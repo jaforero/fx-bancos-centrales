@@ -1,0 +1,88 @@
+{
+  "config_version": "1.0.0",
+  "backfill_start": "2020-01-01",
+  "reference_timezone": "America/Bogota",
+  "incremental_lookback_days": 15,
+  "providers": {
+    "banxico": {
+      "kind": "banxico_sie",
+      "institution": "Banco de México",
+      "country": "MX",
+      "base_url": "https://www.banxico.org.mx/SieAPIRest/service/v1",
+      "token_env": "BANXICO_TOKEN",
+      "token_required": true,
+      "docs_url": "https://www.banxico.org.mx/SieAPIRest/service/v1/",
+      "max_days_per_request": 366
+    },
+    "sfc_trm": {
+      "kind": "socrata_trm",
+      "institution": "Superintendencia Financiera de Colombia (TRM; también la divulga el Banco de la República)",
+      "country": "CO",
+      "base_url": "https://www.datos.gov.co/resource/32sa-8pi3.json",
+      "token_env": "DATOS_GOV_CO_APP_TOKEN",
+      "token_required": false,
+      "docs_url": "https://dev.socrata.com/foundry/www.datos.gov.co/32sa-8pi3",
+      "max_days_per_request": 3660
+    }
+  },
+  "series": {
+    "usd_mxn_fix": {
+      "pair": "USD-MXN",
+      "label": "Tipo de cambio FIX (fecha de determinación)",
+      "quote_unit": "MXN por 1 USD",
+      "provider": "banxico",
+      "source_series_id": "SF43718",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "plausible_range": [10, 40],
+      "max_daily_change_pct": 6,
+      "max_fill_days": 5,
+      "stale_after_days": 5
+    },
+    "usd_mxn_liq": {
+      "pair": "USD-MXN",
+      "label": "Tipo de cambio FIX (fecha de liquidación)",
+      "quote_unit": "MXN por 1 USD",
+      "provider": "banxico",
+      "source_series_id": "SF60653",
+      "date_basis": "vigencia",
+      "primary": false,
+      "decimals": 4,
+      "plausible_range": [10, 40],
+      "max_daily_change_pct": 6,
+      "max_fill_days": 5,
+      "stale_after_days": 5
+    },
+    "usd_cop_trm": {
+      "pair": "USD-COP",
+      "label": "Tasa Representativa del Mercado (TRM)",
+      "quote_unit": "COP por 1 USD",
+      "provider": "sfc_trm",
+      "source_series_id": "32sa-8pi3",
+      "date_basis": "vigencia",
+      "primary": true,
+      "decimals": 2,
+      "plausible_range": [1500, 8000],
+      "max_daily_change_pct": 6,
+      "max_fill_days": 5,
+      "stale_after_days": 5
+    }
+  },
+  "derived": {
+    "mxn_cop_cross": {
+      "pair": "MXN-COP",
+      "label": "Tasa cruzada MXN-COP vía USD (TRM / FIX liquidación)",
+      "quote_unit": "COP por 1 MXN",
+      "method": "cross_via_usd",
+      "numerator": "usd_cop_trm",
+      "denominator": "usd_mxn_liq",
+      "date_basis": "vigencia",
+      "primary": true,
+      "decimals": 4,
+      "plausible_range": [60, 500],
+      "max_daily_change_pct": 8,
+      "stale_after_days": 5
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "rates_daily.json — todas las tasas, una fila por día calendario",
+  "type": "object",
+  "required": ["schema_version", "as_of", "series", "rows"],
+  "properties": {
+    "schema_version": {"type": "string", "pattern": "^1\\."},
+    "as_of": {"type": "string"},
+    "series": {"type": "object"},
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["date"],
+        "properties": {
+          "date": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+          "filled": {"type": "array", "items": {"type": "string"}}
+        },
+        "additionalProperties": {"type": ["number", "null", "array"]}
+      }
+    }
+  }
+}

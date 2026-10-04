@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "latest.json — valores vigentes para tarjetas del dashboard",
+  "type": "object",
+  "required": ["schema_version", "as_of", "overall_status", "series"],
+  "properties": {
+    "schema_version": {"type": "string", "pattern": "^1\\."},
+    "as_of": {"type": "string", "format": "date"},
+    "overall_status": {"enum": ["ok", "degraded"]},
+    "series": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["pair", "label", "quote_unit", "method", "value", "date", "status"],
+        "properties": {
+          "pair": {"type": "string", "pattern": "^[A-Z]{3}-[A-Z]{3}$"},
+          "label": {"type": "string"},
+          "quote_unit": {"type": "string"},
+          "date_basis": {"enum": ["determinacion", "vigencia"]},
+          "primary": {"type": "boolean"},
+          "method": {"type": "string"},
+          "value": {"type": ["number", "null"]},
+          "date": {"type": ["string", "null"]},
+          "days_since_official": {"type": "integer"},
+          "prev_value": {"type": "number"},
+          "prev_date": {"type": "string"},
+          "change_abs": {"type": "number"},
+          "change_pct": {"type": ["number", "null"]},
+          "next": {"type": "object", "required": ["date", "value"]},
+          "status": {"type": "string", "pattern": "^(ok|stale|error:[a-z]+)$"},
+          "error": {"type": "string"},
+          "source": {"type": "object"},
+          "inputs": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}

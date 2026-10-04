@@ -1,0 +1,41 @@
+name: Healthcheck de APIs de bancos centrales
+
+on:
+  schedule:
+    - cron: "0 13 * * 1"   # lunes 08:00 Bogotá
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  healthcheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONPATH: src
+      BANXICO_TOKEN: ${{ secrets.BANXICO_TOKEN }}
+      DATOS_GOV_CO_APP_TOKEN: ${{ secrets.DATOS_GOV_CO_APP_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Probar contrato de cada fuente
+        run: python -m fxpipe healthcheck --report healthcheck.md
+      - name: Publicar resumen
+        if: always()
+        run: test -f healthcheck.md && cat healthcheck.md >> "$GITHUB_STEP_SUMMARY" || true
+      - name: Abrir issue de mantenimiento
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create api-drift --color 5319E7 --description "Posible cambio en API de una fuente" --force
+          NUM=$(gh issue list --label api-drift --state open --json number -q '.[0].number')
+          if [ -n "$NUM" ]; then
+            gh issue comment "$NUM" --body-file healthcheck.md
+          else
+            gh issue create --title "Healthcheck: revisar conectores de bancos centrales" --label api-drift --body-file healthcheck.md
+          fi

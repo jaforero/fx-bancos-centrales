@@ -1,0 +1,63 @@
+{
+  "_nota": "Fixture de prueba con la estructura documentada del SIE. Valores ficticios.",
+  "bmx": {
+    "series": [
+      {
+        "idSerie": "SF43718",
+        "titulo": "Tipo de cambio Pesos por dólar E.U.A. ... Fecha de determinación (FIX)",
+        "datos": [
+          {
+            "fecha": "28/09/2026",
+            "dato": "18.4000"
+          },
+          {
+            "fecha": "29/09/2026",
+            "dato": "18.3500"
+          },
+          {
+            "fecha": "30/09/2026",
+            "dato": "18.3000"
+          },
+          {
+            "fecha": "01/10/2026",
+            "dato": "18.2500"
+          },
+          {
+            "fecha": "02/10/2026",
+            "dato": "18.2000"
+          }
+        ]
+      },
+      {
+        "idSerie": "SF60653",
+        "titulo": "Tipo de cambio Pesos por dólar E.U.A. ... Fecha de liquidación",
+        "datos": [
+          {
+            "fecha": "28/09/2026",
+            "dato": "N/E"
+          },
+          {
+            "fecha": "29/09/2026",
+            "dato": "18.4000"
+          },
+          {
+            "fecha": "30/09/2026",
+            "dato": "18.3500"
+          },
+          {
+            "fecha": "01/10/2026",
+            "dato": "18.3000"
+          },
+          {
+            "fecha": "02/10/2026",
+            "dato": "18.2500"
+          },
+          {
+            "fecha": "05/10/2026",
+            "dato": "18.2000"
+          }
+        ]
+      }
+    ]
+  }
+}

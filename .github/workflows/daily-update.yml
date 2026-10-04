@@ -1,0 +1,76 @@
+name: Actualización diaria de tasas
+
+on:
+  schedule:
+    # Cron en UTC. México: UTC-6 (sin horario de verano). Colombia: UTC-5.
+    # 19:30 UTC = 13:30 CDMX / 14:30 Bogotá: el FIX del día ya está publicado.
+    - cron: "30 19 * * 1-5"
+    # 01:00 UTC = 20:00 Bogotá: recoge la TRM del día siguiente y fines de semana.
+    - cron: "0 1 * * *"
+  workflow_dispatch:
+    inputs:
+      backfill_start:
+        description: "Opcional: AAAA-MM-DD para recargar histórico desde esa fecha"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: fx-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PYTHONPATH: src
+      BANXICO_TOKEN: ${{ secrets.BANXICO_TOKEN }}
+      DATOS_GOV_CO_APP_TOKEN: ${{ secrets.DATOS_GOV_CO_APP_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Descargar y transformar
+        run: |
+          if [ -n "${{ github.event.inputs.backfill_start }}" ]; then
+            python -m fxpipe backfill --start "${{ github.event.inputs.backfill_start }}"
+          else
+            python -m fxpipe update
+          fi
+
+      - name: Publicar cambios en data/
+        run: |
+          git config user.name  "fx-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "Sin cambios en los datos."
+          else
+            git commit -m "datos: actualización $(date -u +%Y-%m-%dT%H:%MZ)"
+            git pull --rebase --autostash
+            git push
+          fi
+
+      - name: Verificar estado de las series
+        run: python -m fxpipe check
+
+      - name: Abrir o actualizar issue de alerta
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create fx-alerta --color D93F0B --description "Fallo del pipeline de tasas" --force
+          BODY="La corrida ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} terminó con series degradadas. Revisa data/manifest.json (campos series_status y errors)."
+          NUM=$(gh issue list --label fx-alerta --state open --json number -q '.[0].number')
+          if [ -n "$NUM" ]; then
+            gh issue comment "$NUM" --body "$BODY"
+          else
+            gh issue create --title "Pipeline de tasas degradado" --label fx-alerta --body "$BODY"
+          fi
