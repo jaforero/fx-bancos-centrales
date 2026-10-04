@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0.0",
+  "as_of": "2026-10-04",
+  "overall_status": "ok",
+  "series": {
+    "usd_mxn_fix": {
+      "pair": "USD-MXN",
+      "label": "Tipo de cambio FIX (fecha de determinación)",
+      "quote_unit": "MXN por 1 USD",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "source": {
+        "provider": "banxico",
+        "institution": "Banco de México",
+        "country": "MX",
+        "series_id": "SF43718",
+        "docs_url": "https://www.banxico.org.mx/SieAPIRest/service/v1/"
+      },
+      "method": "official",
+      "value": 18.1903,
+      "date": "2026-10-02",
+      "days_since_official": 2,
+      "prev_value": 18.3688,
+      "prev_date": "2026-10-01",
+      "change_abs": -0.1785,
+      "change_pct": -0.9718,
+      "status": "ok"
+    },
+    "usd_mxn_liq": {
+      "pair": "USD-MXN",
+      "label": "Tipo de cambio FIX (fecha de liquidación)",
+      "quote_unit": "MXN por 1 USD",
+      "date_basis": "vigencia",
+      "primary": false,
+      "decimals": 4,
+      "source": {
+        "provider": "banxico",
+        "institution": "Banco de México",
+        "country": "MX",
+        "series_id": "SF60653",
+        "docs_url": "https://www.banxico.org.mx/SieAPIRest/service/v1/"
+      },
+      "method": "official",
+      "value": 18.3688,
+      "date": "2026-10-04",
+      "days_since_official": 0,
+      "prev_value": 18.0692,
+      "prev_date": "2026-10-02",
+      "change_abs": 0.2996,
+      "change_pct": 1.6581,
+      "next": {
+        "date": "2026-10-06",
+        "value": 18.1903
+      },
+      "status": "ok"
+    },
+    "usd_cop_trm": {
+      "pair": "USD-COP",
+      "label": "Tasa Representativa del Mercado (TRM)",
+      "quote_unit": "COP por 1 USD",
+      "date_basis": "vigencia",
+      "primary": true,
+      "decimals": 2,
+      "source": {
+        "provider": "sfc_trm",
+        "institution": "Superintendencia Financiera de Colombia (TRM; también la divulga el Banco de la República)",
+        "country": "CO",
+        "series_id": "32sa-8pi3",
+        "docs_url": "https://dev.socrata.com/foundry/www.datos.gov.co/32sa-8pi3"
+      },
+      "method": "official",
+      "value": 3273.49,
+      "date": "2026-10-04",
+      "days_since_official": 0,
+      "prev_value": 3307.73,
+      "prev_date": "2026-10-02",
+      "change_abs": -34.24,
+      "change_pct": -1.0352,
+      "status": "ok"
+    },
+    "mxn_cop_cross": {
+      "pair": "MXN-COP",
+      "label": "Tasa cruzada MXN-COP vía USD (TRM / FIX liquidación)",
+      "quote_unit": "COP por 1 MXN",
+      "date_basis": "vigencia",
+      "primary": true,
+      "decimals": 4,
+      "method": "cross_via_usd: usd_cop_trm / usd_mxn_liq",
+      "inputs": [
+        "usd_cop_trm",
+        "usd_mxn_liq"
+      ],
+      "value": 178.2092,
+      "date": "2026-10-04",
+      "days_since_official": 0,
+      "prev_value": 183.059,
+      "prev_date": "2026-10-02",
+      "change_abs": -4.8498,
+      "change_pct": -2.6493,
+      "status": "ok"
+    }
+  }
+}

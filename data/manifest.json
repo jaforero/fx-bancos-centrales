@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "config_version": "1.0.0",
+  "generated_at": "2026-10-04T17:29:19+00:00",
+  "as_of": "2026-10-04",
+  "overall_status": "ok",
+  "data_hash": "d28129e0ef594e6317ce223a399f429d4d745e9a30fdf011d8701fb46c7cdec2",
+  "series_status": {
+    "mxn_cop_cross": "ok",
+    "usd_cop_trm": "ok",
+    "usd_mxn_fix": "ok",
+    "usd_mxn_liq": "ok"
+  },
+  "errors": {},
+  "warnings": {
+    "usd_cop_trm": [
+      "salto 2020-03-09->2020-03-10: 3584.58 -> 3803.6 (+6.11%)"
+    ]
+  },
+  "files": [
+    "latest.json",
+    "rates_daily.json",
+    "series/mxn_cop_cross.json",
+    "series/usd_cop_trm.json",
+    "series/usd_mxn_fix.json",
+    "series/usd_mxn_liq.json"
+  ]
+}
