@@ -103,6 +103,30 @@
       "change_pct": -1.0352,
       "status": "ok"
     },
+    "usd_ars_a3500": {
+      "pair": "USD-ARS",
+      "label": "Dólar de referencia mayorista (Comunicación A 3500)",
+      "quote_unit": "ARS por 1 USD",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "source": {
+        "provider": "bcra",
+        "institution": "Banco Central de la República Argentina",
+        "country": "AR",
+        "series_id": "REF",
+        "docs_url": "https://www.bcra.gob.ar/archivos/Catalogo/Content/files/pdf/estadisticascambiarias-v1.pdf"
+      },
+      "method": "official",
+      "value": 1523.0868,
+      "date": "2026-10-02",
+      "days_since_official": 2,
+      "prev_value": 1523.2254,
+      "prev_date": "2026-10-01",
+      "change_abs": -0.1386,
+      "change_pct": -0.0091,
+      "status": "ok"
+    },
     "mxn_cop_cross": {
       "pair": "MXN-COP",
       "label": "Tasa cruzada MXN-COP vía USD (TRM ÷ FIX, mismo día de mercado)",
@@ -122,6 +146,48 @@
       "prev_date": "2026-10-01",
       "change_abs": -0.1153,
       "change_pct": -0.064,
+      "status": "ok"
+    },
+    "mxn_ars_cross": {
+      "pair": "MXN-ARS",
+      "label": "Tasa cruzada MXN-ARS vía USD (A 3500 ÷ FIX, mismo día de mercado)",
+      "quote_unit": "ARS por 1 MXN",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "method": "cross_via_usd: usd_ars_a3500 / usd_mxn_fix",
+      "inputs": [
+        "usd_ars_a3500",
+        "usd_mxn_fix"
+      ],
+      "value": 83.7307,
+      "date": "2026-10-02",
+      "days_since_official": 2,
+      "prev_value": 82.9246,
+      "prev_date": "2026-10-01",
+      "change_abs": 0.8061,
+      "change_pct": 0.9721,
+      "status": "ok"
+    },
+    "ars_cop_cross": {
+      "pair": "ARS-COP",
+      "label": "Tasa cruzada ARS-COP vía USD (TRM ÷ A 3500, mismo día de mercado)",
+      "quote_unit": "COP por 1 ARS",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "method": "cross_via_usd: usd_cop_trm_mkt / usd_ars_a3500",
+      "inputs": [
+        "usd_cop_trm_mkt",
+        "usd_ars_a3500"
+      ],
+      "value": 2.1492,
+      "date": "2026-10-02",
+      "days_since_official": 2,
+      "prev_value": 2.1715,
+      "prev_date": "2026-10-01",
+      "change_abs": -0.0223,
+      "change_pct": -1.0269,
       "status": "ok"
     }
   }
