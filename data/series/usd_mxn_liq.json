@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "usd_mxn_liq",
   "pair": "USD-MXN",
-  "label": "Tipo de cambio FIX (fecha de liquidación)",
+  "label": "Tipo de cambio FIX para pagos (fecha de liquidación, FIX de 2 días hábiles antes)",
   "quote_unit": "MXN por 1 USD",
   "date_basis": "vigencia",
   "primary": false,

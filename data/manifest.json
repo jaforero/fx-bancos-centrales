@@ -1,13 +1,14 @@
 {
   "schema_version": "1.0.0",
-  "config_version": "1.0.0",
-  "generated_at": "2026-10-04T17:29:19+00:00",
+  "config_version": "1.1.0",
+  "generated_at": "2026-10-04T17:43:58+00:00",
   "as_of": "2026-10-04",
   "overall_status": "ok",
-  "data_hash": "d28129e0ef594e6317ce223a399f429d4d745e9a30fdf011d8701fb46c7cdec2",
+  "data_hash": "8a1f042237883d3e0ab289230820d9588ca9eac20b0a785c6538660afbfde7ea",
   "series_status": {
     "mxn_cop_cross": "ok",
     "usd_cop_trm": "ok",
+    "usd_cop_trm_mkt": "ok",
     "usd_mxn_fix": "ok",
     "usd_mxn_liq": "ok"
   },
@@ -15,6 +16,9 @@
   "warnings": {
     "usd_cop_trm": [
       "salto 2020-03-09->2020-03-10: 3584.58 -> 3803.6 (+6.11%)"
+    ],
+    "usd_cop_trm_mkt": [
+      "salto 2020-03-06->2020-03-09: 3584.58 -> 3803.6 (+6.11%)"
     ]
   },
   "files": [
@@ -22,6 +26,7 @@
     "rates_daily.json",
     "series/mxn_cop_cross.json",
     "series/usd_cop_trm.json",
+    "series/usd_cop_trm_mkt.json",
     "series/usd_mxn_fix.json",
     "series/usd_mxn_liq.json"
   ]

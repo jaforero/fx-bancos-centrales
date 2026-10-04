@@ -29,7 +29,7 @@
     },
     "usd_mxn_liq": {
       "pair": "USD-MXN",
-      "label": "Tipo de cambio FIX (fecha de liquidación)",
+      "label": "Tipo de cambio FIX para pagos (fecha de liquidación, FIX de 2 días hábiles antes)",
       "quote_unit": "MXN por 1 USD",
       "date_basis": "vigencia",
       "primary": false,
@@ -79,25 +79,49 @@
       "change_pct": -1.0352,
       "status": "ok"
     },
+    "usd_cop_trm_mkt": {
+      "pair": "USD-COP",
+      "label": "TRM por fecha de mercado (insumo de la cruzada)",
+      "quote_unit": "COP por 1 USD",
+      "date_basis": "determinacion",
+      "primary": false,
+      "decimals": 2,
+      "source": {
+        "provider": "sfc_trm",
+        "institution": "Superintendencia Financiera de Colombia (TRM; también la divulga el Banco de la República)",
+        "country": "CO",
+        "series_id": "32sa-8pi3",
+        "docs_url": "https://dev.socrata.com/foundry/www.datos.gov.co/32sa-8pi3"
+      },
+      "method": "official",
+      "value": 3273.49,
+      "date": "2026-10-02",
+      "days_since_official": 2,
+      "prev_value": 3307.73,
+      "prev_date": "2026-10-01",
+      "change_abs": -34.24,
+      "change_pct": -1.0352,
+      "status": "ok"
+    },
     "mxn_cop_cross": {
       "pair": "MXN-COP",
-      "label": "Tasa cruzada MXN-COP vía USD (TRM / FIX liquidación)",
+      "label": "Tasa cruzada MXN-COP vía USD (TRM ÷ FIX, mismo día de mercado)",
       "quote_unit": "COP por 1 MXN",
-      "date_basis": "vigencia",
+      "date_basis": "determinacion",
       "primary": true,
       "decimals": 4,
-      "method": "cross_via_usd: usd_cop_trm / usd_mxn_liq",
+      "method": "cross_via_usd: usd_cop_trm_mkt / usd_mxn_fix",
       "inputs": [
-        "usd_cop_trm",
-        "usd_mxn_liq"
+        "usd_cop_trm_mkt",
+        "usd_mxn_fix"
       ],
-      "value": 178.2092,
-      "date": "2026-10-04",
-      "days_since_official": 0,
-      "prev_value": 183.059,
-      "prev_date": "2026-10-02",
-      "change_abs": -4.8498,
-      "change_pct": -2.6493,
+      "value": 179.958,
+      "date": "2026-10-02",
+      "days_since_official": 2,
+      "prev_value": 180.0733,
+      "prev_date": "2026-10-01",
+      "change_abs": -0.1153,
+      "change_pct": -0.064,
       "status": "ok"
     }
   }
