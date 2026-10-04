@@ -1,5 +1,5 @@
 {
-  "config_version": "1.0.0",
+  "config_version": "1.1.0",
   "backfill_start": "2020-01-01",
   "reference_timezone": "America/Bogota",
   "incremental_lookback_days": 15,
@@ -35,21 +35,27 @@
       "date_basis": "determinacion",
       "primary": true,
       "decimals": 4,
-      "plausible_range": [10, 40],
+      "plausible_range": [
+        10,
+        40
+      ],
       "max_daily_change_pct": 6,
       "max_fill_days": 5,
       "stale_after_days": 5
     },
     "usd_mxn_liq": {
       "pair": "USD-MXN",
-      "label": "Tipo de cambio FIX (fecha de liquidación)",
+      "label": "Tipo de cambio FIX para pagos (fecha de liquidación, FIX de 2 días hábiles antes)",
       "quote_unit": "MXN por 1 USD",
       "provider": "banxico",
       "source_series_id": "SF60653",
       "date_basis": "vigencia",
       "primary": false,
       "decimals": 4,
-      "plausible_range": [10, 40],
+      "plausible_range": [
+        10,
+        40
+      ],
       "max_daily_change_pct": 6,
       "max_fill_days": 5,
       "stale_after_days": 5
@@ -63,7 +69,30 @@
       "date_basis": "vigencia",
       "primary": true,
       "decimals": 2,
-      "plausible_range": [1500, 8000],
+      "plausible_range": [
+        1500,
+        8000
+      ],
+      "max_daily_change_pct": 6,
+      "max_fill_days": 5,
+      "stale_after_days": 5
+    },
+    "usd_cop_trm_mkt": {
+      "pair": "USD-COP",
+      "label": "TRM por fecha de mercado (insumo de la cruzada)",
+      "quote_unit": "COP por 1 USD",
+      "provider": "sfc_trm",
+      "source_series_id": "32sa-8pi3",
+      "source_options": {
+        "index": "market_date"
+      },
+      "date_basis": "determinacion",
+      "primary": false,
+      "decimals": 2,
+      "plausible_range": [
+        1500,
+        8000
+      ],
       "max_daily_change_pct": 6,
       "max_fill_days": 5,
       "stale_after_days": 5
@@ -72,15 +101,18 @@
   "derived": {
     "mxn_cop_cross": {
       "pair": "MXN-COP",
-      "label": "Tasa cruzada MXN-COP vía USD (TRM / FIX liquidación)",
+      "label": "Tasa cruzada MXN-COP vía USD (TRM ÷ FIX, mismo día de mercado)",
       "quote_unit": "COP por 1 MXN",
       "method": "cross_via_usd",
-      "numerator": "usd_cop_trm",
-      "denominator": "usd_mxn_liq",
-      "date_basis": "vigencia",
+      "numerator": "usd_cop_trm_mkt",
+      "denominator": "usd_mxn_fix",
+      "date_basis": "determinacion",
       "primary": true,
       "decimals": 4,
-      "plausible_range": [60, 500],
+      "plausible_range": [
+        60,
+        500
+      ],
       "max_daily_change_pct": 8,
       "stale_after_days": 5
     }

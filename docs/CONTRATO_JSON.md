@@ -12,9 +12,11 @@ publicarla en paralelo bajo otra ruta durante una transición.
   tener varias series (FIX determinación vs. liquidación).
 - **Fechas**: ISO `AAAA-MM-DD`, sin hora.
 - **`date_basis`**:
-  - `determinacion`: fecha en que el banco central calculó la tasa (FIX = mercado de ese día).
-  - `vigencia`: fecha en la que la tasa rige (TRM y FIX liquidación = mercado del día hábil previo).
-  Solo se cruzan series con el mismo `date_basis`.
+  - `determinacion`: fecha del mercado con que se formó la tasa (FIX: día de
+    determinación; `usd_cop_trm_mkt`: vigenciadesde − 1 día).
+  - `vigencia`: fecha en la que la tasa rige. TRM: mercado del día hábil previo.
+    FIX "para pagos" (`usd_mxn_liq`): FIX determinado 2 días hábiles antes.
+  Solo se cruzan series con el mismo `date_basis`; `load_config` lo exige.
 - **`filled: true`**: el pipeline repitió el último valor oficial porque la fuente no
   publica ese día (fin de semana o festivo del país). Máximo `max_fill_days`; luego hay hueco.
   En la TRM los fines de semana no son relleno: la SFC publica la vigencia explícita.

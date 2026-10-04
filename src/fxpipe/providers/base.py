@@ -35,6 +35,10 @@ class ConfigError(RuntimeError):
 class FetchRequest:
     series_key: str          # id interno, p. ej. "usd_mxn_fix"
     source_series_id: str    # id en la fuente, p. ej. "SF43718"
+    options: tuple = ()      # pares (clave, valor) de config "source_options"
+
+    def opt(self, key: str, default=None):
+        return dict(self.options).get(key, default)
 
 
 # Tipo del transporte HTTP: permite inyectar respuestas falsas en pruebas.

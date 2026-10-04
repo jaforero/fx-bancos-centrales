@@ -8,7 +8,7 @@ import pytest
 from fxpipe import pipeline, transform
 from fxpipe.providers import ContractError
 from fxpipe.providers.banxico import parse_payload
-from fxpipe.providers.socrata_trm import expand_records
+from fxpipe.providers.socrata_trm import expand_records, market_date_records
 
 ROOT = Path(__file__).resolve().parents[1]
 FIX = ROOT / "tests" / "fixtures"
@@ -62,6 +62,23 @@ def test_trm_contract_drift_detected():
         expand_records([{"value": "1", "fecha": "2026-10-01"}], date(2026, 1, 1), date(2026, 12, 31))
 
 
+def test_trm_market_date_index():
+    out = market_date_records(load("trm_ok.json"), date(2026, 9, 1), date(2026, 10, 31))
+    assert out["2026-10-02"] == 3273.49          # viernes: mercado que fijó la TRM sáb-lun
+    assert out["2026-09-28"] == 3349.63
+    assert "2026-10-03" not in out and "2026-10-04" not in out
+
+
+def test_config_rejects_misaligned_cross(tmp_path):
+    cfg = json.loads((ROOT / "config" / "sources.json").read_text())
+    cfg["derived"]["mxn_cop_cross"]["numerator"] = "usd_cop_trm"  # vigencia vs determinación
+    p = tmp_path / "c.json"
+    p.write_text(json.dumps(cfg))
+    from fxpipe.providers import ConfigError
+    with pytest.raises(ConfigError):
+        pipeline.load_config(p)
+
+
 # ---------- Transformaciones ----------
 
 def test_fill_forward_limits():
@@ -92,12 +109,10 @@ def test_end_to_end_and_idempotent(env):
     assert r1["overall_status"] == "ok" and r1["changed"]
     latest = json.loads((data / "latest.json").read_text())
     cross = latest["series"]["mxn_cop_cross"]
-    # KPI: último día con AMBOS insumos oficiales (2-oct); el 4-oct existe en
-    # rates_daily pero marcado filled porque el lado MXN es relleno de fin de semana.
-    assert cross["date"] == "2026-10-02" and cross["value"] == round(3307.73 / 18.25, 4)
-    # 5-oct ya es oficial en ambos lados (TRM vigente + FIX liquidación de lunes)
-    assert cross["next"] == {"date": "2026-10-05", "value": round(3273.49 / 18.20, 4)}
-    assert latest["series"]["usd_mxn_fix"]["date"] == "2026-10-02"
+    # Misma fecha de mercado: TRM calculada con el mercado del 2-oct (vigente 3..5-oct)
+    # dividida por el FIX determinado el 2-oct.
+    assert cross["date"] == "2026-10-02" and cross["value"] == round(3273.49 / 18.20, 4)
+    assert cross["prev_date"] == "2026-10-01" and cross["prev_value"] == round(3307.73 / 18.25, 4)
     wide = json.loads((data / "rates_daily.json").read_text())
     row = next(r for r in wide["rows"] if r["date"] == "2026-10-04")
     assert "usd_mxn_fix" in row["filled"] and "usd_cop_trm" not in row["filled"]

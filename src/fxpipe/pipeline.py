@@ -27,6 +27,9 @@ def load_config(path: Path) -> dict:
         for ref in (dv["numerator"], dv["denominator"]):
             if ref not in cfg["series"]:
                 raise ConfigError(f"Derivada {did}: referencia '{ref}' no existe en series")
+        bases = {cfg["series"][r]["date_basis"] for r in (dv["numerator"], dv["denominator"])} | {dv["date_basis"]}
+        if len(bases) != 1:
+            raise ConfigError(f"Derivada {did}: insumos con date_basis distinto {sorted(bases)}; desalinea días de mercado")
         if did in cfg["series"]:
             raise ConfigError(f"Id duplicado entre series y derivadas: {did}")
     return cfg
@@ -77,7 +80,9 @@ def run(cfg: dict, data_dir: Path, as_of: date | None = None, *,
         start = min(starts)
         try:
             provider = build_provider(pname, cfg["providers"][pname], http_get=http_get)
-            reqs = [FetchRequest(sid, cfg["series"][sid]["source_series_id"]) for sid in sids]
+            reqs = [FetchRequest(sid, cfg["series"][sid]["source_series_id"],
+                                 tuple(sorted(cfg["series"][sid].get("source_options", {}).items())))
+                    for sid in sids]
             fetched = provider.fetch(reqs, start, fetch_end)
             log.info("%s: %s", pname, {k: len(v) for k, v in fetched.items()})
         except (ProviderError, ConfigError) as exc:

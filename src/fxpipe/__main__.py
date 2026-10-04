@@ -65,7 +65,9 @@ def cmd_healthcheck(args) -> int:
         pcfg = cfg["providers"][pname]
         try:
             prov = build_provider(pname, pcfg)
-            got = prov.fetch([FetchRequest(s, cfg["series"][s]["source_series_id"]) for s in sids], start, end)
+            got = prov.fetch([FetchRequest(s, cfg["series"][s]["source_series_id"],
+                                           tuple(sorted(cfg["series"][s].get("source_options", {}).items())))
+                              for s in sids], start, end)
             for sid in sids:
                 n = len(got.get(sid, {}))
                 last = max(got[sid]) if got.get(sid) else "—"

@@ -6,15 +6,18 @@ este repositorio para alimentar dashboards. Se actualiza solo con GitHub Actions
 | id | Par | Qué es | Fuente |
 |---|---|---|---|
 | `usd_mxn_fix` | USD-MXN | FIX, fecha de determinación (**principal**) | Banxico SIE `SF43718` |
-| `usd_mxn_liq` | USD-MXN | FIX, fecha de liquidación (insumo de la cruzada) | Banxico SIE `SF60653` |
-| `usd_cop_trm` | USD-COP | TRM vigente | SFC vía datos.gov.co `32sa-8pi3` |
-| `mxn_cop_cross` | MXN-COP | Cruzada: TRM ÷ FIX liquidación | Derivada |
+| `usd_mxn_liq` | USD-MXN | FIX "para pagos" (FIX de 2 días hábiles antes) | Banxico SIE `SF60653` |
+| `usd_cop_trm` | USD-COP | TRM vigente (**principal**) | SFC vía datos.gov.co `32sa-8pi3` |
+| `usd_cop_trm_mkt` | USD-COP | TRM indexada por día de mercado (insumo de la cruzada) | Mismo dataset |
+| `mxn_cop_cross` | MXN-COP | Cruzada: TRM ÷ FIX del **mismo día de mercado** | Derivada |
 
 **Por qué MXN-COP es derivada:** ni Banxico ni el Banco de la República publican
 una tasa oficial MXN-COP. El propio aviso del FIX en el DOF indica que la
 equivalencia con otras monedas se calcula a partir de sus cotizaciones contra el
-dólar. Se cruzan dos tasas con la misma base temporal ("vigente en la fecha D"):
-TRM vigente y FIX en fecha de liquidación.
+dólar. Se cruzan dos tasas formadas el **mismo día de mercado**: el FIX
+determinado el día D y la TRM calculada con el mercado del día D (la que entra en
+vigencia el día siguiente). El pipeline rechaza cruzar series con distinta
+base temporal.
 
 ## Archivos que consume el dashboard
 
