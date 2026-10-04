@@ -1,5 +1,13 @@
 # Cambios
 
+## config 1.2.0 — 2026-10-04
+- Argentina: nuevo conector `bcra_cambiarias` (API Estadísticas Cambiarias v1.0,
+  sin token, paginada) y serie `usd_ars_a3500` (código `REF`, Com. A 3500).
+- Nuevas cruzadas por día de mercado: `mxn_ars_cross` (ARS por MXN) y
+  `ars_cop_cross` (COP por ARS).
+- Errores HTTP 4xx ahora incluyen el mensaje de la API en el manifest.
+- Sin cambios de esquema JSON: solo se agregan series.
+
 ## config 1.1.0 — 2026-10-04
 - **Corrección metodológica de `mxn_cop_cross`.** La versión 1.0.0 cruzaba la TRM
   vigente (mercado del día hábil previo) con el FIX de liquidación (FIX determinado

@@ -4,12 +4,14 @@
 3) declara el proveedor y sus series en config/sources.json.
 """
 from .banxico import BanxicoProvider
+from .bcra_cambiarias import BcraCambiariasProvider
 from .base import ConfigError, ContractError, FetchRequest, Provider, ProviderError
 from .socrata_trm import SocrataTrmProvider
 
 REGISTRY: dict[str, type[Provider]] = {
     BanxicoProvider.kind: BanxicoProvider,
     SocrataTrmProvider.kind: SocrataTrmProvider,
+    BcraCambiariasProvider.kind: BcraCambiariasProvider,
 }
 
 

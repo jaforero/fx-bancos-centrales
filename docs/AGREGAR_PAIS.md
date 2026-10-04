@@ -23,6 +23,15 @@ rangos plausibles y umbrales. Correr `pytest` y `python -m fxpipe healthcheck`.
 7. Crear el secreto en GitHub si la API lo requiere y ejecutar backfill manual.
 8. Subir la versión menor de `config_version`.
 
+## Ejemplo resuelto: Argentina (config 1.2.0)
+
+- Fuente: API Estadísticas Cambiarias v1.0 del BCRA, sin token.
+- Elección de tasa: `REF` (Com. A 3500, mayorista oficial) en lugar de `USD`,
+  MEP, CCL o blue, por ser comparable con FIX y TRM.
+- Trampas encontradas: el peso mexicano es `MXP` (no `MXN`); fechas futuras
+  dan HTTP 400 (se recorta al día de Buenos Aires); rango plausible amplio
+  por inflación y devaluaciones (A 3500 ≈ 60 en 2020, ≈ 1.520 en 2026).
+
 ## Candidatos (NO verificados: confirmar contra la documentación oficial antes de construir)
 
 | País | Institución | Pista de API |
@@ -30,5 +39,4 @@ rangos plausibles y umbrales. Correr `pytest` y `python -m fxpipe healthcheck`.
 | Brasil | Banco Central do Brasil | SGS / PTAX (Olinda), abierta |
 | Perú | BCRP | API de series estadísticas, abierta |
 | Chile | Banco Central de Chile | BDE / SieteRestWS, requiere usuario |
-| Argentina | BCRA | API de estadísticas cambiarias |
 | Zona euro | BCE | Data Portal (SDMX), abierta |

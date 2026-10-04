@@ -8,6 +8,7 @@ import pytest
 from fxpipe import pipeline, transform
 from fxpipe.providers import ContractError
 from fxpipe.providers.banxico import parse_payload
+from fxpipe.providers.bcra_cambiarias import parse_payload as bcra_parse
 from fxpipe.providers.socrata_trm import expand_records, market_date_records
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,8 +20,13 @@ def load(name):
     return json.loads((FIX / name).read_text(encoding="utf-8"))
 
 
-def fake_http(banxico=None, trm=None, fail=None):
+def fake_http(banxico=None, trm=None, bcra=None, fail=None):
     def get(url, headers):
+        if "bcra" in url:
+            if fail == "bcra":
+                from fxpipe.providers import ProviderError
+                raise ProviderError("simulado: HTTP 403")
+            return bcra if bcra is not None else load("bcra_ref_ok.json")
         if "banxico" in url:
             if fail == "banxico":
                 from fxpipe.providers import ProviderError
@@ -33,6 +39,8 @@ def fake_http(banxico=None, trm=None, fail=None):
 @pytest.fixture
 def env(tmp_path, monkeypatch):
     monkeypatch.setenv("BANXICO_TOKEN", "token-de-prueba")
+    from fxpipe.providers import bcra_cambiarias
+    monkeypatch.setattr(bcra_cambiarias, "today_buenos_aires", lambda: date(2026, 12, 31))
     cfg = pipeline.load_config(ROOT / "config" / "sources.json")
     return cfg, tmp_path
 
@@ -79,6 +87,33 @@ def test_config_rejects_misaligned_cross(tmp_path):
         pipeline.load_config(p)
 
 
+def test_bcra_parse_and_contract():
+    rows, n, total = bcra_parse(load("bcra_ref_ok.json"), "REF")
+    assert rows["2026-10-02"] == 1523.0868 and n == 5 and total == 5
+    with pytest.raises(ContractError):  # moneda distinta a la pedida
+        bcra_parse(load("bcra_ref_ok.json"), "USD")
+    with pytest.raises(ContractError):  # error declarado por la API
+        bcra_parse({"status": 400, "errorMessages": ["Parámetro erróneo"]}, "REF")
+
+
+def test_bcra_paginates_and_clamps_future(monkeypatch):
+    from fxpipe.providers import bcra_cambiarias
+    monkeypatch.setattr(bcra_cambiarias, "today_buenos_aires", lambda: date(2026, 10, 2))
+    full = load("bcra_ref_ok.json")
+    calls = []
+
+    def get(url, headers):
+        calls.append(url)
+        off = int(url.split("offset=")[1])
+        page = full["results"][off:off + 3]
+        return {"status": 200, "metadata": {"resultset": {"count": 5}}, "results": page}
+
+    prov = bcra_cambiarias.BcraCambiariasProvider("bcra", {"base_url": "https://x/bcra", "max_days_per_request": 366}, http_get=get)
+    out = prov.fetch([pipeline.FetchRequest("usd_ars_a3500", "REF")], date(2026, 9, 1), date(2026, 10, 11))
+    assert len(out["usd_ars_a3500"]) == 5 and len(calls) == 2
+    assert all("fechahasta=2026-10-02" in u for u in calls)  # no pide fechas futuras
+
+
 # ---------- Transformaciones ----------
 
 def test_fill_forward_limits():
@@ -113,6 +148,11 @@ def test_end_to_end_and_idempotent(env):
     # dividida por el FIX determinado el 2-oct.
     assert cross["date"] == "2026-10-02" and cross["value"] == round(3273.49 / 18.20, 4)
     assert cross["prev_date"] == "2026-10-01" and cross["prev_value"] == round(3307.73 / 18.25, 4)
+    # Argentina: mismas reglas de día de mercado
+    mxn_ars = latest["series"]["mxn_ars_cross"]
+    assert mxn_ars["date"] == "2026-10-02" and mxn_ars["value"] == round(1523.0868 / 18.20, 4)
+    ars_cop = latest["series"]["ars_cop_cross"]
+    assert ars_cop["date"] == "2026-10-02" and ars_cop["value"] == round(3273.49 / 1523.0868, 4)
     wide = json.loads((data / "rates_daily.json").read_text())
     row = next(r for r in wide["rows"] if r["date"] == "2026-10-04")
     assert "usd_mxn_fix" in row["filled"] and "usd_cop_trm" not in row["filled"]
@@ -131,6 +171,15 @@ def test_provider_failure_keeps_history(env):
     assert r["manifest"]["series_status"]["usd_cop_trm"] == "ok"
     assert r["manifest"]["series_status"]["mxn_cop_cross"] == "error:provider"
     assert (data / "series" / "usd_mxn_fix.json").read_text() == before
+
+
+def test_bcra_failure_isolated(env):
+    cfg, data = env
+    r = pipeline.run(cfg, data, AS_OF, http_get=fake_http(fail="bcra"))
+    st = r["manifest"]["series_status"]
+    assert st["usd_ars_a3500"] == "error:provider"
+    assert st["mxn_ars_cross"] == "error:provider" and st["ars_cop_cross"] == "error:provider"
+    assert st["usd_mxn_fix"] == st["usd_cop_trm"] == st["mxn_cop_cross"] == "ok"
 
 
 def test_out_of_range_rejected(env):

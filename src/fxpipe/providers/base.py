@@ -65,7 +65,11 @@ def default_http_get(url: str, headers: dict, *, retries: int = 4,
                 raise ContractError(f"HTTP 404: el endpoint pudo cambiar: {redact(url)}") from exc
             last_exc = exc
             if exc.code not in (429, 500, 502, 503, 504):
-                break
+                try:
+                    detail = exc.read().decode("utf-8", "replace")[:300]
+                except Exception:
+                    detail = ""
+                raise ProviderError(f"HTTP {exc.code} en {redact(url)}: {detail}") from exc
         except (urllib.error.URLError, TimeoutError) as exc:
             last_exc = exc
         time.sleep(min(2 ** attempt * 2, 30))

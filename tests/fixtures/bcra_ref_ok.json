@@ -1,0 +1,68 @@
+{
+  "_nota": "Estructura del manual oficial v1.0. Valor 2026-10-02 real (consulta en vivo); resto ficticio.",
+  "status": 200,
+  "metadata": {
+    "resultset": {
+      "count": 5,
+      "offset": 0,
+      "limit": 500
+    }
+  },
+  "results": [
+    {
+      "fecha": "2026-09-28",
+      "detalle": [
+        {
+          "codigoMoneda": "REF",
+          "descripcion": "DOLAR REFERENCIA COM 3500",
+          "tipoPase": 0.0,
+          "tipoCotizacion": 1510.25
+        }
+      ]
+    },
+    {
+      "fecha": "2026-09-29",
+      "detalle": [
+        {
+          "codigoMoneda": "REF",
+          "descripcion": "DOLAR REFERENCIA COM 3500",
+          "tipoPase": 0.0,
+          "tipoCotizacion": 1512.5
+        }
+      ]
+    },
+    {
+      "fecha": "2026-09-30",
+      "detalle": [
+        {
+          "codigoMoneda": "REF",
+          "descripcion": "DOLAR REFERENCIA COM 3500",
+          "tipoPase": 0.0,
+          "tipoCotizacion": 1515.0
+        }
+      ]
+    },
+    {
+      "fecha": "2026-10-01",
+      "detalle": [
+        {
+          "codigoMoneda": "REF",
+          "descripcion": "DOLAR REFERENCIA COM 3500",
+          "tipoPase": 0.0,
+          "tipoCotizacion": 1518.75
+        }
+      ]
+    },
+    {
+      "fecha": "2026-10-02",
+      "detalle": [
+        {
+          "codigoMoneda": "REF",
+          "descripcion": "DOLAR REFERENCIA COM 3500",
+          "tipoPase": 0.0,
+          "tipoCotizacion": 1523.0868
+        }
+      ]
+    }
+  ]
+}

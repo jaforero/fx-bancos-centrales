@@ -9,7 +9,10 @@ este repositorio para alimentar dashboards. Se actualiza solo con GitHub Actions
 | `usd_mxn_liq` | USD-MXN | FIX "para pagos" (FIX de 2 días hábiles antes) | Banxico SIE `SF60653` |
 | `usd_cop_trm` | USD-COP | TRM vigente (**principal**) | SFC vía datos.gov.co `32sa-8pi3` |
 | `usd_cop_trm_mkt` | USD-COP | TRM indexada por día de mercado (insumo de la cruzada) | Mismo dataset |
+| `usd_ars_a3500` | USD-ARS | Dólar de referencia mayorista Com. A 3500 (**principal**) | BCRA Estadísticas Cambiarias `REF` |
 | `mxn_cop_cross` | MXN-COP | Cruzada: TRM ÷ FIX del **mismo día de mercado** | Derivada |
+| `mxn_ars_cross` | MXN-ARS | Cruzada: A 3500 ÷ FIX (ARS por 1 MXN) | Derivada |
+| `ars_cop_cross` | ARS-COP | Cruzada: TRM ÷ A 3500 (COP por 1 ARS) | Derivada |
 
 **Por qué MXN-COP es derivada:** ni Banxico ni el Banco de la República publican
 una tasa oficial MXN-COP. El propio aviso del FIX en el DOF indica que la
@@ -69,5 +72,5 @@ Ver [docs/AGREGAR_PAIS.md](docs/AGREGAR_PAIS.md).
 
 ## Atribución
 
-Datos: Banco de México (SIE) y Superintendencia Financiera de Colombia
-(datos.gov.co). Las tasas cruzadas son cálculos propios, no tasas oficiales.
+Datos: Banco de México (SIE), Superintendencia Financiera de Colombia
+(datos.gov.co) y Banco Central de la República Argentina (API Estadísticas Cambiarias). Las tasas cruzadas son cálculos propios, no tasas oficiales.
