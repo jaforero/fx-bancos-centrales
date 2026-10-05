@@ -5,6 +5,7 @@
 """
 from .banrep_sdmx import BanrepSdmxProvider
 from .banxico import BanxicoProvider
+from .bcb_ptax import BcbPtaxProvider
 from .bcra_cambiarias import BcraCambiariasProvider
 from .base import ConfigError, ContractError, FetchRequest, Provider, ProviderError
 from .socrata_trm import SocrataTrmProvider
@@ -14,6 +15,7 @@ REGISTRY: dict[str, type[Provider]] = {
     SocrataTrmProvider.kind: SocrataTrmProvider,
     BcraCambiariasProvider.kind: BcraCambiariasProvider,
     BanrepSdmxProvider.kind: BanrepSdmxProvider,
+    BcbPtaxProvider.kind: BcbPtaxProvider,
 }
 
 

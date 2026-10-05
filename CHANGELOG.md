@@ -1,5 +1,12 @@
 # Cambios
 
+## config 1.4.0 — 2026-10-05
+- Brasil: nuevo conector `bcb_ptax` (API PTAX del Banco Central do Brasil, Olinda)
+  y serie `usd_brl_ptax` (PTAX de venta, cierre).
+- Cruzadas por día de mercado: `brl_mxn_cross` (MXN por BRL), `brl_cop_cross`
+  (COP por BRL) y `brl_ars_cross` (ARS por BRL). Malla completa entre MXN, COP, ARS y BRL.
+- Sin cambios de esquema JSON: solo se agregan series.
+
 ## config 1.3.0 — 2026-10-05
 - Colombia: la TRM se descarga del **Banco de la República** (servicio SDMX
   `DF_TRM_DAILY_HIST`, conector `banrep_sdmx`). Atribución completa en

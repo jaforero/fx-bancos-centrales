@@ -10,9 +10,13 @@ este repositorio para alimentar dashboards. Se actualiza solo con GitHub Actions
 | `usd_cop_trm` | USD-COP | TRM vigente (**principal**) | Banco de la República, SDMX `DF_TRM_DAILY_HIST` · verificada contra SFC (datos.gov.co) |
 | `usd_cop_trm_mkt` | USD-COP | TRM indexada por día de mercado (insumo de la cruzada) | Misma fuente |
 | `usd_ars_a3500` | USD-ARS | Dólar de referencia mayorista Com. A 3500 (**principal**) | BCRA Estadísticas Cambiarias `REF` |
+| `usd_brl_ptax` | USD-BRL | PTAX de venta, cierre (**principal**) | Banco Central do Brasil, API PTAX (Olinda) |
 | `mxn_cop_cross` | MXN-COP | Cruzada: TRM ÷ FIX del **mismo día de mercado** | Derivada |
 | `mxn_ars_cross` | MXN-ARS | Cruzada: A 3500 ÷ FIX (ARS por 1 MXN) | Derivada |
 | `ars_cop_cross` | ARS-COP | Cruzada: TRM ÷ A 3500 (COP por 1 ARS) | Derivada |
+| `brl_mxn_cross` | BRL-MXN | Cruzada: FIX ÷ PTAX (MXN por 1 BRL) | Derivada |
+| `brl_cop_cross` | BRL-COP | Cruzada: TRM ÷ PTAX (COP por 1 BRL) | Derivada |
+| `brl_ars_cross` | BRL-ARS | Cruzada: A 3500 ÷ PTAX (ARS por 1 BRL) | Derivada |
 
 **Por qué MXN-COP es derivada:** ni Banxico ni el Banco de la República publican
 una tasa oficial MXN-COP. El propio aviso del FIX en el DOF indica que la
@@ -31,6 +35,7 @@ Cada tasa se descarga de la institución que la define oficialmente:
 | México | FIX | Banco de México (la determina y publica) | API SIE de Banxico |
 | Colombia | TRM | Banco de la República (define la TRM y su metodología; la Superintendencia Financiera la calcula y certifica a diario) | Servicio SDMX del BanRep, verificado en cada corrida contra la SFC en datos.gov.co |
 | Argentina | Com. A 3500 | Banco Central de la República Argentina | API Estadísticas Cambiarias del BCRA |
+| Brasil | PTAX | Banco Central do Brasil (la calcula y publica; Resolução BCB nº 45/2020) | API PTAX del BCB (Olinda, OData) |
 
 Por qué importa: la fuente oficial define la metodología, el horario y las
 correcciones; un agregador puede redondear, retrasarse o mezclar tasas
@@ -91,4 +96,5 @@ Ver [docs/AGREGAR_PAIS.md](docs/AGREGAR_PAIS.md).
 
 Datos: Banco de México (SIE), Banco de la República de Colombia (SDMX; TRM
 calculada y certificada por la Superintendencia Financiera) y Banco Central de
-la República Argentina (API Estadísticas Cambiarias). Las tasas cruzadas son cálculos propios, no tasas oficiales.
+la República Argentina (API Estadísticas Cambiarias) y Banco Central do Brasil
+(API PTAX, licencia ODbL). Las tasas cruzadas son cálculos propios, no tasas oficiales.

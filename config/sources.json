@@ -1,5 +1,5 @@
 {
-  "config_version": "1.3.0",
+  "config_version": "1.4.0",
   "backfill_start": "2020-01-01",
   "reference_timezone": "America/Bogota",
   "incremental_lookback_days": 15,
@@ -47,6 +47,18 @@
       "token_required": false,
       "docs_url": "https://suameca.banrep.gov.co/estadisticas-economicas/",
       "max_days_per_request": 36600
+    },
+    "bcb": {
+      "kind": "bcb_ptax",
+      "institution": "Banco Central do Brasil (BCB)",
+      "country": "BR",
+      "authority": "Banco Central do Brasil: calcula y publica la PTAX",
+      "legal_basis": "Resolução BCB nº 45/2020 (metodología PTAX; reemplazó la Circular 3.506/2010)",
+      "base_url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata",
+      "token_env": null,
+      "token_required": false,
+      "docs_url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/documentacao",
+      "max_days_per_request": 366
     }
   },
   "series": {
@@ -148,6 +160,26 @@
       "max_daily_change_pct": 8,
       "max_fill_days": 6,
       "stale_after_days": 6
+    },
+    "usd_brl_ptax": {
+      "pair": "USD-BRL",
+      "label": "PTAX de venta (cierre)",
+      "quote_unit": "BRL por 1 USD",
+      "provider": "bcb",
+      "source_series_id": "CotacaoDolarPeriodo",
+      "source_options": {
+        "field": "cotacaoVenda"
+      },
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "plausible_range": [
+        1,
+        50
+      ],
+      "max_daily_change_pct": 8,
+      "max_fill_days": 5,
+      "stale_after_days": 5
     }
   },
   "derived": {
@@ -198,6 +230,57 @@
       "plausible_range": [
         0.05,
         500
+      ],
+      "max_daily_change_pct": 10,
+      "stale_after_days": 6
+    },
+    "brl_mxn_cross": {
+      "pair": "BRL-MXN",
+      "label": "Tasa cruzada BRL-MXN vía USD (FIX ÷ PTAX, mismo día de mercado)",
+      "quote_unit": "MXN por 1 BRL",
+      "method": "cross_via_usd",
+      "numerator": "usd_mxn_fix",
+      "denominator": "usd_brl_ptax",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "plausible_range": [
+        0.5,
+        50
+      ],
+      "max_daily_change_pct": 10,
+      "stale_after_days": 6
+    },
+    "brl_cop_cross": {
+      "pair": "BRL-COP",
+      "label": "Tasa cruzada BRL-COP vía USD (TRM ÷ PTAX, mismo día de mercado)",
+      "quote_unit": "COP por 1 BRL",
+      "method": "cross_via_usd",
+      "numerator": "usd_cop_trm_mkt",
+      "denominator": "usd_brl_ptax",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "plausible_range": [
+        50,
+        5000
+      ],
+      "max_daily_change_pct": 10,
+      "stale_after_days": 6
+    },
+    "brl_ars_cross": {
+      "pair": "BRL-ARS",
+      "label": "Tasa cruzada BRL-ARS vía USD (A 3500 ÷ PTAX, mismo día de mercado)",
+      "quote_unit": "ARS por 1 BRL",
+      "method": "cross_via_usd",
+      "numerator": "usd_ars_a3500",
+      "denominator": "usd_brl_ptax",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "plausible_range": [
+        1,
+        20000
       ],
       "max_daily_change_pct": 10,
       "stale_after_days": 6

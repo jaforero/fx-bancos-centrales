@@ -1,0 +1,31 @@
+{
+  "@odata.context": "https://was-p.bcnet.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata$metadata#_CotacaoDolarPeriodo",
+  "_nota": "Estructura real; valores FICTICIOS para pruebas de punta a punta.",
+  "value": [
+    {
+      "cotacaoCompra": 5.3004,
+      "cotacaoVenda": 5.301,
+      "dataHoraCotacao": "2026-09-28 13:08:00.000"
+    },
+    {
+      "cotacaoCompra": 5.2944,
+      "cotacaoVenda": 5.295,
+      "dataHoraCotacao": "2026-09-29 13:08:00.000"
+    },
+    {
+      "cotacaoCompra": 5.2874,
+      "cotacaoVenda": 5.288,
+      "dataHoraCotacao": "2026-09-30 13:08:00.000"
+    },
+    {
+      "cotacaoCompra": 5.2794,
+      "cotacaoVenda": 5.28,
+      "dataHoraCotacao": "2026-10-01 13:08:00.000"
+    },
+    {
+      "cotacaoCompra": 5.2744,
+      "cotacaoVenda": 5.275,
+      "dataHoraCotacao": "2026-10-02 13:08:00.000"
+    }
+  ]
+}

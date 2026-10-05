@@ -8,6 +8,7 @@ import pytest
 from fxpipe import pipeline, transform
 from fxpipe.providers import ContractError
 from fxpipe.providers.banxico import parse_payload
+from fxpipe.providers.bcb_ptax import parse_payload as bcb_parse
 from fxpipe.providers.banrep_sdmx import market_dates_from_daily, parse_generic_xml
 from fxpipe.providers.bcra_cambiarias import parse_payload as bcra_parse
 from fxpipe.providers.socrata_trm import expand_records, market_date_records
@@ -21,8 +22,13 @@ def load(name):
     return json.loads((FIX / name).read_text(encoding="utf-8"))
 
 
-def fake_http(banxico=None, trm=None, bcra=None, banrep=None, fail=None):
+def fake_http(banxico=None, trm=None, bcra=None, banrep=None, bcb=None, fail=None):
     def get(url, headers):
+        if "olinda.bcb.gov.br" in url:
+            if fail == "bcb":
+                from fxpipe.providers import ProviderError
+                raise ProviderError("simulado: HTTP 503 BCB")
+            return bcb if bcb is not None else load("bcb_ptax_ok.json")
         if "banrep" in url:
             if fail in ("banrep", "colombia"):
                 from fxpipe.providers import ProviderError
@@ -50,6 +56,8 @@ def env(tmp_path, monkeypatch):
     monkeypatch.setenv("BANXICO_TOKEN", "token-de-prueba")
     from fxpipe.providers import bcra_cambiarias
     monkeypatch.setattr(bcra_cambiarias, "today_buenos_aires", lambda: date(2026, 12, 31))
+    from fxpipe.providers import bcb_ptax
+    monkeypatch.setattr(bcb_ptax, "today_brasilia", lambda: date(2026, 12, 31))
     cfg = pipeline.load_config(ROOT / "config" / "sources.json")
     return cfg, tmp_path
 
@@ -175,6 +183,49 @@ def test_colombia_fully_down_degrades(env):
     cfg, data = env
     r = pipeline.run(cfg, data, AS_OF, http_get=fake_http(fail="colombia"))
     assert r["manifest"]["series_status"]["usd_cop_trm"] == "error:provider"
+
+
+def test_bcb_parse_real_response():
+    recs = bcb_parse(load("bcb_ptax_real_2024.json"))
+    assert len(recs) == 9 and recs["2024-01-02"]["cotacaoVenda"] == 4.8916
+    assert recs["2024-01-11"]["cotacaoVenda"] == 4.8794  # publicada tarde (17:03): misma fecha
+    with pytest.raises(ContractError):
+        bcb_parse({"value": [{"cotacaoCompra": 5.0, "dataHoraCotacao": "2024-01-02 13:00:00"}]})
+    with pytest.raises(ContractError):  # venta < compra: campos invertidos
+        bcb_parse({"value": [{"cotacaoCompra": 5.1, "cotacaoVenda": 5.0, "dataHoraCotacao": "2024-01-02 13:00:00"}]})
+    dup = {"value": [{"cotacaoCompra": 5.0, "cotacaoVenda": 5.01, "dataHoraCotacao": "2024-01-02 13:00:00.0"},
+                     {"cotacaoCompra": 5.1, "cotacaoVenda": 5.11, "dataHoraCotacao": "2024-01-02 16:00:00.0"}]}
+    assert bcb_parse(dup)["2024-01-02"]["cotacaoVenda"] == 5.11  # el registro más reciente
+
+
+def test_bcb_url_and_clamp(monkeypatch):
+    from fxpipe.providers import bcb_ptax
+    monkeypatch.setattr(bcb_ptax, "today_brasilia", lambda: date(2026, 10, 2))
+    seen = []
+    prov = bcb_ptax.BcbPtaxProvider("bcb", {"base_url": "https://olinda.bcb.gov.br/x", "max_days_per_request": 366},
+                                    http_get=lambda u, h: seen.append(u) or load("bcb_ptax_ok.json"))
+    out = prov.fetch([pipeline.FetchRequest("usd_brl_ptax", "CotacaoDolarPeriodo", (("field", "cotacaoVenda"),))],
+                     date(2026, 9, 1), date(2026, 10, 9))
+    assert "@dataInicial=%2709-01-2026%27" in seen[0] and "@dataFinalCotacao=%2710-02-2026%27" in seen[0]
+    assert out["usd_brl_ptax"]["2026-10-02"] == 5.275
+
+
+def test_brazil_end_to_end_crosses(env):
+    cfg, data = env
+    r = pipeline.run(cfg, data, AS_OF, http_get=fake_http())
+    assert r["overall_status"] == "ok"
+    L = json.loads((data / "latest.json").read_text())["series"]
+    assert L["usd_brl_ptax"]["value"] == 5.275 and L["usd_brl_ptax"]["source"]["institution"].startswith("Banco Central do Brasil")
+    assert L["brl_mxn_cross"]["value"] == round(18.20 / 5.275, 4) and L["brl_mxn_cross"]["pair"] == "BRL-MXN"
+    assert L["brl_cop_cross"]["value"] == round(3273.49 / 5.275, 4)
+    assert L["brl_ars_cross"]["value"] == round(1523.0868 / 5.275, 4)
+
+
+def test_brazil_failure_isolated(env):
+    cfg, data = env
+    st = pipeline.run(cfg, data, AS_OF, http_get=fake_http(fail="bcb"))["manifest"]["series_status"]
+    assert st["usd_brl_ptax"] == st["brl_mxn_cross"] == st["brl_cop_cross"] == st["brl_ars_cross"] == "error:provider"
+    assert st["usd_mxn_fix"] == st["usd_cop_trm"] == st["usd_ars_a3500"] == st["mxn_cop_cross"] == "ok"
 
 
 # ---------- Transformaciones ----------

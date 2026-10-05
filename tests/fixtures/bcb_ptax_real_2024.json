@@ -1,0 +1,51 @@
+{
+  "@odata.context": "https://was-p.bcnet.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata$metadata#_CotacaoDolarPeriodo",
+  "_nota": "Registros reales de la API PTAX (2-12 ene 2024) tal como se publicaron.",
+  "value": [
+    {
+      "cotacaoCompra": 4.891,
+      "cotacaoVenda": 4.8916,
+      "dataHoraCotacao": "2024-01-02 13:05:50.319"
+    },
+    {
+      "cotacaoCompra": 4.9206,
+      "cotacaoVenda": 4.9212,
+      "dataHoraCotacao": "2024-01-03 13:14:41.153"
+    },
+    {
+      "cotacaoCompra": 4.9182,
+      "cotacaoVenda": 4.9188,
+      "dataHoraCotacao": "2024-01-04 13:05:35.048"
+    },
+    {
+      "cotacaoCompra": 4.8893,
+      "cotacaoVenda": 4.8899,
+      "dataHoraCotacao": "2024-01-05 13:10:31.843"
+    },
+    {
+      "cotacaoCompra": 4.8844,
+      "cotacaoVenda": 4.885,
+      "dataHoraCotacao": "2024-01-08 13:11:30.76"
+    },
+    {
+      "cotacaoCompra": 4.8931,
+      "cotacaoVenda": 4.8937,
+      "dataHoraCotacao": "2024-01-09 13:09:30.847"
+    },
+    {
+      "cotacaoCompra": 4.8895,
+      "cotacaoVenda": 4.8901,
+      "dataHoraCotacao": "2024-01-10 13:09:34.773"
+    },
+    {
+      "cotacaoCompra": 4.8788,
+      "cotacaoVenda": 4.8794,
+      "dataHoraCotacao": "2024-01-11 17:03:40.62"
+    },
+    {
+      "cotacaoCompra": 4.8537,
+      "cotacaoVenda": 4.8543,
+      "dataHoraCotacao": "2024-01-12 13:26:56.442"
+    }
+  ]
+}

@@ -41,11 +41,21 @@ rangos plausibles y umbrales. Correr `pytest` y `python -m fxpipe healthcheck`.
   dan HTTP 400 (se recorta al día de Buenos Aires); rango plausible amplio
   por inflación y devaluaciones (A 3500 ≈ 60 en 2020, ≈ 1.520 en 2026).
 
+## Ejemplo resuelto: Brasil (config 1.4.0)
+
+- Fuente: API PTAX (Olinda, OData) del Banco Central do Brasil, sin token, licencia ODbL.
+- Tasa: PTAX de venta de cierre (`cotacaoVenda`), promedio de cuatro consultas
+  diarias a dealers según la Resolução BCB nº 45/2020.
+- `date_basis: determinacion`: refleja el mercado del mismo día, como FIX y A 3500.
+- Trampas: fechas en formato `MM-DD-AAAA` entre comillas simples (`%27`); la hora
+  de publicación varía (un registro de ene-2024 salió a las 17:03); el sitio
+  bloquea robots, así que la validación en vivo se hace desde GitHub Actions.
+- Cruzadas: BRL contra MXN, COP y ARS completan la malla de las cuatro monedas.
+
 ## Candidatos (NO verificados: confirmar contra la documentación oficial antes de construir)
 
 | País | Institución | Pista de API |
 |---|---|---|
-| Brasil | Banco Central do Brasil | SGS / PTAX (Olinda), abierta |
 | Perú | BCRP | API de series estadísticas, abierta |
 | Chile | Banco Central de Chile | BDE / SieteRestWS, requiere usuario |
 | Zona euro | BCE | Data Portal (SDMX), abierta |
