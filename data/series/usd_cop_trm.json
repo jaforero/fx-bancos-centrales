@@ -8,11 +8,21 @@
   "primary": true,
   "decimals": 2,
   "source": {
-    "provider": "sfc_trm",
-    "institution": "Superintendencia Financiera de Colombia (TRM; también la divulga el Banco de la República)",
+    "provider": "banrep",
+    "institution": "Banco de la República (BanRep)",
     "country": "CO",
-    "series_id": "32sa-8pi3",
-    "docs_url": "https://dev.socrata.com/foundry/www.datos.gov.co/32sa-8pi3"
+    "series_id": "DF_TRM_DAILY_HIST",
+    "docs_url": "https://suameca.banrep.gov.co/estadisticas-economicas/",
+    "authority": "Banco de la República: autoridad cambiaria que define la TRM y su metodología",
+    "certified_by": "Superintendencia Financiera de Colombia (calcula y certifica la TRM a diario)",
+    "legal_basis": "Res. Externa 1 de 2018 JDBR, art. 40; Circular Reglamentaria DODM-146",
+    "verified_against": {
+      "provider": "sfc_trm",
+      "institution": "Superintendencia Financiera de Colombia (portal de datos abiertos datos.gov.co)",
+      "series_id": "32sa-8pi3",
+      "docs_url": "https://dev.socrata.com/foundry/www.datos.gov.co/32sa-8pi3"
+    },
+    "fallback_used": false
   },
   "method": "official",
   "first_date": "2020-01-01",

@@ -63,11 +63,21 @@
       "primary": true,
       "decimals": 2,
       "source": {
-        "provider": "sfc_trm",
-        "institution": "Superintendencia Financiera de Colombia (TRM; también la divulga el Banco de la República)",
+        "provider": "banrep",
+        "institution": "Banco de la República (BanRep)",
         "country": "CO",
-        "series_id": "32sa-8pi3",
-        "docs_url": "https://dev.socrata.com/foundry/www.datos.gov.co/32sa-8pi3"
+        "series_id": "DF_TRM_DAILY_HIST",
+        "docs_url": "https://suameca.banrep.gov.co/estadisticas-economicas/",
+        "authority": "Banco de la República: autoridad cambiaria que define la TRM y su metodología",
+        "certified_by": "Superintendencia Financiera de Colombia (calcula y certifica la TRM a diario)",
+        "legal_basis": "Res. Externa 1 de 2018 JDBR, art. 40; Circular Reglamentaria DODM-146",
+        "verified_against": {
+          "provider": "sfc_trm",
+          "institution": "Superintendencia Financiera de Colombia (portal de datos abiertos datos.gov.co)",
+          "series_id": "32sa-8pi3",
+          "docs_url": "https://dev.socrata.com/foundry/www.datos.gov.co/32sa-8pi3"
+        },
+        "fallback_used": false
       },
       "method": "official",
       "value": 3273.49,
@@ -87,11 +97,21 @@
       "primary": false,
       "decimals": 2,
       "source": {
-        "provider": "sfc_trm",
-        "institution": "Superintendencia Financiera de Colombia (TRM; también la divulga el Banco de la República)",
+        "provider": "banrep",
+        "institution": "Banco de la República (BanRep)",
         "country": "CO",
-        "series_id": "32sa-8pi3",
-        "docs_url": "https://dev.socrata.com/foundry/www.datos.gov.co/32sa-8pi3"
+        "series_id": "DF_TRM_DAILY_HIST",
+        "docs_url": "https://suameca.banrep.gov.co/estadisticas-economicas/",
+        "authority": "Banco de la República: autoridad cambiaria que define la TRM y su metodología",
+        "certified_by": "Superintendencia Financiera de Colombia (calcula y certifica la TRM a diario)",
+        "legal_basis": "Res. Externa 1 de 2018 JDBR, art. 40; Circular Reglamentaria DODM-146",
+        "verified_against": {
+          "provider": "sfc_trm",
+          "institution": "Superintendencia Financiera de Colombia (portal de datos abiertos datos.gov.co)",
+          "series_id": "32sa-8pi3",
+          "docs_url": "https://dev.socrata.com/foundry/www.datos.gov.co/32sa-8pi3"
+        },
+        "fallback_used": false
       },
       "method": "official",
       "value": 3273.49,
@@ -125,6 +145,32 @@
       "prev_date": "2026-10-01",
       "change_abs": -0.1386,
       "change_pct": -0.0091,
+      "status": "ok"
+    },
+    "usd_brl_ptax": {
+      "pair": "USD-BRL",
+      "label": "PTAX de venta (cierre)",
+      "quote_unit": "BRL por 1 USD",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "source": {
+        "provider": "bcb",
+        "institution": "Banco Central do Brasil (BCB)",
+        "country": "BR",
+        "series_id": "CotacaoDolarPeriodo",
+        "docs_url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/documentacao",
+        "authority": "Banco Central do Brasil: calcula y publica la PTAX",
+        "legal_basis": "Resolução BCB nº 45/2020 (metodología PTAX; reemplazó la Circular 3.506/2010)"
+      },
+      "method": "official",
+      "value": 5.2238,
+      "date": "2026-10-02",
+      "days_since_official": 3,
+      "prev_value": 5.2079,
+      "prev_date": "2026-10-01",
+      "change_abs": 0.0159,
+      "change_pct": 0.3053,
       "status": "ok"
     },
     "mxn_cop_cross": {
@@ -188,6 +234,69 @@
       "prev_date": "2026-10-01",
       "change_abs": -0.0223,
       "change_pct": -1.0269,
+      "status": "ok"
+    },
+    "brl_mxn_cross": {
+      "pair": "BRL-MXN",
+      "label": "Tasa cruzada BRL-MXN vía USD (FIX ÷ PTAX, mismo día de mercado)",
+      "quote_unit": "MXN por 1 BRL",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "method": "cross_via_usd: usd_mxn_fix / usd_brl_ptax",
+      "inputs": [
+        "usd_mxn_fix",
+        "usd_brl_ptax"
+      ],
+      "value": 3.4822,
+      "date": "2026-10-02",
+      "days_since_official": 3,
+      "prev_value": 3.5271,
+      "prev_date": "2026-10-01",
+      "change_abs": -0.0449,
+      "change_pct": -1.273,
+      "status": "ok"
+    },
+    "brl_cop_cross": {
+      "pair": "BRL-COP",
+      "label": "Tasa cruzada BRL-COP vía USD (TRM ÷ PTAX, mismo día de mercado)",
+      "quote_unit": "COP por 1 BRL",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "method": "cross_via_usd: usd_cop_trm_mkt / usd_brl_ptax",
+      "inputs": [
+        "usd_cop_trm_mkt",
+        "usd_brl_ptax"
+      ],
+      "value": 626.6492,
+      "date": "2026-10-02",
+      "days_since_official": 3,
+      "prev_value": 635.137,
+      "prev_date": "2026-10-01",
+      "change_abs": -8.4878,
+      "change_pct": -1.3364,
+      "status": "ok"
+    },
+    "brl_ars_cross": {
+      "pair": "BRL-ARS",
+      "label": "Tasa cruzada BRL-ARS vía USD (A 3500 ÷ PTAX, mismo día de mercado)",
+      "quote_unit": "ARS por 1 BRL",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "method": "cross_via_usd: usd_ars_a3500 / usd_brl_ptax",
+      "inputs": [
+        "usd_ars_a3500",
+        "usd_brl_ptax"
+      ],
+      "value": 291.5668,
+      "date": "2026-10-02",
+      "days_since_official": 3,
+      "prev_value": 292.4836,
+      "prev_date": "2026-10-01",
+      "change_abs": -0.9168,
+      "change_pct": -0.3135,
       "status": "ok"
     }
   }

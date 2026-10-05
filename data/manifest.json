@@ -1,15 +1,19 @@
 {
   "schema_version": "1.0.0",
-  "config_version": "1.2.0",
-  "generated_at": "2026-10-05T06:24:24+00:00",
+  "config_version": "1.4.0",
+  "generated_at": "2026-10-05T11:41:24+00:00",
   "as_of": "2026-10-05",
   "overall_status": "ok",
-  "data_hash": "57c127d42a7969a2da875ac6f33cc4374363f0303247c8fd710b4ac94687b6ff",
+  "data_hash": "9cb71a66ca07c1f1dd71babbdf6d8306188b3d370c085d2149a3b7ffc979dcfc",
   "series_status": {
     "ars_cop_cross": "ok",
+    "brl_ars_cross": "ok",
+    "brl_cop_cross": "ok",
+    "brl_mxn_cross": "ok",
     "mxn_ars_cross": "ok",
     "mxn_cop_cross": "ok",
     "usd_ars_a3500": "ok",
+    "usd_brl_ptax": "ok",
     "usd_cop_trm": "ok",
     "usd_cop_trm_mkt": "ok",
     "usd_mxn_fix": "ok",
@@ -20,6 +24,11 @@
     "ars_cop_cross": [
       "salto 2023-08-11->2023-08-14: 13.8306 -> 11.515 (-16.74%)",
       "salto 2023-12-12->2023-12-13: 10.8892 -> 4.9994 (-54.09%)"
+    ],
+    "brl_ars_cross": [
+      "salto 2023-08-11->2023-08-14: 58.7292 -> 70.7292 (+20.43%)",
+      "salto 2023-12-12->2023-12-13: 74.0763 -> 161.3503 (+117.82%)",
+      "salto 2025-04-11->2025-04-14: 183.5938 -> 202.382 (+10.23%)"
     ],
     "mxn_ars_cross": [
       "salto 2023-08-11->2023-08-14: 16.895 -> 20.5057 (+21.37%)",
@@ -43,9 +52,13 @@
     "latest.json",
     "rates_daily.json",
     "series/ars_cop_cross.json",
+    "series/brl_ars_cross.json",
+    "series/brl_cop_cross.json",
+    "series/brl_mxn_cross.json",
     "series/mxn_ars_cross.json",
     "series/mxn_cop_cross.json",
     "series/usd_ars_a3500.json",
+    "series/usd_brl_ptax.json",
     "series/usd_cop_trm.json",
     "series/usd_cop_trm_mkt.json",
     "series/usd_mxn_fix.json",
