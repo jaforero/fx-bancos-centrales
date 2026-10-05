@@ -8,6 +8,7 @@ import pytest
 from fxpipe import pipeline, transform
 from fxpipe.providers import ContractError
 from fxpipe.providers.banxico import parse_payload
+from fxpipe.providers.banrep_sdmx import market_dates_from_daily, parse_generic_xml
 from fxpipe.providers.bcra_cambiarias import parse_payload as bcra_parse
 from fxpipe.providers.socrata_trm import expand_records, market_date_records
 
@@ -20,8 +21,16 @@ def load(name):
     return json.loads((FIX / name).read_text(encoding="utf-8"))
 
 
-def fake_http(banxico=None, trm=None, bcra=None, fail=None):
+def fake_http(banxico=None, trm=None, bcra=None, banrep=None, fail=None):
     def get(url, headers):
+        if "banrep" in url:
+            if fail in ("banrep", "colombia"):
+                from fxpipe.providers import ProviderError
+                raise ProviderError("simulado: HTTP 503 BanRep")
+            return banrep if banrep is not None else (FIX / "banrep_trm_ok.xml").read_text()
+        if "datos.gov.co" in url and fail == "colombia":
+            from fxpipe.providers import ProviderError
+            raise ProviderError("simulado: HTTP 503 datos.gov.co")
         if "bcra" in url:
             if fail == "bcra":
                 from fxpipe.providers import ProviderError
@@ -112,6 +121,60 @@ def test_bcra_paginates_and_clamps_future(monkeypatch):
     out = prov.fetch([pipeline.FetchRequest("usd_ars_a3500", "REF")], date(2026, 9, 1), date(2026, 10, 11))
     assert len(out["usd_ars_a3500"]) == 5 and len(calls) == 2
     assert all("fechahasta=2026-10-02" in u for u in calls)  # no pide fechas futuras
+
+
+def test_banrep_parse_and_contract():
+    xml = (FIX / "banrep_trm_ok.xml").read_text()
+    d = parse_generic_xml(xml)
+    assert d["2026-10-04"] == 3273.49 and len(d) == 10
+    with pytest.raises(ContractError):
+        parse_generic_xml(xml.replace('Sender id="BANREP"', 'Sender id="OTRO"'))
+    with pytest.raises(ContractError):
+        parse_generic_xml(xml.replace('value="COP"', 'value="USD"'))
+    with pytest.raises(ContractError):
+        parse_generic_xml("<html>mantenimiento</html>")
+
+
+def test_banrep_market_dates_match_sfc_rule():
+    daily = parse_generic_xml((FIX / "banrep_trm_ok.xml").read_text())
+    via_banrep = market_dates_from_daily(daily)
+    via_sfc = market_date_records(load("trm_ok.json"), date(2026, 9, 1), date(2026, 10, 31))
+    assert via_banrep == via_sfc  # misma regla: inicio de vigencia - 1 día
+
+
+def test_colombia_attribution_banrep_with_sfc_verification(env):
+    cfg, data = env
+    r = pipeline.run(cfg, data, AS_OF, http_get=fake_http())
+    src = json.loads((data / "latest.json").read_text())["series"]["usd_cop_trm"]["source"]
+    assert src["institution"].startswith("Banco de la República")
+    assert "Superintendencia Financiera" in src["certified_by"]
+    assert src["verified_against"]["provider"] == "sfc_trm" and src["fallback_used"] is False
+    assert not r["manifest"]["warnings"].get("usd_cop_trm")  # BanRep y SFC coinciden
+
+
+def test_banrep_down_uses_sfc_fallback_transparently(env):
+    cfg, data = env
+    r = pipeline.run(cfg, data, AS_OF, http_get=fake_http(fail="banrep"))
+    st = r["manifest"]["series_status"]
+    assert st["usd_cop_trm"] == st["usd_cop_trm_mkt"] == st["mxn_cop_cross"] == "ok"
+    latest = json.loads((data / "latest.json").read_text())["series"]
+    assert latest["usd_cop_trm"]["source"]["fallback_used"] is True
+    assert any("respaldo" in w for w in r["manifest"]["warnings"]["usd_cop_trm"])
+    assert latest["mxn_cop_cross"]["value"] == round(3273.49 / 18.20, 4)
+
+
+def test_banrep_and_sfc_discrepancy_warned(env):
+    cfg, data = env
+    xml = (FIX / "banrep_trm_ok.xml").read_text().replace('"20261002" /><generic:ObsValue value="3307.73"',
+                                                          '"20261002" /><generic:ObsValue value="3307.99"')
+    r = pipeline.run(cfg, data, AS_OF, http_get=fake_http(banrep=xml))
+    assert any("discrepancia" in w for w in r["manifest"]["warnings"]["usd_cop_trm"])
+
+
+def test_colombia_fully_down_degrades(env):
+    cfg, data = env
+    r = pipeline.run(cfg, data, AS_OF, http_get=fake_http(fail="colombia"))
+    assert r["manifest"]["series_status"]["usd_cop_trm"] == "error:provider"
 
 
 # ---------- Transformaciones ----------

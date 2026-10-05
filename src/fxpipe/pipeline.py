@@ -43,10 +43,41 @@ def today_in(tz_name: str) -> date:
         return (datetime.now(timezone.utc) - timedelta(hours=5)).date()
 
 
-def _source_meta(cfg: dict, s: dict) -> dict:
+def _source_meta(cfg: dict, s: dict, used_fallback: bool = False) -> dict:
     p = cfg["providers"][s["provider"]]
-    return {"provider": s["provider"], "institution": p["institution"], "country": p["country"],
+    meta = {"provider": s["provider"], "institution": p["institution"], "country": p["country"],
             "series_id": s["source_series_id"], "docs_url": p["docs_url"]}
+    for k in ("authority", "certified_by", "legal_basis"):
+        if p.get(k):
+            meta[k] = p[k]
+    fb = s.get("fallback")
+    if fb:
+        fp = cfg["providers"][fb["provider"]]
+        meta["verified_against"] = {"provider": fb["provider"], "institution": fp["institution"],
+                                    "series_id": fb["source_series_id"], "docs_url": fp["docs_url"]}
+        meta["fallback_used"] = used_fallback
+    return meta
+
+
+def _fetch_fallbacks(cfg, sids_starts, fetch_end, http_get):
+    """Descarga la fuente de verificación/respaldo de cada serie que la declare."""
+    by_provider: dict[str, list[tuple[str, dict, date]]] = defaultdict(list)
+    for sid, start in sids_starts.items():
+        fb = cfg["series"][sid].get("fallback")
+        if fb:
+            by_provider[fb["provider"]].append((sid, fb, start))
+    got: dict[str, dict[str, float]] = {}
+    errs: dict[str, str] = {}
+    for pname, items in by_provider.items():
+        try:
+            prov = build_provider(pname, cfg["providers"][pname], http_get=http_get)
+            reqs = [FetchRequest(sid, fb["source_series_id"], tuple(sorted(fb.get("source_options", {}).items())))
+                    for sid, fb, _ in items]
+            got.update(prov.fetch(reqs, min(s for _, _, s in items), fetch_end))
+        except (ProviderError, ConfigError) as exc:
+            for sid, _, _ in items:
+                errs[sid] = str(exc)
+    return got, errs
 
 
 def run(cfg: dict, data_dir: Path, as_of: date | None = None, *,
@@ -62,6 +93,8 @@ def run(cfg: dict, data_dir: Path, as_of: date | None = None, *,
     official: dict[str, dict[str, float]] = {}
 
     # 1) Cargar histórico y decidir ventana por proveedor
+    series_start: dict[str, date] = {}
+    used_fallback: dict[str, bool] = {}
     by_provider: dict[str, list[str]] = defaultdict(list)
     for sid, s in cfg["series"].items():
         official[sid] = store.load_official(data_dir, sid)
@@ -78,6 +111,8 @@ def run(cfg: dict, data_dir: Path, as_of: date | None = None, *,
             else:
                 starts.append(default_start)
         start = min(starts)
+        for sid in sids:
+            series_start[sid] = start
         try:
             provider = build_provider(pname, cfg["providers"][pname], http_get=http_get)
             reqs = [FetchRequest(sid, cfg["series"][sid]["source_series_id"],
@@ -110,13 +145,43 @@ def run(cfg: dict, data_dir: Path, as_of: date | None = None, *,
             official[sid].update(new)
             status.setdefault(sid, "ok")
 
+    # 2b) Fuente de verificación y respaldo (p. ej. TRM: BanRep principal, SFC respaldo)
+    fb_data, fb_errs = _fetch_fallbacks(cfg, series_start, fetch_end, http_get)
+    for sid, s in cfg["series"].items():
+        fb = s.get("fallback")
+        if not fb:
+            continue
+        alt = fb_data.get(sid)
+        primary_failed = status.get(sid, "ok") != "ok"
+        if primary_failed and alt:
+            if transform.out_of_range(alt, *s["plausible_range"]):
+                continue
+            official[sid].update(alt)
+            used_fallback[sid] = True
+            warnings[sid].append(f"fuente principal no disponible ({errors.pop(sid, status[sid])}); "
+                                 f"se usó el respaldo {fb['provider']}")
+            status[sid] = "ok"
+        elif not primary_failed:
+            if sid in fb_errs:
+                warnings[sid].append(f"verificación no disponible ({fb['provider']}): {fb_errs[sid][:120]}")
+            elif alt:
+                start = series_start.get(sid)
+                prim = {k: v for k, v in official[sid].items() if start is None or date.fromisoformat(k) >= start}
+                diff = [k for k in sorted(set(prim) & set(alt)) if abs(prim[k] - alt[k]) > 1e-9]
+                if diff:
+                    warnings[sid].append(f"discrepancia con {fb['provider']} en {len(diff)} fechas: "
+                                         + ", ".join(f"{k} {prim[k]} vs {alt[k]}" for k in diff[:3]))
+                lp, la = max(prim) if prim else None, max(alt)
+                if lp and la > lp:
+                    warnings[sid].append(f"{fb['provider']} tiene datos hasta {la}; la fuente principal hasta {lp}")
+
     # 3) Series diarias con relleno controlado
     daily: dict[str, transform.Daily] = {}
     meta: dict[str, dict] = {}
     for sid, s in cfg["series"].items():
         daily[sid] = transform.fill_forward(official[sid], as_of, int(s["max_fill_days"]))
         meta[sid] = {k: s[k] for k in ("pair", "label", "quote_unit", "date_basis", "primary", "decimals")}
-        meta[sid]["source"] = _source_meta(cfg, s)
+        meta[sid]["source"] = _source_meta(cfg, s, used_fallback.get(sid, False))
         meta[sid]["method"] = "official"
 
     # 4) Derivadas (tasas cruzadas)

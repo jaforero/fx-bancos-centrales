@@ -80,6 +80,22 @@ def cmd_healthcheck(args) -> int:
         except (ProviderError, ConfigError) as exc:
             ok = False
             lines.append(f"- ❌ `{pname}`: error operativo — {exc}")
+    # Fuentes de verificación/respaldo (p. ej. SFC para la TRM del BanRep)
+    fb_groups: dict[str, list[tuple[str, dict]]] = {}
+    for sid, s in cfg["series"].items():
+        if s.get("fallback"):
+            fb_groups.setdefault(s["fallback"]["provider"], []).append((sid, s["fallback"]))
+    for pname, items in fb_groups.items():
+        try:
+            prov = build_provider(pname, cfg["providers"][pname])
+            got = prov.fetch([FetchRequest(sid, fb["source_series_id"],
+                                           tuple(sorted(fb.get("source_options", {}).items())))
+                              for sid, fb in items], start, end)
+            for sid, _ in items:
+                n = len(got.get(sid, {}))
+                lines.append(f"- {'✅' if n else '⚠️'} respaldo `{pname}` / `{sid}`: {n} registros")
+        except (ProviderError, ConfigError) as exc:
+            lines.append(f"- ⚠️ respaldo `{pname}` no disponible — {exc}")  # no bloquea: es respaldo
     m = store.load_json(args.data_dir / "manifest.json")
     if m:
         lines += ["", f"Último manifest: as_of={m['as_of']} estado={m['overall_status']}"]

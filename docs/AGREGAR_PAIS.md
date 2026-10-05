@@ -1,5 +1,14 @@
 # Agregar un país
 
+## Regla 0: la fuente es el banco central
+
+Busca primero el servicio oficial del banco central (o de la autoridad que la
+ley designa). Portales de datos abiertos, agregadores o APIs comerciales solo
+entran como verificación o respaldo declarado (`fallback` en la config), nunca
+como fuente principal si existe la oficial. Documenta en el proveedor
+`authority`, `certified_by` y `legal_basis` cuando la cadena institucional no
+sea obvia (como la TRM: BanRep la define, la SFC la certifica).
+
 ## Caso A: el banco central ya tiene conector (`kind` existente)
 
 Solo editar `config/sources.json`: añadir la serie con su `source_series_id`,

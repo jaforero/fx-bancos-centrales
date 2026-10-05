@@ -3,6 +3,7 @@
 2) agrégalo a REGISTRY,
 3) declara el proveedor y sus series en config/sources.json.
 """
+from .banrep_sdmx import BanrepSdmxProvider
 from .banxico import BanxicoProvider
 from .bcra_cambiarias import BcraCambiariasProvider
 from .base import ConfigError, ContractError, FetchRequest, Provider, ProviderError
@@ -12,6 +13,7 @@ REGISTRY: dict[str, type[Provider]] = {
     BanxicoProvider.kind: BanxicoProvider,
     SocrataTrmProvider.kind: SocrataTrmProvider,
     BcraCambiariasProvider.kind: BcraCambiariasProvider,
+    BanrepSdmxProvider.kind: BanrepSdmxProvider,
 }
 
 

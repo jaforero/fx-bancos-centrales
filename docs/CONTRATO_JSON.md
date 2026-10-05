@@ -49,6 +49,11 @@ publicarla en paralelo bajo otra ruta durante una transición.
 }
 ```
 
+Campos de `source` (series oficiales): `provider`, `institution`, `country`,
+`series_id`, `docs_url` y, cuando aplica, `authority`, `certified_by`,
+`legal_basis`, `verified_against` (fuente de verificación) y `fallback_used`
+(`true` si el dato vino del respaldo en la última corrida).
+
 Regla de KPI para tasas cruzadas: `value` es el último día en que **ambos**
 insumos son oficiales. El valor con relleno existe en `rates_daily.json`
 marcado en `filled`.

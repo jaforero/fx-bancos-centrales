@@ -1,5 +1,16 @@
 # Cambios
 
+## config 1.3.0 — 2026-10-05
+- Colombia: la TRM se descarga del **Banco de la República** (servicio SDMX
+  `DF_TRM_DAILY_HIST`, conector `banrep_sdmx`). Atribución completa en
+  `source`: autoridad (BanRep), certificación (Superintendencia Financiera) y
+  base legal (Res. Ext. 1/2018 JDBR art. 40; Circular DODM-146).
+- datos.gov.co (SFC) pasa a **verificación cruzada** en cada corrida y
+  **respaldo declarado** (`source.fallback_used`) si el BanRep no responde.
+- Verificado: BanRep y SFC publican valores idénticos (13/13 muestras 2023-2024).
+- El healthcheck también prueba las fuentes de respaldo.
+- Sin cambios incompatibles: `source` solo gana campos.
+
 ## config 1.2.0 — 2026-10-04
 - Argentina: nuevo conector `bcra_cambiarias` (API Estadísticas Cambiarias v1.0,
   sin token, paginada) y serie `usd_ars_a3500` (código `REF`, Com. A 3500).

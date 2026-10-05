@@ -54,6 +54,8 @@ def default_http_get(url: str, headers: dict, *, retries: int = 4,
         try:
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 raw = resp.read().decode("utf-8")
+            if "json" not in headers.get("Accept", "application/json"):
+                return raw  # p. ej. SDMX-ML del Banco de la República
             try:
                 return json.loads(raw)
             except json.JSONDecodeError as exc:

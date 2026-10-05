@@ -7,8 +7,8 @@ este repositorio para alimentar dashboards. Se actualiza solo con GitHub Actions
 |---|---|---|---|
 | `usd_mxn_fix` | USD-MXN | FIX, fecha de determinación (**principal**) | Banxico SIE `SF43718` |
 | `usd_mxn_liq` | USD-MXN | FIX "para pagos" (FIX de 2 días hábiles antes) | Banxico SIE `SF60653` |
-| `usd_cop_trm` | USD-COP | TRM vigente (**principal**) | SFC vía datos.gov.co `32sa-8pi3` |
-| `usd_cop_trm_mkt` | USD-COP | TRM indexada por día de mercado (insumo de la cruzada) | Mismo dataset |
+| `usd_cop_trm` | USD-COP | TRM vigente (**principal**) | Banco de la República, SDMX `DF_TRM_DAILY_HIST` · verificada contra SFC (datos.gov.co) |
+| `usd_cop_trm_mkt` | USD-COP | TRM indexada por día de mercado (insumo de la cruzada) | Misma fuente |
 | `usd_ars_a3500` | USD-ARS | Dólar de referencia mayorista Com. A 3500 (**principal**) | BCRA Estadísticas Cambiarias `REF` |
 | `mxn_cop_cross` | MXN-COP | Cruzada: TRM ÷ FIX del **mismo día de mercado** | Derivada |
 | `mxn_ars_cross` | MXN-ARS | Cruzada: A 3500 ÷ FIX (ARS por 1 MXN) | Derivada |
@@ -21,6 +21,23 @@ dólar. Se cruzan dos tasas formadas el **mismo día de mercado**: el FIX
 determinado el día D y la TRM calculada con el mercado del día D (la que entra en
 vigencia el día siguiente). El pipeline rechaza cruzar series con distinta
 base temporal.
+
+## Principio: fuentes oficiales de los bancos centrales
+
+Cada tasa se descarga de la institución que la define oficialmente:
+
+| País | Tasa | Autoridad | Cómo se obtiene |
+|---|---|---|---|
+| México | FIX | Banco de México (la determina y publica) | API SIE de Banxico |
+| Colombia | TRM | Banco de la República (define la TRM y su metodología; la Superintendencia Financiera la calcula y certifica a diario) | Servicio SDMX del BanRep, verificado en cada corrida contra la SFC en datos.gov.co |
+| Argentina | Com. A 3500 | Banco Central de la República Argentina | API Estadísticas Cambiarias del BCRA |
+
+Por qué importa: la fuente oficial define la metodología, el horario y las
+correcciones; un agregador puede redondear, retrasarse o mezclar tasas
+distintas bajo el mismo nombre. Cuando existe una segunda publicación oficial
+(como la de la SFC en datos.gov.co), el pipeline la usa para **verificar** cada
+dato y como **respaldo** declarado (`source.fallback_used: true`), nunca en
+silencio.
 
 ## Archivos que consume el dashboard
 
@@ -72,5 +89,6 @@ Ver [docs/AGREGAR_PAIS.md](docs/AGREGAR_PAIS.md).
 
 ## Atribución
 
-Datos: Banco de México (SIE), Superintendencia Financiera de Colombia
-(datos.gov.co) y Banco Central de la República Argentina (API Estadísticas Cambiarias). Las tasas cruzadas son cálculos propios, no tasas oficiales.
+Datos: Banco de México (SIE), Banco de la República de Colombia (SDMX; TRM
+calculada y certificada por la Superintendencia Financiera) y Banco Central de
+la República Argentina (API Estadísticas Cambiarias). Las tasas cruzadas son cálculos propios, no tasas oficiales.
