@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "as_of": "2026-10-08",
+  "as_of": "2026-10-09",
   "series": {
     "usd_mxn_fix": {
       "pair": "USD-MXN",
@@ -2673,7 +2673,7 @@
     {"date": "2026-10-06", "usd_mxn_fix": 17.967, "usd_mxn_liq": 18.1903, "usd_cop_trm": 3209.78, "usd_cop_trm_mkt": 3216.01, "usd_ars_a3500": 1520.3002, "usd_brl_ptax": 4.9698, "mxn_cop_cross": 178.9954, "mxn_ars_cross": 84.6163, "ars_cop_cross": 2.1154, "brl_mxn_cross": 3.6152, "brl_cop_cross": 647.1105, "brl_ars_cross": 305.9077},
     {"date": "2026-10-07", "usd_mxn_fix": 17.978, "usd_mxn_liq": 18.1343, "usd_cop_trm": 3216.01, "usd_cop_trm_mkt": 3238.88, "usd_ars_a3500": 1520.7136, "usd_brl_ptax": 4.9935, "mxn_cop_cross": 180.158, "mxn_ars_cross": 84.5875, "ars_cop_cross": 2.1298, "brl_mxn_cross": 3.6003, "brl_cop_cross": 648.6192, "brl_ars_cross": 304.5386},
     {"date": "2026-10-08", "usd_mxn_fix": 18.1128, "usd_mxn_liq": 17.967, "usd_cop_trm": 3238.88, "usd_cop_trm_mkt": 3218.75, "usd_ars_a3500": 1518.4363, "usd_brl_ptax": 5.0119, "mxn_cop_cross": 177.7058, "mxn_ars_cross": 83.8322, "ars_cop_cross": 2.1198, "brl_mxn_cross": 3.614, "brl_cop_cross": 642.2215, "brl_ars_cross": 302.9662},
-    {"date": "2026-10-09", "usd_mxn_fix": null, "usd_mxn_liq": 17.978, "usd_cop_trm": 3218.75, "usd_cop_trm_mkt": null, "usd_ars_a3500": null, "usd_brl_ptax": null, "mxn_cop_cross": null, "mxn_ars_cross": null, "ars_cop_cross": null, "brl_mxn_cross": null, "brl_cop_cross": null, "brl_ars_cross": null},
+    {"date": "2026-10-09", "usd_mxn_fix": 18.1128, "usd_mxn_liq": 17.978, "usd_cop_trm": 3218.75, "usd_cop_trm_mkt": 3218.75, "usd_ars_a3500": 1518.4363, "usd_brl_ptax": 5.0119, "mxn_cop_cross": 177.7058, "mxn_ars_cross": 83.8322, "ars_cop_cross": 2.1198, "brl_mxn_cross": 3.614, "brl_cop_cross": 642.2215, "brl_ars_cross": 302.9662, "filled": ["usd_mxn_fix", "usd_cop_trm_mkt", "usd_ars_a3500", "usd_brl_ptax", "mxn_cop_cross", "mxn_ars_cross", "ars_cop_cross", "brl_mxn_cross", "brl_cop_cross", "brl_ars_cross"]},
     {"date": "2026-10-10", "usd_mxn_fix": null, "usd_mxn_liq": 18.1128, "usd_cop_trm": null, "usd_cop_trm_mkt": null, "usd_ars_a3500": null, "usd_brl_ptax": null, "mxn_cop_cross": null, "mxn_ars_cross": null, "ars_cop_cross": null, "brl_mxn_cross": null, "brl_cop_cross": null, "brl_ars_cross": null},
     {"date": "2026-10-11", "usd_mxn_fix": null, "usd_mxn_liq": 18.1128, "usd_cop_trm": null, "usd_cop_trm_mkt": null, "usd_ars_a3500": null, "usd_brl_ptax": null, "mxn_cop_cross": null, "mxn_ars_cross": null, "ars_cop_cross": null, "brl_mxn_cross": null, "brl_cop_cross": null, "brl_ars_cross": null},
     {"date": "2026-10-12", "usd_mxn_fix": null, "usd_mxn_liq": 18.1128, "usd_cop_trm": null, "usd_cop_trm_mkt": null, "usd_ars_a3500": null, "usd_brl_ptax": null, "mxn_cop_cross": null, "mxn_ars_cross": null, "ars_cop_cross": null, "brl_mxn_cross": null, "brl_cop_cross": null, "brl_ars_cross": null}
