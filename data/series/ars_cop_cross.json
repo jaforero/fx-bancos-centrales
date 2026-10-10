@@ -13,7 +13,7 @@
     "usd_ars_a3500"
   ],
   "first_date": "2020-01-02",
-  "last_date": "2026-10-09",
+  "last_date": "2026-10-10",
   "last_official_date": "2026-10-09",
   "observations": [
     {"date": "2020-01-02", "value": 54.4485, "filled": false},
@@ -2488,6 +2488,7 @@
     {"date": "2026-10-06", "value": 2.1154, "filled": false},
     {"date": "2026-10-07", "value": 2.1298, "filled": false},
     {"date": "2026-10-08", "value": 2.1198, "filled": false},
-    {"date": "2026-10-09", "value": 2.1073, "filled": false}
+    {"date": "2026-10-09", "value": 2.1073, "filled": false},
+    {"date": "2026-10-10", "value": 2.1073, "filled": true}
   ]
 }
