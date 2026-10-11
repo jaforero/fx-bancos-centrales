@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0.0",
   "config_version": "1.4.0",
-  "generated_at": "2026-10-10T06:31:46+00:00",
-  "as_of": "2026-10-10",
+  "generated_at": "2026-10-11T06:37:30+00:00",
+  "as_of": "2026-10-11",
   "overall_status": "ok",
-  "data_hash": "bebb8dcd5e4042d72dc5011cbd9d45fb2d6803aed795683b7b6eeff49aa95e23",
+  "data_hash": "d590cc19b7535662202b85c24c3404cb4f003a03a1dc20f4bad532a71a60f9e9",
   "series_status": {
     "ars_cop_cross": "ok",
     "brl_ars_cross": "ok",
@@ -42,9 +42,11 @@
       "salto 2025-04-16->2025-04-21: 1172.8333 -> 1070.4167 (-8.73%)"
     ],
     "usd_cop_trm": [
+      "fuente principal no disponible (Fallo tras 4 intentos en https://totoro.banrep.gov.co/nsi-jax-ws/rest/data/ESTAT,DF_TRM_DAILY_HIST,1.0/all/ALL/?startPeriod=2026: HTTP Error 500: ); se usó el respaldo sfc_trm",
       "salto 2020-03-09->2020-03-10: 3584.58 -> 3803.6 (+6.11%)"
     ],
     "usd_cop_trm_mkt": [
+      "fuente principal no disponible (Fallo tras 4 intentos en https://totoro.banrep.gov.co/nsi-jax-ws/rest/data/ESTAT,DF_TRM_DAILY_HIST,1.0/all/ALL/?startPeriod=2026: HTTP Error 500: ); se usó el respaldo sfc_trm",
       "salto 2020-03-06->2020-03-09: 3584.58 -> 3803.6 (+6.11%)"
     ]
   },
