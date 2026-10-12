@@ -17,8 +17,10 @@
     "legal_basis": "Compendio de Normas de Cambios Internacionales, Capítulo I, sección VII"
   },
   "method": "official",
-  "first_date": null,
-  "last_date": null,
-  "last_official_date": null,
-  "observations": []
+  "first_date": "2026-10-13",
+  "last_date": "2026-10-13",
+  "last_official_date": "2026-10-13",
+  "observations": [
+    {"date": "2026-10-13", "value": 978.61, "filled": false}
+  ]
 }

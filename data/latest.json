@@ -192,8 +192,7 @@
       "method": "official",
       "value": null,
       "date": null,
-      "status": "error:contract",
-      "error": "Respuesta no es UTF-8 desde https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=%2A%2A%2A&function=GetSeries&timeseries=F073.TCO.PRE.Z.D&firstdate=2026-10-12&lastdate=2026-10-12"
+      "status": "ok"
     },
     "usd_clp_obs_mkt": {
       "pair": "USD-CLP",
@@ -214,8 +213,7 @@
       "method": "official",
       "value": null,
       "date": null,
-      "status": "error:contract",
-      "error": "Respuesta no es UTF-8 desde https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=%2A%2A%2A&function=GetSeries&timeseries=F073.TCO.PRE.Z.D&firstdate=2026-10-12&lastdate=2026-10-12"
+      "status": "error:empty"
     },
     "mxn_cop_cross": {
       "pair": "MXN-COP",
@@ -357,8 +355,7 @@
       ],
       "value": null,
       "date": null,
-      "status": "error:contract",
-      "error": "insumo degradado: usd_clp_obs_mkt (error:contract)"
+      "status": "error:empty"
     },
     "clp_cop_cross": {
       "pair": "CLP-COP",
@@ -374,8 +371,7 @@
       ],
       "value": null,
       "date": null,
-      "status": "error:contract",
-      "error": "insumo degradado: usd_clp_obs_mkt (error:contract)"
+      "status": "error:empty"
     },
     "clp_ars_cross": {
       "pair": "CLP-ARS",
@@ -391,8 +387,7 @@
       ],
       "value": null,
       "date": null,
-      "status": "error:contract",
-      "error": "insumo degradado: usd_clp_obs_mkt (error:contract)"
+      "status": "error:empty"
     },
     "brl_clp_cross": {
       "pair": "BRL-CLP",
@@ -408,8 +403,7 @@
       ],
       "value": null,
       "date": null,
-      "status": "error:contract",
-      "error": "insumo degradado: usd_clp_obs_mkt (error:contract)"
+      "status": "error:empty"
     }
   }
 }
