@@ -52,10 +52,29 @@ rangos plausibles y umbrales. Correr `pytest` y `python -m fxpipe healthcheck`.
   bloquea robots, así que la validación en vivo se hace desde GitHub Actions.
 - Cruzadas: BRL contra MXN, COP y ARS completan la malla de las cuatro monedas.
 
+## Ejemplo resuelto: Chile (config 1.5.0)
+
+- Fuente: API REST de la Base de Datos Estadísticos (BDE) del Banco Central de Chile,
+  serie `F073.TCO.PRE.Z.D` (dólar observado, CLP por USD, dos decimales). Requiere
+  cuenta y API Key Token (vence al año): secreto `BCCH_TOKEN`.
+- `date_basis: vigencia`, como la TRM: el valor del día D se calcula con el mercado
+  del día hábil bancario anterior, se difunde a las 17:30 de ese día y se publica en
+  el Diario Oficial el día D. Verificado contra la tabla de la BDE y la del SII.
+- Día de mercado (`index: "market_date"`) = fecha de la observación oficial anterior.
+  Usa el calendario bancario chileno de la propia serie, sin tabla de feriados.
+  Prueba empírica (sep-oct 2026, 26 días): la variación diaria por día de mercado
+  correlaciona 0,58 con la PTAX, 0,47 con el FIX y 0,42 con la TRM de mercado; la
+  serie por vigencia, sin ajuste, da 0,01, 0,11 y −0,21. Cruzar la vigencia habría
+  mezclado días de mercado.
+- Trampas: fechas `DD-MM-AAAA` en la respuesta y `AAAA-MM-DD` en la consulta; los
+  días sin dato llegan como `"NaN"` con `statusCode: "ND"`; el contenedor de Claude
+  recibe 403 del proxy, así que la validación en vivo se hace desde GitHub Actions.
+- Despliegue gradual: `primary: false` hasta que el dashboard incorpore los nombres,
+  la bandera y la reserva de alto; luego basta cambiar `primary` a `true`.
+
 ## Candidatos (NO verificados: confirmar contra la documentación oficial antes de construir)
 
 | País | Institución | Pista de API |
 |---|---|---|
 | Perú | BCRP | API de series estadísticas, abierta |
-| Chile | Banco Central de Chile | BDE / SieteRestWS, requiere usuario |
 | Zona euro | BCE | Data Portal (SDMX), abierta |

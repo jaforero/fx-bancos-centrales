@@ -54,6 +54,13 @@ Campos de `source` (series oficiales): `provider`, `institution`, `country`,
 `legal_basis`, `verified_against` (fuente de verificación) y `fallback_used`
 (`true` si el dato vino del respaldo en la última corrida).
 
+`overall_status` de `latest.json` resume solo las series `primary` (lo que muestra el
+dashboard); el de `manifest.json` resume todas y es el que usa la alerta `fx-alerta`.
+
+`primary: true` marca las series que muestra el dashboard. Una serie nueva puede
+publicarse con `false` mientras el dashboard se adapta y pasar a `true` después:
+es un cambio compatible (así entró Chile en config 1.5.0).
+
 Regla de KPI para tasas cruzadas: `value` es el último día en que **ambos**
 insumos son oficiales. El valor con relleno existe en `rates_daily.json`
 marcado en `filled`.

@@ -1,5 +1,5 @@
 {
-  "config_version": "1.4.0",
+  "config_version": "1.5.0",
   "backfill_start": "2020-01-01",
   "reference_timezone": "America/Bogota",
   "incremental_lookback_days": 15,
@@ -58,6 +58,18 @@
       "token_env": null,
       "token_required": false,
       "docs_url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/documentacao",
+      "max_days_per_request": 366
+    },
+    "bcch": {
+      "kind": "bcch_bde",
+      "institution": "Banco Central de Chile (BCCh)",
+      "country": "CL",
+      "authority": "Banco Central de Chile: calcula y publica el dólar observado",
+      "legal_basis": "Compendio de Normas de Cambios Internacionales, Capítulo I, sección VII",
+      "base_url": "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx",
+      "token_env": "BCCH_TOKEN",
+      "token_required": true,
+      "docs_url": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/documentacion.html",
       "max_days_per_request": 366
     }
   },
@@ -180,6 +192,43 @@
       "max_daily_change_pct": 8,
       "max_fill_days": 5,
       "stale_after_days": 5
+    },
+    "usd_clp_obs": {
+      "pair": "USD-CLP",
+      "label": "Dólar observado (fecha de vigencia)",
+      "quote_unit": "CLP por 1 USD",
+      "provider": "bcch",
+      "source_series_id": "F073.TCO.PRE.Z.D",
+      "date_basis": "vigencia",
+      "primary": false,
+      "decimals": 2,
+      "plausible_range": [
+        400,
+        2500
+      ],
+      "max_daily_change_pct": 6,
+      "max_fill_days": 5,
+      "stale_after_days": 6
+    },
+    "usd_clp_obs_mkt": {
+      "pair": "USD-CLP",
+      "label": "Dólar observado por fecha de mercado (insumo de las cruzadas)",
+      "quote_unit": "CLP por 1 USD",
+      "provider": "bcch",
+      "source_series_id": "F073.TCO.PRE.Z.D",
+      "date_basis": "determinacion",
+      "primary": false,
+      "decimals": 2,
+      "plausible_range": [
+        400,
+        2500
+      ],
+      "max_daily_change_pct": 6,
+      "max_fill_days": 5,
+      "stale_after_days": 6,
+      "source_options": {
+        "index": "market_date"
+      }
     }
   },
   "derived": {
@@ -281,6 +330,74 @@
       "plausible_range": [
         1,
         20000
+      ],
+      "max_daily_change_pct": 10,
+      "stale_after_days": 6
+    },
+    "mxn_clp_cross": {
+      "pair": "MXN-CLP",
+      "label": "Tasa cruzada MXN-CLP vía USD (dólar observado ÷ FIX, mismo día de mercado)",
+      "quote_unit": "CLP por 1 MXN",
+      "method": "cross_via_usd",
+      "numerator": "usd_clp_obs_mkt",
+      "denominator": "usd_mxn_fix",
+      "date_basis": "determinacion",
+      "primary": false,
+      "decimals": 4,
+      "plausible_range": [
+        10,
+        200
+      ],
+      "max_daily_change_pct": 10,
+      "stale_after_days": 6
+    },
+    "clp_cop_cross": {
+      "pair": "CLP-COP",
+      "label": "Tasa cruzada CLP-COP vía USD (TRM ÷ dólar observado, mismo día de mercado)",
+      "quote_unit": "COP por 1 CLP",
+      "method": "cross_via_usd",
+      "numerator": "usd_cop_trm_mkt",
+      "denominator": "usd_clp_obs_mkt",
+      "date_basis": "determinacion",
+      "primary": false,
+      "decimals": 4,
+      "plausible_range": [
+        1,
+        20
+      ],
+      "max_daily_change_pct": 10,
+      "stale_after_days": 6
+    },
+    "clp_ars_cross": {
+      "pair": "CLP-ARS",
+      "label": "Tasa cruzada CLP-ARS vía USD (A 3500 ÷ dólar observado, mismo día de mercado)",
+      "quote_unit": "ARS por 1 CLP",
+      "method": "cross_via_usd",
+      "numerator": "usd_ars_a3500",
+      "denominator": "usd_clp_obs_mkt",
+      "date_basis": "determinacion",
+      "primary": false,
+      "decimals": 6,
+      "plausible_range": [
+        0.01,
+        100
+      ],
+      "max_daily_change_pct": 10,
+      "stale_after_days": 6
+    },
+    "brl_clp_cross": {
+      "pair": "BRL-CLP",
+      "label": "Tasa cruzada BRL-CLP vía USD (dólar observado ÷ PTAX, mismo día de mercado)",
+      "quote_unit": "CLP por 1 BRL",
+      "method": "cross_via_usd",
+      "numerator": "usd_clp_obs_mkt",
+      "denominator": "usd_brl_ptax",
+      "date_basis": "determinacion",
+      "primary": false,
+      "decimals": 4,
+      "plausible_range": [
+        50,
+        1000
       ],
       "max_daily_change_pct": 10,
       "stale_after_days": 6

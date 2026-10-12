@@ -284,7 +284,9 @@ def build_outputs(cfg, daily, meta, status, warnings, errors, as_of) -> dict[str
     latest = {
         "schema_version": store.SCHEMA_VERSION,
         "as_of": as_of.isoformat(),
-        "overall_status": "ok" if all(status.get(s, "ok") == "ok" for s in order) else "degraded",
+        # Estado de lo que muestra el dashboard: solo series primary. El manifest conserva
+        # el estado de todas (lo usa `check` para alertar).
+        "overall_status": "ok" if all(status.get(s, "ok") == "ok" for s in order if meta[s]["primary"]) else "degraded",
         "series": {},
     }
     for sid in order:

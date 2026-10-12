@@ -30,6 +30,7 @@ jobs:
       PYTHONPATH: src
       BANXICO_TOKEN: ${{ secrets.BANXICO_TOKEN }}
       DATOS_GOV_CO_APP_TOKEN: ${{ secrets.DATOS_GOV_CO_APP_TOKEN }}
+      BCCH_TOKEN: ${{ secrets.BCCH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 

@@ -11,12 +11,22 @@ este repositorio para alimentar dashboards. Se actualiza solo con GitHub Actions
 | `usd_cop_trm_mkt` | USD-COP | TRM indexada por día de mercado (insumo de la cruzada) | Misma fuente |
 | `usd_ars_a3500` | USD-ARS | Dólar de referencia mayorista Com. A 3500 (**principal**) | BCRA Estadísticas Cambiarias `REF` |
 | `usd_brl_ptax` | USD-BRL | PTAX de venta, cierre (**principal**) | Banco Central do Brasil, API PTAX (Olinda) |
+| `usd_clp_obs` | USD-CLP | Dólar observado, fecha de vigencia | Banco Central de Chile, API BDE `F073.TCO.PRE.Z.D` |
+| `usd_clp_obs_mkt` | USD-CLP | Dólar observado indexado por día de mercado (insumo de las cruzadas) | Misma fuente |
 | `mxn_cop_cross` | MXN-COP | Cruzada: TRM ÷ FIX del **mismo día de mercado** | Derivada |
 | `mxn_ars_cross` | MXN-ARS | Cruzada: A 3500 ÷ FIX (ARS por 1 MXN) | Derivada |
 | `ars_cop_cross` | ARS-COP | Cruzada: TRM ÷ A 3500 (COP por 1 ARS) | Derivada |
 | `brl_mxn_cross` | BRL-MXN | Cruzada: FIX ÷ PTAX (MXN por 1 BRL) | Derivada |
 | `brl_cop_cross` | BRL-COP | Cruzada: TRM ÷ PTAX (COP por 1 BRL) | Derivada |
 | `brl_ars_cross` | BRL-ARS | Cruzada: A 3500 ÷ PTAX (ARS por 1 BRL) | Derivada |
+| `mxn_clp_cross` | MXN-CLP | Cruzada: dólar observado ÷ FIX (CLP por 1 MXN) | Derivada |
+| `clp_cop_cross` | CLP-COP | Cruzada: TRM ÷ dólar observado (COP por 1 CLP) | Derivada |
+| `clp_ars_cross` | CLP-ARS | Cruzada: A 3500 ÷ dólar observado (ARS por 1 CLP) | Derivada |
+| `brl_clp_cross` | BRL-CLP | Cruzada: dólar observado ÷ PTAX (CLP por 1 BRL) | Derivada |
+
+Las seis series de Chile se publican con `primary: false` hasta que el dashboard
+las incorpore (decisión del 2026-10-11): el JSON se actualiza y se valida a diario,
+pero el tablero, que solo muestra series `primary`, no cambia.
 
 **Por qué MXN-COP es derivada:** ni Banxico ni el Banco de la República publican
 una tasa oficial MXN-COP. El propio aviso del FIX en el DOF indica que la
@@ -36,6 +46,7 @@ Cada tasa se descarga de la institución que la define oficialmente:
 | Colombia | TRM | Banco de la República (define la TRM y su metodología; la Superintendencia Financiera la calcula y certifica a diario) | Servicio SDMX del BanRep, verificado en cada corrida contra la SFC en datos.gov.co |
 | Argentina | Com. A 3500 | Banco Central de la República Argentina | API Estadísticas Cambiarias del BCRA |
 | Brasil | PTAX | Banco Central do Brasil (la calcula y publica; Resolução BCB nº 45/2020) | API PTAX del BCB (Olinda, OData) |
+| Chile | Dólar observado | Banco Central de Chile (lo calcula y publica; Compendio de Normas de Cambios Internacionales, Cap. I, sección VII) | API REST de la Base de Datos Estadísticos (BDE), con token |
 
 Por qué importa: la fuente oficial define la metodología, el horario y las
 correcciones; un agregador puede redondear, retrasarse o mezclar tasas
@@ -61,10 +72,20 @@ dashboard en [docs/DASHBOARD.md](docs/DASHBOARD.md).
 1. Solicita tu token gratuito del SIE en https://www.banxico.org.mx/SieAPIRest/service/v1/token
 2. Crea el repo **público** `jaforero/fx-bancos-centrales` y sube este contenido.
 3. En *Settings → Secrets and variables → Actions* crea el secreto `BANXICO_TOKEN`.
+   Crea también `BCCH_TOKEN` (API Key Token de la BDE del Banco Central de Chile; ver abajo).
    Opcional: `DATOS_GOV_CO_APP_TOKEN` (app token de Socrata, mejora límites de uso).
 4. En *Settings → Actions → General → Workflow permissions* elige **Read and write**.
 5. Ejecuta manualmente *Actualización diaria de tasas* con `backfill_start = 2020-01-01`.
 6. Verifica `data/manifest.json` → `overall_status: "ok"`.
+
+### Token del Banco Central de Chile (`BCCH_TOKEN`)
+
+1. Sigue la guía oficial de acceso: https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/acceso_api.html
+   (si no tienes cuenta en la BDE, regístrate desde la página de inicio de la API).
+2. Inicia sesión, acepta los términos de uso y pulsa **Activar el uso de la API** (una sola vez).
+3. En **Mi Cuenta → Apikey Token** copia el token y guárdalo como secreto `BCCH_TOKEN`.
+4. El token **vence al año**. Se renueva o se extiende en la misma sección; si vence, la
+   corrida marca las series de Chile `error:provider` con un mensaje que lo indica.
 
 ## Operación
 
@@ -83,6 +104,7 @@ su histórico, se marca `error:*` o `stale` y el dashboard puede mostrarlo.
 ```bash
 pip install -e ".[dev]"
 export BANXICO_TOKEN=...            # nunca lo subas al repo
+export BCCH_TOKEN=...
 PYTHONPATH=src python -m fxpipe update --dry-run
 PYTHONPATH=src python -m fxpipe healthcheck
 pytest -q
@@ -96,5 +118,6 @@ Ver [docs/AGREGAR_PAIS.md](docs/AGREGAR_PAIS.md).
 
 Datos: Banco de México (SIE), Banco de la República de Colombia (SDMX; TRM
 calculada y certificada por la Superintendencia Financiera) y Banco Central de
-la República Argentina (API Estadísticas Cambiarias) y Banco Central do Brasil
-(API PTAX, licencia ODbL). Las tasas cruzadas son cálculos propios, no tasas oficiales.
+la República Argentina (API Estadísticas Cambiarias), Banco Central do Brasil
+(API PTAX, licencia ODbL) y Banco Central de Chile (Base de Datos Estadísticos).
+Las tasas cruzadas son cálculos propios, no tasas oficiales.

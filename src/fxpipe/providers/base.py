@@ -6,6 +6,7 @@ normalizadas: {fecha ISO -> valor float}. Todo lo específico de la API
 """
 from __future__ import annotations
 
+import http.client
 import json
 import os
 import time
@@ -72,7 +73,9 @@ def default_http_get(url: str, headers: dict, *, retries: int = 4,
                 except Exception:
                     detail = ""
                 raise ProviderError(f"HTTP {exc.code} en {redact(url)}: {detail}") from exc
-        except (urllib.error.URLError, TimeoutError) as exc:
+        except UnicodeDecodeError as exc:
+            raise ContractError(f"Respuesta no es UTF-8 desde {redact(url)}") from exc
+        except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.HTTPException) as exc:
             last_exc = exc
         time.sleep(min(2 ** attempt * 2, 30))
     raise ProviderError(f"Fallo tras {retries} intentos en {redact(url)}: {last_exc}")

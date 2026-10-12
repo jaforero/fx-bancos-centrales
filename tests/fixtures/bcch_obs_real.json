@@ -1,0 +1,227 @@
+{
+  "Codigo": 0,
+  "Descripcion": "Success",
+  "Series": {
+    "descripEsp": "Tipo de cambio nominal (dólar observado $CLP/USD)\\ tipo de cambio \\ precio \\ diario \\ BCCh",
+    "descripIng": "Nominal exchange rate (Observed dollar $CLP/USD) \\ exchange rate \\ price \\ daily \\ CBC",
+    "seriesId": "F073.TCO.PRE.Z.D",
+    "Obs": [
+      {
+        "indexDateString": "01-09-2026",
+        "value": "933.4",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "02-09-2026",
+        "value": "936.86",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "03-09-2026",
+        "value": "936.32",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "04-09-2026",
+        "value": "933.47",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "05-09-2026",
+        "value": "NaN",
+        "statusCode": "ND"
+      },
+      {
+        "indexDateString": "06-09-2026",
+        "value": "NaN",
+        "statusCode": "ND"
+      },
+      {
+        "indexDateString": "07-09-2026",
+        "value": "934.35",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "08-09-2026",
+        "value": "933.82",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "09-09-2026",
+        "value": "926.94",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "10-09-2026",
+        "value": "925.97",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "11-09-2026",
+        "value": "937.17",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "12-09-2026",
+        "value": "NaN",
+        "statusCode": "ND"
+      },
+      {
+        "indexDateString": "13-09-2026",
+        "value": "NaN",
+        "statusCode": "ND"
+      },
+      {
+        "indexDateString": "14-09-2026",
+        "value": "940.91",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "15-09-2026",
+        "value": "957.53",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "16-09-2026",
+        "value": "955.37",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "17-09-2026",
+        "value": "954.85",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "18-09-2026",
+        "value": "NaN",
+        "statusCode": "ND"
+      },
+      {
+        "indexDateString": "19-09-2026",
+        "value": "NaN",
+        "statusCode": "ND"
+      },
+      {
+        "indexDateString": "20-09-2026",
+        "value": "NaN",
+        "statusCode": "ND"
+      },
+      {
+        "indexDateString": "21-09-2026",
+        "value": "958.42",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "22-09-2026",
+        "value": "952",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "23-09-2026",
+        "value": "945.87",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "24-09-2026",
+        "value": "959.39",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "25-09-2026",
+        "value": "965.71",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "26-09-2026",
+        "value": "NaN",
+        "statusCode": "ND"
+      },
+      {
+        "indexDateString": "27-09-2026",
+        "value": "NaN",
+        "statusCode": "ND"
+      },
+      {
+        "indexDateString": "28-09-2026",
+        "value": "964.1",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "29-09-2026",
+        "value": "969.7",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "30-09-2026",
+        "value": "970.46",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "01-10-2026",
+        "value": "972.6",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "02-10-2026",
+        "value": "983.84",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "03-10-2026",
+        "value": "NaN",
+        "statusCode": "ND"
+      },
+      {
+        "indexDateString": "04-10-2026",
+        "value": "NaN",
+        "statusCode": "ND"
+      },
+      {
+        "indexDateString": "05-10-2026",
+        "value": "984.82",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "06-10-2026",
+        "value": "977.25",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "07-10-2026",
+        "value": "967.79",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "08-10-2026",
+        "value": "979.85",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "09-10-2026",
+        "value": "981.61",
+        "statusCode": "OK"
+      },
+      {
+        "indexDateString": "10-10-2026",
+        "value": "NaN",
+        "statusCode": "ND"
+      },
+      {
+        "indexDateString": "11-10-2026",
+        "value": "NaN",
+        "statusCode": "ND"
+      },
+      {
+        "indexDateString": "12-10-2026",
+        "value": "NaN",
+        "statusCode": "ND"
+      },
+      {
+        "indexDateString": "13-10-2026",
+        "value": "978.61",
+        "statusCode": "OK"
+      }
+    ]
+  },
+  "SeriesInfos": []
+}

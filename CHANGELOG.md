@@ -1,5 +1,20 @@
 # Cambios
 
+## config 1.5.0 — 2026-10-11
+- Chile: nuevo conector `bcch_bde` (API REST de la Base de Datos Estadísticos del
+  Banco Central de Chile, token en el secreto `BCCH_TOKEN`) y series
+  `usd_clp_obs` (dólar observado, fecha de vigencia) y `usd_clp_obs_mkt` (mismo dato
+  indexado por día de mercado).
+- Cruzadas por día de mercado: `mxn_clp_cross`, `clp_cop_cross`, `clp_ars_cross` y
+  `brl_clp_cross`. Malla completa entre MXN, COP, ARS, BRL y CLP.
+- Las seis series nuevas salen con `primary: false` hasta adaptar el dashboard.
+- `latest.json` → `overall_status` se calcula solo con las series `primary`, para que
+  una falla de Chile (oculto) no marque el tablero como degradado. `manifest.json`
+  sigue resumiendo todas las series y la alerta `fx-alerta` no cambia.
+- Red: `default_http_get` reintenta también cortes de conexión durante la lectura
+  (`ConnectionError`, `http.client.HTTPException`) en lugar de abortar la corrida.
+- Sin cambios de esquema JSON: solo se agregan series.
+
 ## config 1.4.0 — 2026-10-05
 - Brasil: nuevo conector `bcb_ptax` (API PTAX del Banco Central do Brasil, Olinda)
   y serie `usd_brl_ptax` (PTAX de venta, cierre).
