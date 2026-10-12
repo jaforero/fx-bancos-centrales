@@ -178,7 +178,7 @@
       "label": "Dólar observado (fecha de vigencia)",
       "quote_unit": "CLP por 1 USD",
       "date_basis": "vigencia",
-      "primary": false,
+      "primary": true,
       "decimals": 2,
       "source": {
         "provider": "bcch",
@@ -360,7 +360,7 @@
       "label": "Tasa cruzada MXN-CLP vía USD (dólar observado ÷ FIX, mismo día de mercado)",
       "quote_unit": "CLP por 1 MXN",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 4,
       "method": "cross_via_usd: usd_clp_obs_mkt / usd_mxn_fix",
       "inputs": [
@@ -381,7 +381,7 @@
       "label": "Tasa cruzada CLP-COP vía USD (TRM ÷ dólar observado, mismo día de mercado)",
       "quote_unit": "COP por 1 CLP",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 4,
       "method": "cross_via_usd: usd_cop_trm_mkt / usd_clp_obs_mkt",
       "inputs": [
@@ -402,7 +402,7 @@
       "label": "Tasa cruzada CLP-ARS vía USD (A 3500 ÷ dólar observado, mismo día de mercado)",
       "quote_unit": "ARS por 1 CLP",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 6,
       "method": "cross_via_usd: usd_ars_a3500 / usd_clp_obs_mkt",
       "inputs": [
@@ -423,7 +423,7 @@
       "label": "Tasa cruzada BRL-CLP vía USD (dólar observado ÷ PTAX, mismo día de mercado)",
       "quote_unit": "CLP por 1 BRL",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 4,
       "method": "cross_via_usd: usd_clp_obs_mkt / usd_brl_ptax",
       "inputs": [

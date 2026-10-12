@@ -5,7 +5,7 @@
   "label": "Tasa cruzada CLP-ARS vía USD (A 3500 ÷ dólar observado, mismo día de mercado)",
   "quote_unit": "ARS por 1 CLP",
   "date_basis": "determinacion",
-  "primary": false,
+  "primary": true,
   "decimals": 6,
   "method": "cross_via_usd: usd_ars_a3500 / usd_clp_obs_mkt",
   "inputs": [

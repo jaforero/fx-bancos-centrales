@@ -5,7 +5,7 @@
   "label": "Tasa cruzada CLP-COP vía USD (TRM ÷ dólar observado, mismo día de mercado)",
   "quote_unit": "COP por 1 CLP",
   "date_basis": "determinacion",
-  "primary": false,
+  "primary": true,
   "decimals": 4,
   "method": "cross_via_usd: usd_cop_trm_mkt / usd_clp_obs_mkt",
   "inputs": [

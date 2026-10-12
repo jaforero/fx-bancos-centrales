@@ -5,7 +5,7 @@
   "label": "Tasa cruzada MXN-CLP vía USD (dólar observado ÷ FIX, mismo día de mercado)",
   "quote_unit": "CLP por 1 MXN",
   "date_basis": "determinacion",
-  "primary": false,
+  "primary": true,
   "decimals": 4,
   "method": "cross_via_usd: usd_clp_obs_mkt / usd_mxn_fix",
   "inputs": [

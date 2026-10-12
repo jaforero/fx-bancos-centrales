@@ -5,7 +5,7 @@
   "label": "Dólar observado (fecha de vigencia)",
   "quote_unit": "CLP por 1 USD",
   "date_basis": "vigencia",
-  "primary": false,
+  "primary": true,
   "decimals": 2,
   "source": {
     "provider": "bcch",
