@@ -334,6 +334,10 @@ def test_bcch_future_window_is_best_effort(env):
 
 def test_latest_overall_status_ignores_hidden_series(env):
     cfg, data = env
+    for sid in ("usd_clp_obs", "usd_clp_obs_mkt"):  # una fuente cuyas series no muestra el dashboard
+        cfg["series"][sid]["primary"] = False
+    for did in ("mxn_clp_cross", "clp_cop_cross", "clp_ars_cross", "brl_clp_cross"):
+        cfg["derived"][did]["primary"] = False
     r = pipeline.run(cfg, data, AS_OF, http_get=fake_http(fail="bcch"))
     assert r["manifest"]["overall_status"] == "degraded"  # la alerta fx-alerta sí se dispara
     assert json.loads((data / "latest.json").read_text())["overall_status"] == "ok"  # el tablero no cambia
@@ -373,15 +377,17 @@ def test_chile_end_to_end_crosses(env):
     assert all(L[i]["method"].startswith("cross_via_usd") for i in ("mxn_clp_cross", "clp_cop_cross", "clp_ars_cross", "brl_clp_cross"))
 
 
-def test_chile_hidden_from_dashboard_until_enabled(env):
-    """Decisión de Javier (2026-10-11): Chile sale con primary:false hasta adaptar el tablero."""
+def test_chile_visible_in_dashboard(env):
+    """config 1.6.0 (2026-10-12): el dashboard ya incorpora Chile; sus 5 series pasan a primary.
+    El insumo por día de mercado sigue oculto, como usd_cop_trm_mkt."""
     cfg, data = env
     pipeline.run(cfg, data, AS_OF, http_get=fake_http())
     L = json.loads((data / "latest.json").read_text())["series"]
     prim = sorted(k for k, v in L.items() if v["primary"])
-    assert prim == sorted(["usd_mxn_fix", "usd_cop_trm", "usd_ars_a3500", "usd_brl_ptax", "mxn_cop_cross",
-                           "mxn_ars_cross", "ars_cop_cross", "brl_mxn_cross", "brl_cop_cross", "brl_ars_cross"])
-    assert not any(L[i]["primary"] for i in L if "clp" in i)
+    assert prim == sorted(["usd_mxn_fix", "usd_cop_trm", "usd_ars_a3500", "usd_brl_ptax", "usd_clp_obs",
+                           "mxn_cop_cross", "mxn_ars_cross", "ars_cop_cross", "brl_mxn_cross", "brl_cop_cross",
+                           "brl_ars_cross", "mxn_clp_cross", "clp_cop_cross", "clp_ars_cross", "brl_clp_cross"])
+    assert L["usd_clp_obs_mkt"]["primary"] is False and L["usd_cop_trm_mkt"]["primary"] is False
 
 
 def test_chile_failure_isolated(env):

@@ -1,5 +1,13 @@
 # Cambios
 
+## config 1.6.0 — 2026-10-12
+- Chile visible en el dashboard: `primary: true` en `usd_clp_obs`, `mxn_clp_cross`,
+  `clp_cop_cross`, `clp_ars_cross` y `brl_clp_cross`. `usd_clp_obs_mkt` sigue oculto
+  (insumo de las cruzadas, como `usd_cop_trm_mkt`).
+- Publicar después del dashboard que ya trae los nombres, la bandera y la reserva de
+  alto para 15 series.
+- Sin cambios de esquema JSON.
+
 ## config 1.5.1 — 2026-10-12
 - Corrección: la API BDE del Banco Central de Chile responde en ISO-8859-1
   (`application/json; charset=ISO-8859-1`, con tildes en `descripEsp`), y la lectura

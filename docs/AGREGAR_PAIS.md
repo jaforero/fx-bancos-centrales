@@ -71,8 +71,8 @@ rangos plausibles y umbrales. Correr `pytest` y `python -m fxpipe healthcheck`.
   **ISO-8859-1** (no UTF-8) y el servidor puede comprimirla con gzip; un token inválido
   devuelve HTTP 200 con `Codigo: -5` («Invalid username or password»); el contenedor de
   Claude recibe 403 del proxy, así que la validación en vivo se hace desde GitHub Actions.
-- Despliegue gradual: `primary: false` hasta que el dashboard incorpore los nombres,
-  la bandera y la reserva de alto; luego basta cambiar `primary` a `true`.
+- Despliegue gradual: `primary: false` (config 1.5.x) hasta que el dashboard incorporó
+  los nombres, la bandera y la reserva de alto; luego `primary: true` (config 1.6.0).
 
 ## Candidatos (NO verificados: confirmar contra la documentación oficial antes de construir)
 

@@ -24,9 +24,10 @@ este repositorio para alimentar dashboards. Se actualiza solo con GitHub Actions
 | `clp_ars_cross` | CLP-ARS | Cruzada: A 3500 ÷ dólar observado (ARS por 1 CLP) | Derivada |
 | `brl_clp_cross` | BRL-CLP | Cruzada: dólar observado ÷ PTAX (CLP por 1 BRL) | Derivada |
 
-Las seis series de Chile se publican con `primary: false` hasta que el dashboard
-las incorpore (decisión del 2026-10-11): el JSON se actualiza y se valida a diario,
-pero el tablero, que solo muestra series `primary`, no cambia.
+Chile entró en dos fases: primero los datos con `primary: false` (config 1.5.x) y,
+con el dashboard ya adaptado, `primary: true` en el dólar observado y sus cuatro
+cruzadas (config 1.6.0). `usd_clp_obs_mkt`, como `usd_cop_trm_mkt`, es un insumo y
+sigue oculto.
 
 **Por qué MXN-COP es derivada:** ni Banxico ni el Banco de la República publican
 una tasa oficial MXN-COP. El propio aviso del FIX en el DOF indica que la

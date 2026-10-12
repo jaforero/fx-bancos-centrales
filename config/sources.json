@@ -1,5 +1,5 @@
 {
-  "config_version": "1.5.1",
+  "config_version": "1.6.0",
   "backfill_start": "2020-01-01",
   "reference_timezone": "America/Bogota",
   "incremental_lookback_days": 15,
@@ -200,7 +200,7 @@
       "provider": "bcch",
       "source_series_id": "F073.TCO.PRE.Z.D",
       "date_basis": "vigencia",
-      "primary": false,
+      "primary": true,
       "decimals": 2,
       "plausible_range": [
         400,
@@ -342,7 +342,7 @@
       "numerator": "usd_clp_obs_mkt",
       "denominator": "usd_mxn_fix",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 4,
       "plausible_range": [
         10,
@@ -359,7 +359,7 @@
       "numerator": "usd_cop_trm_mkt",
       "denominator": "usd_clp_obs_mkt",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 4,
       "plausible_range": [
         1,
@@ -376,7 +376,7 @@
       "numerator": "usd_ars_a3500",
       "denominator": "usd_clp_obs_mkt",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 6,
       "plausible_range": [
         0.01,
@@ -393,7 +393,7 @@
       "numerator": "usd_clp_obs_mkt",
       "denominator": "usd_brl_ptax",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 4,
       "plausible_range": [
         50,
