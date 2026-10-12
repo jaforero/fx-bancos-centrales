@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "id": "brl_clp_cross",
+  "pair": "BRL-CLP",
+  "label": "Tasa cruzada BRL-CLP vía USD (dólar observado ÷ PTAX, mismo día de mercado)",
+  "quote_unit": "CLP por 1 BRL",
+  "date_basis": "determinacion",
+  "primary": false,
+  "decimals": 4,
+  "method": "cross_via_usd: usd_clp_obs_mkt / usd_brl_ptax",
+  "inputs": [
+    "usd_clp_obs_mkt",
+    "usd_brl_ptax"
+  ],
+  "first_date": null,
+  "last_date": null,
+  "last_official_date": null,
+  "observations": []
+}

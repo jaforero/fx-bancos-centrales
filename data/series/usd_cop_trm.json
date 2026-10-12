@@ -22,7 +22,7 @@
       "series_id": "32sa-8pi3",
       "docs_url": "https://dev.socrata.com/foundry/www.datos.gov.co/32sa-8pi3"
     },
-    "fallback_used": true
+    "fallback_used": false
   },
   "method": "official",
   "first_date": "2020-01-01",

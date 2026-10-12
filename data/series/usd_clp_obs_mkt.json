@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "id": "usd_clp_obs_mkt",
+  "pair": "USD-CLP",
+  "label": "Dólar observado por fecha de mercado (insumo de las cruzadas)",
+  "quote_unit": "CLP por 1 USD",
+  "date_basis": "determinacion",
+  "primary": false,
+  "decimals": 2,
+  "source": {
+    "provider": "bcch",
+    "institution": "Banco Central de Chile (BCCh)",
+    "country": "CL",
+    "series_id": "F073.TCO.PRE.Z.D",
+    "docs_url": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/documentacion.html",
+    "authority": "Banco Central de Chile: calcula y publica el dólar observado",
+    "legal_basis": "Compendio de Normas de Cambios Internacionales, Capítulo I, sección VII"
+  },
+  "method": "official",
+  "first_date": null,
+  "last_date": null,
+  "last_official_date": null,
+  "observations": []
+}

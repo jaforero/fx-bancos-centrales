@@ -1,25 +1,38 @@
 {
   "schema_version": "1.0.0",
-  "config_version": "1.4.0",
-  "generated_at": "2026-10-11T06:37:30+00:00",
-  "as_of": "2026-10-11",
-  "overall_status": "ok",
-  "data_hash": "d590cc19b7535662202b85c24c3404cb4f003a03a1dc20f4bad532a71a60f9e9",
+  "config_version": "1.5.0",
+  "generated_at": "2026-10-12T05:07:54+00:00",
+  "as_of": "2026-10-12",
+  "overall_status": "degraded",
+  "data_hash": "f44b65676152bc0711c1052db0cdb4a883e3717b4eb553af64b4a2df021b7db4",
   "series_status": {
     "ars_cop_cross": "ok",
     "brl_ars_cross": "ok",
+    "brl_clp_cross": "error:contract",
     "brl_cop_cross": "ok",
     "brl_mxn_cross": "ok",
+    "clp_ars_cross": "error:contract",
+    "clp_cop_cross": "error:contract",
     "mxn_ars_cross": "ok",
+    "mxn_clp_cross": "error:contract",
     "mxn_cop_cross": "ok",
     "usd_ars_a3500": "ok",
     "usd_brl_ptax": "ok",
+    "usd_clp_obs": "error:contract",
+    "usd_clp_obs_mkt": "error:contract",
     "usd_cop_trm": "ok",
     "usd_cop_trm_mkt": "ok",
     "usd_mxn_fix": "ok",
     "usd_mxn_liq": "ok"
   },
-  "errors": {},
+  "errors": {
+    "brl_clp_cross": "insumo degradado: usd_clp_obs_mkt (error:contract)",
+    "clp_ars_cross": "insumo degradado: usd_clp_obs_mkt (error:contract)",
+    "clp_cop_cross": "insumo degradado: usd_clp_obs_mkt (error:contract)",
+    "mxn_clp_cross": "insumo degradado: usd_clp_obs_mkt (error:contract)",
+    "usd_clp_obs": "Respuesta no es UTF-8 desde https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=%2A%2A%2A&function=GetSeries&timeseries=F073.TCO.PRE.Z.D&firstdate=2026-10-12&lastdate=2026-10-12",
+    "usd_clp_obs_mkt": "Respuesta no es UTF-8 desde https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=%2A%2A%2A&function=GetSeries&timeseries=F073.TCO.PRE.Z.D&firstdate=2026-10-12&lastdate=2026-10-12"
+  },
   "warnings": {
     "ars_cop_cross": [
       "salto 2023-08-11->2023-08-14: 13.8306 -> 11.515 (-16.74%)",
@@ -42,11 +55,9 @@
       "salto 2025-04-16->2025-04-21: 1172.8333 -> 1070.4167 (-8.73%)"
     ],
     "usd_cop_trm": [
-      "fuente principal no disponible (Fallo tras 4 intentos en https://totoro.banrep.gov.co/nsi-jax-ws/rest/data/ESTAT,DF_TRM_DAILY_HIST,1.0/all/ALL/?startPeriod=2026: HTTP Error 500: ); se usó el respaldo sfc_trm",
       "salto 2020-03-09->2020-03-10: 3584.58 -> 3803.6 (+6.11%)"
     ],
     "usd_cop_trm_mkt": [
-      "fuente principal no disponible (Fallo tras 4 intentos en https://totoro.banrep.gov.co/nsi-jax-ws/rest/data/ESTAT,DF_TRM_DAILY_HIST,1.0/all/ALL/?startPeriod=2026: HTTP Error 500: ); se usó el respaldo sfc_trm",
       "salto 2020-03-06->2020-03-09: 3584.58 -> 3803.6 (+6.11%)"
     ]
   },
@@ -55,12 +66,18 @@
     "rates_daily.json",
     "series/ars_cop_cross.json",
     "series/brl_ars_cross.json",
+    "series/brl_clp_cross.json",
     "series/brl_cop_cross.json",
     "series/brl_mxn_cross.json",
+    "series/clp_ars_cross.json",
+    "series/clp_cop_cross.json",
     "series/mxn_ars_cross.json",
+    "series/mxn_clp_cross.json",
     "series/mxn_cop_cross.json",
     "series/usd_ars_a3500.json",
     "series/usd_brl_ptax.json",
+    "series/usd_clp_obs.json",
+    "series/usd_clp_obs_mkt.json",
     "series/usd_cop_trm.json",
     "series/usd_cop_trm_mkt.json",
     "series/usd_mxn_fix.json",

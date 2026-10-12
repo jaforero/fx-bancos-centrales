@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "id": "clp_ars_cross",
+  "pair": "CLP-ARS",
+  "label": "Tasa cruzada CLP-ARS vía USD (A 3500 ÷ dólar observado, mismo día de mercado)",
+  "quote_unit": "ARS por 1 CLP",
+  "date_basis": "determinacion",
+  "primary": false,
+  "decimals": 6,
+  "method": "cross_via_usd: usd_ars_a3500 / usd_clp_obs_mkt",
+  "inputs": [
+    "usd_ars_a3500",
+    "usd_clp_obs_mkt"
+  ],
+  "first_date": null,
+  "last_date": null,
+  "last_official_date": null,
+  "observations": []
+}
