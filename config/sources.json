@@ -1,5 +1,5 @@
 {
-  "config_version": "1.5.0",
+  "config_version": "1.5.1",
   "backfill_start": "2020-01-01",
   "reference_timezone": "America/Bogota",
   "incremental_lookback_days": 15,

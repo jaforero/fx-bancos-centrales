@@ -6,6 +6,7 @@ normalizadas: {fecha ISO -> valor float}. Todo lo específico de la API
 """
 from __future__ import annotations
 
+import gzip
 import http.client
 import json
 import os
@@ -42,6 +43,37 @@ class FetchRequest:
         return dict(self.options).get(key, default)
 
 
+def decode_body(data: bytes, content_type: str = "", content_encoding: str = "") -> str:
+    """Bytes de la respuesta -> texto.
+
+    Primero UTF-8 estricto (lo que envían casi todas las fuentes). Si falla, se usa
+    el charset que declara el servidor: la API BDE del Banco Central de Chile
+    responde `application/json; charset=ISO-8859-1` con tildes en `descripEsp`
+    (verificado con una respuesta real, 2026-10-12). Sin charset declarado, un
+    texto que no es UTF-8 se trata como cambio de contrato. Si el servidor comprime
+    sin que se le pida, se descomprime.
+    """
+    if content_encoding.lower().strip() == "gzip" or data[:2] == b"\x1f\x8b":
+        try:
+            data = gzip.decompress(data)
+        except (OSError, EOFError) as exc:
+            raise ContractError(f"Respuesta gzip inválida ({exc})") from exc
+    try:
+        return data.decode("utf-8")
+    except UnicodeDecodeError:
+        charset = ""
+        for part in content_type.split(";")[1:]:
+            k, _, v = part.strip().partition("=")
+            if k.lower() == "charset":
+                charset = v.strip().strip('"')
+        if not charset or charset.lower().replace("_", "-") in ("utf-8", "utf8"):
+            raise
+        try:
+            return data.decode(charset)
+        except (LookupError, UnicodeDecodeError) as exc:
+            raise ContractError(f"Respuesta no decodificable con el charset declarado {charset!r}") from exc
+
+
 # Tipo del transporte HTTP: permite inyectar respuestas falsas en pruebas.
 HttpGet = Callable[[str, dict], object]
 
@@ -54,7 +86,8 @@ def default_http_get(url: str, headers: dict, *, retries: int = 4,
         req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, **headers})
         try:
             with urllib.request.urlopen(req, timeout=timeout) as resp:
-                raw = resp.read().decode("utf-8")
+                raw = decode_body(resp.read(), resp.headers.get("Content-Type", ""),
+                                  resp.headers.get("Content-Encoding", ""))
             if "json" not in headers.get("Accept", "application/json"):
                 return raw  # p. ej. SDMX-ML del Banco de la República
             try:
@@ -74,7 +107,7 @@ def default_http_get(url: str, headers: dict, *, retries: int = 4,
                     detail = ""
                 raise ProviderError(f"HTTP {exc.code} en {redact(url)}: {detail}") from exc
         except UnicodeDecodeError as exc:
-            raise ContractError(f"Respuesta no es UTF-8 desde {redact(url)}") from exc
+            raise ContractError(f"Respuesta no es UTF-8 ni declara otro charset, desde {redact(url)}") from exc
         except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.HTTPException) as exc:
             last_exc = exc
         time.sleep(min(2 ** attempt * 2, 30))

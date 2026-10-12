@@ -1,0 +1,11 @@
+{
+  "Codigo": -5,
+  "Descripcion": "Invalid username or password",
+  "Series": {
+    "descripEsp": null,
+    "descripIng": null,
+    "seriesId": null,
+    "Obs": null
+  },
+  "SeriesInfos": []
+}

@@ -1,5 +1,5 @@
 {
- "_nota": "Fixture reconstruido, no es una captura cruda: forma de la respuesta GetSeries según la documentación oficial (si3.bcentral.cl/estadisticas/Principal1/Web_Services/documentacion.html) y valores de la tabla oficial de la BDE 'Dólar observado' (consultada el 2026-10-11), idénticos a los de la tabla del SII. Reemplazar por bcch_obs_real.json cuando se capture una respuesta real con el token.",
+ "_nota": "Fixture reconstruido con la forma de la respuesta GetSeries (documentacion.html) y los valores de la tabla oficial de la BDE. La prueba test_bcch_real_capture_matches_official_table confirma que coincide con la captura real bcch_obs_real.json (2026-10-12), que viene en ISO-8859-1.",
  "Codigo": 0,
  "Descripcion": "Success",
  "Series": {

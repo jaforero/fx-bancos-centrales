@@ -400,16 +400,65 @@ def test_chile_missing_token_is_reported(env, monkeypatch):
     assert "BCCH_TOKEN" in r["manifest"]["errors"]["usd_clp_obs"]
 
 
+BCCH_CTYPE = "application/json; charset=ISO-8859-1"  # encabezado real de la API BDE (2026-10-12)
+
+
 def test_bcch_real_capture_matches_official_table():
-    """Si existe una captura real (tests/fixtures/bcch_obs_real.json), debe coincidir con la tabla oficial."""
+    """La captura real (tests/fixtures/bcch_obs_real.json, ISO-8859-1) coincide con la tabla oficial."""
+    from fxpipe.providers.base import decode_body
     p = FIX / "bcch_obs_real.json"
     if not p.exists():
         pytest.skip("sin captura real de la API BDE (ver README: Chile)")
-    real = bcch_parse(json.loads(p.read_text(encoding="utf-8")), "F073.TCO.PRE.Z.D")
+    payload = json.loads(decode_body(p.read_bytes(), BCCH_CTYPE))
+    assert "dólar observado" in payload["Series"]["descripEsp"]  # la tilde que rompía la lectura en UTF-8
+    real = bcch_parse(payload, "F073.TCO.PRE.Z.D")
     ref = bcch_parse(load("bcch_obs_ok.json"), "F073.TCO.PRE.Z.D")
     common = sorted(set(real) & set(ref))
     assert common, "la captura no se solapa con sep-oct 2026; captura ese rango"
     assert {k: real[k] for k in common} == {k: ref[k] for k in common}
+
+
+def test_decode_body_handles_latin1_and_gzip():
+    import gzip as gz
+    from fxpipe.providers.base import decode_body
+    raw = (FIX / "bcch_obs_real.json").read_bytes()
+    with pytest.raises(UnicodeDecodeError):  # sin charset declarado no se adivina
+        decode_body(raw, "application/json")
+    text = decode_body(raw, BCCH_CTYPE)
+    assert decode_body(gz.compress(raw), BCCH_CTYPE, "gzip") == text
+    assert decode_body(gz.compress(raw), BCCH_CTYPE, "") == text  # comprimido sin avisar
+    assert decode_body("ñandú".encode("utf-8"), BCCH_CTYPE) == "ñandú"  # UTF-8 válido se respeta
+
+
+def test_http_get_reads_real_bcch_bytes(monkeypatch):
+    import gzip as gz
+    from fxpipe.providers import base
+
+    class Resp:
+        def __init__(self, body, headers):
+            self.body, self.headers = body, headers
+        def read(self):
+            return self.body
+        def __enter__(self):
+            return self
+        def __exit__(self, *a):
+            return False
+    raw = (FIX / "bcch_obs_real.json").read_bytes()
+    monkeypatch.setattr(base.urllib.request, "urlopen",
+                        lambda req, timeout: Resp(gz.compress(raw), {"Content-Type": BCCH_CTYPE, "Content-Encoding": "gzip"}))
+    payload = base.default_http_get("https://si3.bcentral.cl/x?token=t", {"Accept": "application/json"})
+    assert bcch_parse(payload, "F073.TCO.PRE.Z.D")["2026-10-13"] == 978.61
+
+
+def test_bcch_real_error_response_is_operational():
+    """Respuesta real de la API con un token inválido (HTTP 200, Codigo -5), capturada el 2026-10-12."""
+    from fxpipe.providers import ProviderError
+    from fxpipe.providers.base import decode_body
+    payload = json.loads(decode_body((FIX / "bcch_error_real.json").read_bytes(), BCCH_CTYPE))
+    with pytest.raises(ProviderError) as exc:
+        bcch_parse(payload, "F073.TCO.PRE.Z.D")
+    assert not isinstance(exc.value, ContractError)
+    assert "Codigo=-5" in str(exc.value) and "BCCH_TOKEN" in str(exc.value)
 
 
 # ---------- Transformaciones ----------

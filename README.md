@@ -85,7 +85,8 @@ dashboard en [docs/DASHBOARD.md](docs/DASHBOARD.md).
 2. Inicia sesión, acepta los términos de uso y pulsa **Activar el uso de la API** (una sola vez).
 3. En **Mi Cuenta → Apikey Token** copia el token y guárdalo como secreto `BCCH_TOKEN`.
 4. El token **vence al año**. Se renueva o se extiende en la misma sección; si vence, la
-   corrida marca las series de Chile `error:provider` con un mensaje que lo indica.
+   corrida marca las series de Chile `error:provider` con un mensaje que lo indica
+   (la API responde `Codigo=-5`, «Invalid username or password»).
 
 ## Operación
 

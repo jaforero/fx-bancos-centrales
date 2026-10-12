@@ -1,5 +1,15 @@
 # Cambios
 
+## config 1.5.1 — 2026-10-12
+- Corrección: la API BDE del Banco Central de Chile responde en ISO-8859-1
+  (`application/json; charset=ISO-8859-1`, con tildes en `descripEsp`), y la lectura
+  exigía UTF-8. La primera corrida en vivo marcó Chile `error:contract` («Respuesta no
+  es UTF-8»); el resto de los países se actualizó normalmente y el tablero no cambió.
+- `default_http_get` decodifica con UTF-8 y, si falla, con el charset que declara el
+  servidor; también descomprime gzip si la respuesta llega comprimida.
+- Pruebas con respuestas reales: `bcch_obs_real.json` (datos) y `bcch_error_real.json`
+  (token inválido: HTTP 200 con `Codigo: -5`).
+
 ## config 1.5.0 — 2026-10-11
 - Chile: nuevo conector `bcch_bde` (API REST de la Base de Datos Estadísticos del
   Banco Central de Chile, token en el secreto `BCCH_TOKEN`) y series
