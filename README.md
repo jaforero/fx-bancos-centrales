@@ -30,8 +30,9 @@ este repositorio para alimentar dashboards. Se actualiza solo con GitHub Actions
 | `brl_uyu_cross` | BRL-UYU | Cruzada: interbancario ÷ PTAX (UYU por 1 BRL) | Derivada |
 | `uyu_clp_cross` | UYU-CLP | Cruzada: dólar observado ÷ interbancario (CLP por 1 UYU) | Derivada |
 
-Las seis series de Uruguay se publican con `primary: false` (config 1.7.0) hasta que el
-dashboard las incorpore, igual que se hizo con Chile.
+Uruguay entró igual que Chile: primero los datos con `primary: false` (config 1.7.0) y,
+con el dashboard adaptado, `primary: true` en el interbancario y sus cinco cruzadas
+(config 1.8.0).
 
 Chile entró en dos fases: primero los datos con `primary: false` (config 1.5.x) y,
 con el dashboard ya adaptado, `primary: true` en el dólar observado y sus cuatro

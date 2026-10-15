@@ -90,7 +90,8 @@ rangos plausibles y umbrales. Correr `pytest` y `python -m fxpipe healthcheck`.
   como ventana vacía; la especificación limita el rango a 31 días (no se exige en la
   práctica, pero se respeta); las cotizaciones «billete» de otras monedas en el grupo 2
   son del mercado local de billetes y no sirven para controlar las cruzadas.
-- Despliegue gradual: `primary: false` hasta que el dashboard incorpore Uruguay.
+- Despliegue gradual: `primary: false` (config 1.7.0) y, con el dashboard adaptado,
+  `primary: true` (config 1.8.0).
 
 ## Candidatos (NO verificados: confirmar contra la documentación oficial antes de construir)
 

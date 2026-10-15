@@ -1,5 +1,12 @@
 # Cambios
 
+## config 1.8.0 — 2026-10-15
+- Uruguay visible en el dashboard: `primary: true` en `usd_uyu_interbank`,
+  `mxn_uyu_cross`, `uyu_cop_cross`, `uyu_ars_cross`, `brl_uyu_cross` y `uyu_clp_cross`
+  (21 series primary en total).
+- Publicar después del dashboard que ya trae Uruguay.
+- Sin cambios de esquema JSON.
+
 ## config 1.7.0 — 2026-10-15
 - Uruguay: nuevo conector `bcu_ws` (web service SOAP de cotizaciones del Banco Central
   del Uruguay, sin token) y serie `usd_uyu_interbank` (código 2225, dólar interbancario

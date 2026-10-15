@@ -365,7 +365,7 @@ def test_latest_overall_status_ignores_hidden_series(env):
     cfg, data = env
     for sid in ("usd_clp_obs", "usd_clp_obs_mkt"):  # una fuente cuyas series no muestra el dashboard
         cfg["series"][sid]["primary"] = False
-    for did in ("mxn_clp_cross", "clp_cop_cross", "clp_ars_cross", "brl_clp_cross"):
+    for did in ("mxn_clp_cross", "clp_cop_cross", "clp_ars_cross", "brl_clp_cross", "uyu_clp_cross"):
         cfg["derived"][did]["primary"] = False
     r = pipeline.run(cfg, data, AS_OF, http_get=fake_http(fail="bcch"))
     assert r["manifest"]["overall_status"] == "degraded"  # la alerta fx-alerta sí se dispara
@@ -413,9 +413,9 @@ def test_chile_visible_in_dashboard(env):
     pipeline.run(cfg, data, AS_OF, http_get=fake_http())
     L = json.loads((data / "latest.json").read_text())["series"]
     prim = sorted(k for k, v in L.items() if v["primary"])
-    assert prim == sorted(["usd_mxn_fix", "usd_cop_trm", "usd_ars_a3500", "usd_brl_ptax", "usd_clp_obs",
-                           "mxn_cop_cross", "mxn_ars_cross", "ars_cop_cross", "brl_mxn_cross", "brl_cop_cross",
-                           "brl_ars_cross", "mxn_clp_cross", "clp_cop_cross", "clp_ars_cross", "brl_clp_cross"])
+    assert set(prim) >= {"usd_mxn_fix", "usd_cop_trm", "usd_ars_a3500", "usd_brl_ptax", "usd_clp_obs",
+                         "mxn_cop_cross", "mxn_ars_cross", "ars_cop_cross", "brl_mxn_cross", "brl_cop_cross",
+                         "brl_ars_cross", "mxn_clp_cross", "clp_cop_cross", "clp_ars_cross", "brl_clp_cross"}
     assert L["usd_clp_obs_mkt"]["primary"] is False and L["usd_cop_trm_mkt"]["primary"] is False
 
 
@@ -580,13 +580,13 @@ def test_uruguay_end_to_end_crosses(env):
     assert L["uyu_clp_cross"]["value"] == round(984.82 / 40.342, 4)
 
 
-def test_uruguay_hidden_until_dashboard_ready(env):
-    """Como Chile: los datos se publican con primary:false hasta adaptar el tablero."""
+def test_uruguay_visible_in_dashboard(env):
+    """config 1.8.0: el dashboard ya incorpora Uruguay; sus 6 series pasan a primary (21 en total)."""
     cfg, data = env
     pipeline.run(cfg, data, AS_OF, http_get=fake_http())
     L = json.loads((data / "latest.json").read_text())["series"]
-    assert not any(L[i]["primary"] for i in UY)
-    assert sum(1 for v in L.values() if v["primary"]) == 15
+    assert all(L[i]["primary"] for i in UY)
+    assert sum(1 for v in L.values() if v["primary"]) == 21
 
 
 def test_uruguay_failure_isolated(env):

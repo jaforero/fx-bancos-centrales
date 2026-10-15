@@ -1,5 +1,5 @@
 {
-  "config_version": "1.7.0",
+  "config_version": "1.8.0",
   "backfill_start": "2020-01-01",
   "reference_timezone": "America/Bogota",
   "incremental_lookback_days": 15,
@@ -252,7 +252,7 @@
         "field": "TCV"
       },
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 3,
       "plausible_range": [
         20,
@@ -442,7 +442,7 @@
       "numerator": "usd_uyu_interbank",
       "denominator": "usd_mxn_fix",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 4,
       "plausible_range": [
         0.5,
@@ -459,7 +459,7 @@
       "numerator": "usd_cop_trm_mkt",
       "denominator": "usd_uyu_interbank",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 4,
       "plausible_range": [
         20,
@@ -476,7 +476,7 @@
       "numerator": "usd_ars_a3500",
       "denominator": "usd_uyu_interbank",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 4,
       "plausible_range": [
         0.2,
@@ -493,7 +493,7 @@
       "numerator": "usd_uyu_interbank",
       "denominator": "usd_brl_ptax",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 4,
       "plausible_range": [
         2,
@@ -510,7 +510,7 @@
       "numerator": "usd_clp_obs_mkt",
       "denominator": "usd_uyu_interbank",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 4,
       "plausible_range": [
         5,
