@@ -13,7 +13,7 @@
     "usd_brl_ptax"
   ],
   "first_date": "2020-01-02",
-  "last_date": "2026-10-14",
+  "last_date": "2026-10-15",
   "last_official_date": "2026-10-14",
   "observations": [
     {"date": "2020-01-02", "value": 187.5413, "filled": false},
@@ -2493,6 +2493,7 @@
     {"date": "2026-10-11", "value": 196.1457, "filled": true},
     {"date": "2026-10-12", "value": 196.1457, "filled": true},
     {"date": "2026-10-13", "value": 195.7821, "filled": false},
-    {"date": "2026-10-14", "value": 195.6801, "filled": false}
+    {"date": "2026-10-14", "value": 195.6801, "filled": false},
+    {"date": "2026-10-15", "value": 195.6801, "filled": true}
   ]
 }
