@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<SOAP-ENV:Body>
+		<wsbcucotizaciones.ExecuteResponse xmlns="Cotiza">
+			<Salida xmlns="Cotiza">
+				<respuestastatus>
+					<status>1</status>
+					<codigoerror>0</codigoerror>
+					<mensaje/>
+				</respuestastatus>
+				<datoscotizaciones>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-01</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.236000</TCC>
+						<TCV>40.236000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-02</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.233000</TCC>
+						<TCV>40.233000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-03</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.235000</TCC>
+						<TCV>40.235000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-04</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.243000</TCC>
+						<TCV>40.243000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-07</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.224000</TCC>
+						<TCV>40.224000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-08</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.216000</TCC>
+						<TCV>40.216000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-09</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.242000</TCC>
+						<TCV>40.242000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-10</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.259000</TCC>
+						<TCV>40.259000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-11</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.200000</TCC>
+						<TCV>40.200000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-14</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.218000</TCC>
+						<TCV>40.218000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-15</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.191000</TCC>
+						<TCV>40.191000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-16</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.196000</TCC>
+						<TCV>40.196000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-17</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.164000</TCC>
+						<TCV>40.164000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-18</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.142000</TCC>
+						<TCV>40.142000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-21</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.064000</TCC>
+						<TCV>40.064000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-22</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.052000</TCC>
+						<TCV>40.052000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-23</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.049000</TCC>
+						<TCV>40.049000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-24</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.214000</TCC>
+						<TCV>40.214000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-25</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.390000</TCC>
+						<TCV>40.390000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-28</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.273000</TCC>
+						<TCV>40.273000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-29</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.237000</TCC>
+						<TCV>40.237000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-09-30</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.286000</TCC>
+						<TCV>40.286000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-10-01</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.463000</TCC>
+						<TCV>40.463000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-10-02</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.342000</TCC>
+						<TCV>40.342000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-10-05</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.092000</TCC>
+						<TCV>40.092000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-10-06</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.166000</TCC>
+						<TCV>40.166000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-10-07</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.150000</TCC>
+						<TCV>40.150000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-10-08</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.210000</TCC>
+						<TCV>40.210000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-10-09</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.184000</TCC>
+						<TCV>40.184000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-10-13</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.200000</TCC>
+						<TCV>40.200000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-10-14</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.236000</TCC>
+						<TCV>40.236000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+					<datoscotizaciones.dato xmlns="Cotiza">
+						<Fecha>2026-10-15</Fecha>
+						<Moneda>2225</Moneda>
+						<Nombre>DLS. USA BILLETE</Nombre>
+						<CodigoISO>DLS.</CodigoISO>
+						<Emisor>ESTADOS UNIDOS</Emisor>
+						<TCC>40.135000</TCC>
+						<TCV>40.135000</TCV>
+						<ArbAct>1.000000</ArbAct>
+						<FormaArbitrar>0</FormaArbitrar>
+					</datoscotizaciones.dato>
+				</datoscotizaciones>
+			</Salida>
+		</wsbcucotizaciones.ExecuteResponse>
+	</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

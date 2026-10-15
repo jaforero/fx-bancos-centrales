@@ -74,6 +74,24 @@ rangos plausibles y umbrales. Correr `pytest` y `python -m fxpipe healthcheck`.
 - Despliegue gradual: `primary: false` (config 1.5.x) hasta que el dashboard incorporó
   los nombres, la bandera y la reserva de alto; luego `primary: true` (config 1.6.0).
 
+## Ejemplo resuelto: Uruguay (config 1.7.0)
+
+- Fuente: web service SOAP de cotizaciones del Banco Central del Uruguay
+  (`awsbcucotizaciones`, especificación v3), sin token, grupo 2 (cotizaciones locales).
+- Tasa: código 2225 «DLS. USA BILLETE», el interbancario (promedio de las operaciones del
+  día en BEVSA; coincide con lo que informa la prensa, p. ej. 42,572 el 6-sep-2021 y
+  38,626 el 25-abr-2024). Desde 2020, cable (2224) y promedio fondo (2230) publican el
+  mismo valor. Compra = venta en todo el período: el conector lo exige.
+- `date_basis: determinacion`: el cierre del día D se publica el día D. Prueba empírica
+  (1.571-1.661 días): la variación diaria correlaciona 0,47 con la PTAX y 0,41 con el FIX
+  el mismo día; con ±1 día de desfase, ~0,02.
+- Trampas: SOAP por POST con `SOAPAction`; el código 100 («No existe cotización») llega
+  en feriados, fines de semana y fechas futuras con un dato vacío (`Moneda` 0): se trata
+  como ventana vacía; la especificación limita el rango a 31 días (no se exige en la
+  práctica, pero se respeta); las cotizaciones «billete» de otras monedas en el grupo 2
+  son del mercado local de billetes y no sirven para controlar las cruzadas.
+- Despliegue gradual: `primary: false` hasta que el dashboard incorpore Uruguay.
+
 ## Candidatos (NO verificados: confirmar contra la documentación oficial antes de construir)
 
 | País | Institución | Pista de API |

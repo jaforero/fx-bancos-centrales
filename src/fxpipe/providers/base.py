@@ -78,12 +78,13 @@ def decode_body(data: bytes, content_type: str = "", content_encoding: str = "")
 HttpGet = Callable[[str, dict], object]
 
 
-def default_http_get(url: str, headers: dict, *, retries: int = 4,
+def default_http_get(url: str, headers: dict, *, data: bytes | None = None, retries: int = 4,
                      timeout: int = 45) -> object:
-    """GET con reintentos exponenciales para 429/5xx y errores de red."""
+    """GET (o POST si se pasa `data`, p. ej. SOAP) con reintentos exponenciales para 429/5xx y errores de red."""
     last_exc: Exception | None = None
     for attempt in range(retries):
-        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, **headers})
+        req = urllib.request.Request(url, data=data, headers={"User-Agent": USER_AGENT, **headers},
+                                     method="POST" if data is not None else "GET")
         try:
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 raw = decode_body(resp.read(), resp.headers.get("Content-Type", ""),

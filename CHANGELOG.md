@@ -1,5 +1,17 @@
 # Cambios
 
+## config 1.7.0 — 2026-10-15
+- Uruguay: nuevo conector `bcu_ws` (web service SOAP de cotizaciones del Banco Central
+  del Uruguay, sin token) y serie `usd_uyu_interbank` (código 2225, dólar interbancario
+  billete: promedio de las operaciones del día en BEVSA).
+- `date_basis: determinacion`: el BCU fecha cada cotización por el día de sus operaciones
+  y la publica el mismo día. Sin serie por día de mercado: se cruza directamente.
+- Cruzadas por día de mercado: `mxn_uyu_cross`, `uyu_cop_cross`, `uyu_ars_cross`,
+  `brl_uyu_cross` y `uyu_clp_cross`. Malla completa entre MXN, COP, ARS, BRL, CLP y UYU.
+- Las seis series nuevas salen con `primary: false` hasta adaptar el dashboard.
+- `default_http_get` acepta un cuerpo (`data`) y entonces hace POST (SOAP).
+- Sin cambios de esquema JSON.
+
 ## config 1.6.0 — 2026-10-12
 - Chile visible en el dashboard: `primary: true` en `usd_clp_obs`, `mxn_clp_cross`,
   `clp_cop_cross`, `clp_ars_cross` y `brl_clp_cross`. `usd_clp_obs_mkt` sigue oculto

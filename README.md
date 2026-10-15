@@ -13,6 +13,7 @@ este repositorio para alimentar dashboards. Se actualiza solo con GitHub Actions
 | `usd_brl_ptax` | USD-BRL | PTAX de venta, cierre (**principal**) | Banco Central do Brasil, API PTAX (Olinda) |
 | `usd_clp_obs` | USD-CLP | Dólar observado, fecha de vigencia | Banco Central de Chile, API BDE `F073.TCO.PRE.Z.D` |
 | `usd_clp_obs_mkt` | USD-CLP | Dólar observado indexado por día de mercado (insumo de las cruzadas) | Misma fuente |
+| `usd_uyu_interbank` | USD-UYU | Dólar interbancario billete, promedio del día | Banco Central del Uruguay, web service de cotizaciones (código `2225`) |
 | `mxn_cop_cross` | MXN-COP | Cruzada: TRM ÷ FIX del **mismo día de mercado** | Derivada |
 | `mxn_ars_cross` | MXN-ARS | Cruzada: A 3500 ÷ FIX (ARS por 1 MXN) | Derivada |
 | `ars_cop_cross` | ARS-COP | Cruzada: TRM ÷ A 3500 (COP por 1 ARS) | Derivada |
@@ -23,6 +24,14 @@ este repositorio para alimentar dashboards. Se actualiza solo con GitHub Actions
 | `clp_cop_cross` | CLP-COP | Cruzada: TRM ÷ dólar observado (COP por 1 CLP) | Derivada |
 | `clp_ars_cross` | CLP-ARS | Cruzada: A 3500 ÷ dólar observado (ARS por 1 CLP) | Derivada |
 | `brl_clp_cross` | BRL-CLP | Cruzada: dólar observado ÷ PTAX (CLP por 1 BRL) | Derivada |
+| `mxn_uyu_cross` | MXN-UYU | Cruzada: interbancario ÷ FIX (UYU por 1 MXN) | Derivada |
+| `uyu_cop_cross` | UYU-COP | Cruzada: TRM ÷ interbancario (COP por 1 UYU) | Derivada |
+| `uyu_ars_cross` | UYU-ARS | Cruzada: A 3500 ÷ interbancario (ARS por 1 UYU) | Derivada |
+| `brl_uyu_cross` | BRL-UYU | Cruzada: interbancario ÷ PTAX (UYU por 1 BRL) | Derivada |
+| `uyu_clp_cross` | UYU-CLP | Cruzada: dólar observado ÷ interbancario (CLP por 1 UYU) | Derivada |
+
+Las seis series de Uruguay se publican con `primary: false` (config 1.7.0) hasta que el
+dashboard las incorpore, igual que se hizo con Chile.
 
 Chile entró en dos fases: primero los datos con `primary: false` (config 1.5.x) y,
 con el dashboard ya adaptado, `primary: true` en el dólar observado y sus cuatro
@@ -48,6 +57,7 @@ Cada tasa se descarga de la institución que la define oficialmente:
 | Argentina | Com. A 3500 | Banco Central de la República Argentina | API Estadísticas Cambiarias del BCRA |
 | Brasil | PTAX | Banco Central do Brasil (la calcula y publica; Resolução BCB nº 45/2020) | API PTAX del BCB (Olinda, OData) |
 | Chile | Dólar observado | Banco Central de Chile (lo calcula y publica; Compendio de Normas de Cambios Internacionales, Cap. I, sección VII) | API REST de la Base de Datos Estadísticos (BDE), con token |
+| Uruguay | Interbancario | Banco Central del Uruguay (publica el promedio de las operaciones interbancarias del día en BEVSA) | Web service SOAP de cotizaciones del BCU, sin token |
 
 Por qué importa: la fuente oficial define la metodología, el horario y las
 correcciones; un agregador puede redondear, retrasarse o mezclar tasas
@@ -121,5 +131,6 @@ Ver [docs/AGREGAR_PAIS.md](docs/AGREGAR_PAIS.md).
 Datos: Banco de México (SIE), Banco de la República de Colombia (SDMX; TRM
 calculada y certificada por la Superintendencia Financiera) y Banco Central de
 la República Argentina (API Estadísticas Cambiarias), Banco Central do Brasil
-(API PTAX, licencia ODbL) y Banco Central de Chile (Base de Datos Estadísticos).
+(API PTAX, licencia ODbL), Banco Central de Chile (Base de Datos Estadísticos) y
+Banco Central del Uruguay (web service de cotizaciones).
 Las tasas cruzadas son cálculos propios, no tasas oficiales.

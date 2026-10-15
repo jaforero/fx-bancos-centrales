@@ -10,6 +10,7 @@ from fxpipe.providers import ContractError
 from fxpipe.providers.banxico import parse_payload
 from fxpipe.providers.bcb_ptax import parse_payload as bcb_parse
 from fxpipe.providers.bcch_bde import market_dates_from_observations, parse_payload as bcch_parse
+from fxpipe.providers.bcu_ws import parse_payload as bcu_parse
 from fxpipe.providers.banrep_sdmx import market_dates_from_daily, parse_generic_xml
 from fxpipe.providers.bcra_cambiarias import parse_payload as bcra_parse
 from fxpipe.providers.socrata_trm import expand_records, market_date_records
@@ -35,8 +36,34 @@ def bcch_response(url, payload=None):
     return doc
 
 
+def bcu_values():
+    """Valores reales de la serie 2225 (sep-oct 2026) tomados de tests/fixtures/bcu_sep_oct.xml."""
+    return {k: v["TCV"] for k, v in bcu_parse((FIX / "bcu_sep_oct.xml").read_text(encoding="utf-8"), {2225})[2225].items()}
+
+
+def bcu_response(data: bytes, values=None) -> str:
+    """Simula el web service del BCU con el mismo formato de la respuesta real."""
+    import re as _re
+    body = data.decode("utf-8")
+    a = date.fromisoformat(_re.search(r"<cot:FechaDesde>([\d-]+)<", body).group(1))
+    b = date.fromisoformat(_re.search(r"<cot:FechaHasta>([\d-]+)<", body).group(1))
+    vals = {k: v for k, v in (values or bcu_values()).items() if a <= date.fromisoformat(k) <= b}
+    if not vals:
+        return (FIX / "bcu_sin_cotizacion_real.xml").read_text(encoding="utf-8")
+    real = (FIX / "bcu_cotizaciones_real.xml").read_text(encoding="utf-8")
+    head, tail = real.split("\t\t\t\t\t<datoscotizaciones.dato", 1)[0], real.split("</datoscotizaciones.dato>\n")[-1]
+    tpl = ("\t\t\t\t\t<datoscotizaciones.dato" + real.split("\t\t\t\t\t<datoscotizaciones.dato", 2)[1]
+           ).replace("2026-10-01", "{f}").replace("40.463000", "{v}")
+    return head + "".join(tpl.format(f=k, v=f"{v:.6f}") for k, v in sorted(vals.items())) + tail
+
+
 def fake_http(banxico=None, trm=None, bcra=None, banrep=None, bcb=None, bcch=None, fail=None):
-    def get(url, headers):
+    def get(url, headers, data=None):
+        if "bcu.gub.uy" in url:
+            if fail == "bcu":
+                from fxpipe.providers import ProviderError
+                raise ProviderError("simulado: HTTP 503 BCU")
+            return bcu_response(data)
         if "bcentral.cl" in url:
             if fail == "bcch":
                 from fxpipe.providers import ProviderError
@@ -79,6 +106,8 @@ def env(tmp_path, monkeypatch):
     monkeypatch.setattr(bcb_ptax, "today_brasilia", lambda: date(2026, 12, 31))
     from fxpipe.providers import bcch_bde
     monkeypatch.setattr(bcch_bde, "today_santiago", lambda: AS_OF)
+    from fxpipe.providers import bcu_ws
+    monkeypatch.setattr(bcu_ws, "today_montevideo", lambda: AS_OF)
     cfg = pipeline.load_config(ROOT / "config" / "sources.json")
     return cfg, tmp_path
 
@@ -393,7 +422,8 @@ def test_chile_visible_in_dashboard(env):
 def test_chile_failure_isolated(env):
     cfg, data = env
     st = pipeline.run(cfg, data, AS_OF, http_get=fake_http(fail="bcch"))["manifest"]["series_status"]
-    chile = ["usd_clp_obs", "usd_clp_obs_mkt", "mxn_clp_cross", "clp_cop_cross", "clp_ars_cross", "brl_clp_cross"]
+    chile = ["usd_clp_obs", "usd_clp_obs_mkt", "mxn_clp_cross", "clp_cop_cross", "clp_ars_cross", "brl_clp_cross",
+             "uyu_clp_cross"]  # la cruzada con Uruguay también depende del observado
     assert all(st[i] == "error:provider" for i in chile)
     assert all(v == "ok" for k, v in st.items() if k not in chile)
 
@@ -465,6 +495,105 @@ def test_bcch_real_error_response_is_operational():
         bcch_parse(payload, "F073.TCO.PRE.Z.D")
     assert not isinstance(exc.value, ContractError)
     assert "Codigo=-5" in str(exc.value) and "BCCH_TOKEN" in str(exc.value)
+
+
+# ---------- Uruguay: cotización interbancaria (BCU, web service SOAP) ----------
+
+UY = ["usd_uyu_interbank", "mxn_uyu_cross", "uyu_cop_cross", "uyu_ars_cross", "brl_uyu_cross", "uyu_clp_cross"]
+
+
+def test_bcu_parse_real_response():
+    """Respuesta real del web service (serie 2225, 1 al 15-oct-2026), capturada el 2026-10-15."""
+    rows = bcu_parse((FIX / "bcu_cotizaciones_real.xml").read_text(encoding="utf-8"), {2225})[2225]
+    assert len(rows) == 10 and rows["2026-10-15"]["TCV"] == 40.135 and rows["2026-10-01"]["TCC"] == 40.463
+    assert "2026-10-12" not in rows  # feriado en Uruguay: el BCU no publica
+    assert bcu_parse((FIX / "bcu_sin_cotizacion_real.xml").read_text(encoding="utf-8"), {2225}) == {}  # codigoerror 100
+
+
+def test_bcu_contract_and_operational_errors():
+    from fxpipe.providers import ProviderError
+    real = (FIX / "bcu_cotizaciones_real.xml").read_text(encoding="utf-8")
+    err = (FIX / "bcu_sin_cotizacion_real.xml").read_text(encoding="utf-8")
+    with pytest.raises(ContractError):  # moneda inexistente (101): la consulta cambió
+        bcu_parse(err.replace("<codigoerror>100</codigoerror>", "<codigoerror>101</codigoerror>"), {2225})
+    with pytest.raises(ProviderError) as exc:  # 106/107: servicio no disponible, transitorio
+        bcu_parse(err.replace("<codigoerror>100</codigoerror>", "<codigoerror>107</codigoerror>"), {2225})
+    assert not isinstance(exc.value, ContractError)
+    with pytest.raises(ContractError):  # llega una moneda que no se pidió
+        bcu_parse(real, {2230})
+    with pytest.raises(ContractError):  # compra y venta distintas: revisar metodología
+        bcu_parse(real.replace("<TCC>40.135000</TCC>", "<TCC>40.100000</TCC>"), {2225})
+    with pytest.raises(ContractError):
+        bcu_parse("<html>mantenimiento</html>", {2225})
+
+
+def test_bcu_soap_request_and_window(env):
+    cfg, _ = env
+    from fxpipe.providers import build_provider
+    from fxpipe.providers.base import FetchRequest as FR
+    calls = []
+    prov = build_provider("bcu", cfg["providers"]["bcu"],
+                          http_get=lambda u, h, data=None: calls.append((u, h, data)) or bcu_response(data))
+    out = prov.fetch([FR("usd_uyu_interbank", "2225", (("field", "TCV"),))], date(2026, 8, 20), date(2026, 10, 11))
+    assert all(h["SOAPAction"] == "Cotizaaction/AWSBCUCOTIZACIONES.Execute" and b"<cot:item>2225</cot:item>" in d
+               for _, h, d in calls)
+    assert len(calls) == 2 and b"<cot:FechaDesde>2026-08-20<" in calls[0][2] and b"<cot:FechaHasta>2026-09-19<" in calls[0][2]
+    assert b"<cot:FechaHasta>2026-10-04<" in calls[1][2]  # se recorta a hoy en Montevideo: no hay futuro
+    assert out["usd_uyu_interbank"]["2026-10-02"] == 40.342 and max(out["usd_uyu_interbank"]) == "2026-10-02"
+
+
+def test_http_get_posts_soap_body(monkeypatch):
+    from fxpipe.providers import base
+    seen = {}
+
+    class Resp:
+        headers = {"Content-Type": "text/xml;charset=utf-8"}
+        def read(self):
+            return (FIX / "bcu_cotizaciones_real.xml").read_bytes()
+        def __enter__(self):
+            return self
+        def __exit__(self, *a):
+            return False
+
+    def fake_urlopen(req, timeout):
+        seen.update(method=req.get_method(), data=req.data)
+        return Resp()
+    monkeypatch.setattr(base.urllib.request, "urlopen", fake_urlopen)
+    txt = base.default_http_get("https://cotizaciones.bcu.gub.uy/x", {"Accept": "text/xml"}, data=b"<a/>")
+    assert seen == {"method": "POST", "data": b"<a/>"} and "DLS. USA BILLETE" in txt
+
+
+def test_uruguay_end_to_end_crosses(env):
+    cfg, data = env
+    r = pipeline.run(cfg, data, AS_OF, http_get=fake_http())
+    assert r["overall_status"] == "ok"
+    L = json.loads((data / "latest.json").read_text())["series"]
+    uy = L["usd_uyu_interbank"]
+    assert uy["value"] == 40.342 and uy["date"] == "2026-10-02" and uy["date_basis"] == "determinacion"
+    assert uy["source"]["country"] == "UY" and uy["source"]["institution"].startswith("Banco Central del Uruguay")
+    assert uy["source"]["series_id"] == "2225" and "next" not in uy
+    # Mismo día de mercado (2-oct) sin desplazar: el BCU fecha cada cotización por el día de sus operaciones
+    assert L["mxn_uyu_cross"]["date"] == "2026-10-02" and L["mxn_uyu_cross"]["value"] == round(40.342 / 18.20, 4)
+    assert L["uyu_cop_cross"]["value"] == round(3273.49 / 40.342, 4) and L["uyu_cop_cross"]["pair"] == "UYU-COP"
+    assert L["uyu_ars_cross"]["value"] == round(1523.0868 / 40.342, 4)
+    assert L["brl_uyu_cross"]["value"] == round(40.342 / 5.275, 4)
+    assert L["uyu_clp_cross"]["value"] == round(984.82 / 40.342, 4)
+
+
+def test_uruguay_hidden_until_dashboard_ready(env):
+    """Como Chile: los datos se publican con primary:false hasta adaptar el tablero."""
+    cfg, data = env
+    pipeline.run(cfg, data, AS_OF, http_get=fake_http())
+    L = json.loads((data / "latest.json").read_text())["series"]
+    assert not any(L[i]["primary"] for i in UY)
+    assert sum(1 for v in L.values() if v["primary"]) == 15
+
+
+def test_uruguay_failure_isolated(env):
+    cfg, data = env
+    st = pipeline.run(cfg, data, AS_OF, http_get=fake_http(fail="bcu"))["manifest"]["series_status"]
+    assert all(st[i] == "error:provider" for i in UY)
+    assert all(v == "ok" for k, v in st.items() if k not in UY)
 
 
 # ---------- Transformaciones ----------
