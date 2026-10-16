@@ -233,6 +233,31 @@
       "change_pct": -0.2979,
       "status": "ok"
     },
+    "usd_uyu_interbank": {
+      "pair": "USD-UYU",
+      "label": "Dólar interbancario billete (promedio del día)",
+      "quote_unit": "UYU por 1 USD",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 3,
+      "source": {
+        "provider": "bcu",
+        "institution": "Banco Central del Uruguay (BCU)",
+        "country": "UY",
+        "series_id": "2225",
+        "docs_url": "https://www.bcu.gub.uy/Estadisticas-e-Indicadores/Paginas/Cotizaciones.aspx",
+        "authority": "Banco Central del Uruguay: publica la cotización interbancaria (promedio de las operaciones del día en BEVSA)"
+      },
+      "method": "official",
+      "value": 40.135,
+      "date": "2026-10-15",
+      "days_since_official": 0,
+      "prev_value": 40.236,
+      "prev_date": "2026-10-14",
+      "change_abs": -0.101,
+      "change_pct": -0.251,
+      "status": "ok"
+    },
     "mxn_cop_cross": {
       "pair": "MXN-COP",
       "label": "Tasa cruzada MXN-COP vía USD (TRM ÷ FIX, mismo día de mercado)",
@@ -441,6 +466,111 @@
       "prev_date": "2026-10-14",
       "change_abs": -0.8918,
       "change_pct": -0.4557,
+      "status": "ok"
+    },
+    "mxn_uyu_cross": {
+      "pair": "MXN-UYU",
+      "label": "Tasa cruzada MXN-UYU vía USD (interbancario ÷ FIX, mismo día de mercado)",
+      "quote_unit": "UYU por 1 MXN",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "method": "cross_via_usd: usd_uyu_interbank / usd_mxn_fix",
+      "inputs": [
+        "usd_uyu_interbank",
+        "usd_mxn_fix"
+      ],
+      "value": 2.1783,
+      "date": "2026-10-15",
+      "days_since_official": 0,
+      "prev_value": 2.1762,
+      "prev_date": "2026-10-14",
+      "change_abs": 0.0021,
+      "change_pct": 0.0965,
+      "status": "ok"
+    },
+    "uyu_cop_cross": {
+      "pair": "UYU-COP",
+      "label": "Tasa cruzada UYU-COP vía USD (TRM ÷ interbancario, mismo día de mercado)",
+      "quote_unit": "COP por 1 UYU",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "method": "cross_via_usd: usd_cop_trm_mkt / usd_uyu_interbank",
+      "inputs": [
+        "usd_cop_trm_mkt",
+        "usd_uyu_interbank"
+      ],
+      "value": 78.9949,
+      "date": "2026-10-15",
+      "days_since_official": 0,
+      "prev_value": 79.4724,
+      "prev_date": "2026-10-14",
+      "change_abs": -0.4775,
+      "change_pct": -0.6008,
+      "status": "ok"
+    },
+    "uyu_ars_cross": {
+      "pair": "UYU-ARS",
+      "label": "Tasa cruzada UYU-ARS vía USD (A 3500 ÷ interbancario, mismo día de mercado)",
+      "quote_unit": "ARS por 1 UYU",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "method": "cross_via_usd: usd_ars_a3500 / usd_uyu_interbank",
+      "inputs": [
+        "usd_ars_a3500",
+        "usd_uyu_interbank"
+      ],
+      "value": 37.721,
+      "date": "2026-10-15",
+      "days_since_official": 0,
+      "prev_value": 37.642,
+      "prev_date": "2026-10-14",
+      "change_abs": 0.079,
+      "change_pct": 0.2099,
+      "status": "ok"
+    },
+    "brl_uyu_cross": {
+      "pair": "BRL-UYU",
+      "label": "Tasa cruzada BRL-UYU vía USD (interbancario ÷ PTAX, mismo día de mercado)",
+      "quote_unit": "UYU por 1 BRL",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "method": "cross_via_usd: usd_uyu_interbank / usd_brl_ptax",
+      "inputs": [
+        "usd_uyu_interbank",
+        "usd_brl_ptax"
+      ],
+      "value": 7.9442,
+      "date": "2026-10-15",
+      "days_since_official": 0,
+      "prev_value": 7.9768,
+      "prev_date": "2026-10-14",
+      "change_abs": -0.0326,
+      "change_pct": -0.4087,
+      "status": "ok"
+    },
+    "uyu_clp_cross": {
+      "pair": "UYU-CLP",
+      "label": "Tasa cruzada UYU-CLP vía USD (dólar observado ÷ interbancario, mismo día de mercado)",
+      "quote_unit": "CLP por 1 UYU",
+      "date_basis": "determinacion",
+      "primary": true,
+      "decimals": 4,
+      "method": "cross_via_usd: usd_clp_obs_mkt / usd_uyu_interbank",
+      "inputs": [
+        "usd_clp_obs_mkt",
+        "usd_uyu_interbank"
+      ],
+      "value": 24.5195,
+      "date": "2026-10-15",
+      "days_since_official": 0,
+      "prev_value": 24.531,
+      "prev_date": "2026-10-14",
+      "change_abs": -0.0115,
+      "change_pct": -0.0469,
       "status": "ok"
     }
   }

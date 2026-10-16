@@ -1,21 +1,23 @@
 {
   "schema_version": "1.0.0",
-  "config_version": "1.6.0",
-  "generated_at": "2026-10-15T22:32:52+00:00",
+  "config_version": "1.8.0",
+  "generated_at": "2026-10-16T00:08:48+00:00",
   "as_of": "2026-10-15",
   "overall_status": "ok",
-  "data_hash": "2d65cac7e762126d234a98ce9800c31fea5a057679244bfdfd65d5365c21ef18",
+  "data_hash": "66ab8da2fa5ad54b2c03f2abaf1b643bd19c5a6ca6bb85330055a903c757f2b7",
   "series_status": {
     "ars_cop_cross": "ok",
     "brl_ars_cross": "ok",
     "brl_clp_cross": "ok",
     "brl_cop_cross": "ok",
     "brl_mxn_cross": "ok",
+    "brl_uyu_cross": "ok",
     "clp_ars_cross": "ok",
     "clp_cop_cross": "ok",
     "mxn_ars_cross": "ok",
     "mxn_clp_cross": "ok",
     "mxn_cop_cross": "ok",
+    "mxn_uyu_cross": "ok",
     "usd_ars_a3500": "ok",
     "usd_brl_ptax": "ok",
     "usd_clp_obs": "ok",
@@ -23,7 +25,11 @@
     "usd_cop_trm": "ok",
     "usd_cop_trm_mkt": "ok",
     "usd_mxn_fix": "ok",
-    "usd_mxn_liq": "ok"
+    "usd_mxn_liq": "ok",
+    "usd_uyu_interbank": "ok",
+    "uyu_ars_cross": "ok",
+    "uyu_clp_cross": "ok",
+    "uyu_cop_cross": "ok"
   },
   "errors": {},
   "warnings": {
@@ -57,6 +63,11 @@
     ],
     "usd_cop_trm_mkt": [
       "salto 2020-03-06->2020-03-09: 3584.58 -> 3803.6 (+6.11%)"
+    ],
+    "uyu_ars_cross": [
+      "salto 2023-08-11->2023-08-14: 7.5837 -> 9.1732 (+20.96%)",
+      "salto 2023-12-12->2023-12-13: 9.197 -> 20.0194 (+117.67%)",
+      "salto 2025-04-11->2025-04-14: 25.2849 -> 27.9195 (+10.42%)"
     ]
   },
   "files": [
@@ -67,11 +78,13 @@
     "series/brl_clp_cross.json",
     "series/brl_cop_cross.json",
     "series/brl_mxn_cross.json",
+    "series/brl_uyu_cross.json",
     "series/clp_ars_cross.json",
     "series/clp_cop_cross.json",
     "series/mxn_ars_cross.json",
     "series/mxn_clp_cross.json",
     "series/mxn_cop_cross.json",
+    "series/mxn_uyu_cross.json",
     "series/usd_ars_a3500.json",
     "series/usd_brl_ptax.json",
     "series/usd_clp_obs.json",
@@ -79,6 +92,10 @@
     "series/usd_cop_trm.json",
     "series/usd_cop_trm_mkt.json",
     "series/usd_mxn_fix.json",
-    "series/usd_mxn_liq.json"
+    "series/usd_mxn_liq.json",
+    "series/usd_uyu_interbank.json",
+    "series/uyu_ars_cross.json",
+    "series/uyu_clp_cross.json",
+    "series/uyu_cop_cross.json"
   ]
 }
