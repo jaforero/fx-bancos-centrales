@@ -1013,10 +1013,10 @@ def test_compact_rejects_cross_of_cross():
         transform.compact_columns(list(meta), meta)
 
 
-def test_compact_is_listed_in_manifest_and_schema_is_1_1(compact_run):
+def test_compact_is_listed_in_manifest_and_schema_is_1_2(compact_run):
     cfg, data, wide, compact = compact_run
     manifest = json.loads((data / "manifest.json").read_text())
     assert "rates_daily_compact.json" in manifest["files"]
     for doc in (compact, wide, json.loads((data / "latest.json").read_text()), manifest):
-        assert doc["schema_version"] == "1.1.0"
+        assert doc["schema_version"] == "1.2.0"
     assert compact["layout"] == "columnar"
