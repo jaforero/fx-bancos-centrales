@@ -8,7 +8,9 @@ import os
 import tempfile
 from pathlib import Path
 
-SCHEMA_VERSION = "1.1.0"  # 1.1.0: agrega rates_daily_compact.json (compatible con 1.0.x)
+# 1.1.0: agrega rates_daily_compact.json (compatible con 1.0.x)
+# 1.2.0: agrega semantic_model.json y semantic_model.yaml, el modelo semántico (compatible con 1.1.x)
+SCHEMA_VERSION = "1.2.0"
 
 
 def load_official(data_dir: Path, series_id: str) -> dict[str, float]:

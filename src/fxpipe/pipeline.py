@@ -12,7 +12,7 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
-from . import store, transform
+from . import semantic, store, transform
 from .providers import ConfigError, ContractError, FetchRequest, ProviderError, build_provider
 
 log = logging.getLogger("fxpipe")
@@ -32,6 +32,9 @@ def load_config(path: Path) -> dict:
             raise ConfigError(f"Derivada {did}: insumos con date_basis distinto {sorted(bases)}; desalinea días de mercado")
         if did in cfg["series"]:
             raise ConfigError(f"Id duplicado entre series y derivadas: {did}")
+    # Curaduría del modelo semántico (config/semantic.json, junto a sources.json). Es metadato: si falta o
+    # está mal formada no impide publicar datos; el modelo lo declara en curation.gaps.
+    cfg["_curation"], cfg["_curation_problem"] = semantic.load_curation(path)
     return cfg
 
 
@@ -300,4 +303,13 @@ def build_outputs(cfg, daily, meta, status, warnings, errors, as_of) -> dict[str
             entry["error"] = errors[sid]
         latest["series"][sid] = entry
     texts["latest.json"] = store.render(latest)
+
+    # data/semantic_model.json y .yaml — modelo semántico: metadatos, relaciones, linaje, calidad y cobertura
+    try:
+        model = semantic.build_model(cfg, cfg.get("_curation"), daily, status, as_of.isoformat(),
+                                     store.SCHEMA_VERSION, cfg.get("_curation_problem"))
+        texts["semantic_model.json"] = semantic.render_json(model)
+        texts["semantic_model.yaml"] = semantic.render_yaml(model)
+    except Exception as exc:  # noqa: BLE001 — metadato: un fallo aquí nunca debe impedir publicar los datos
+        log.error("modelo semántico no generado (se conserva el anterior): %r", exc)
     return texts

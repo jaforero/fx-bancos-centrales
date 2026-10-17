@@ -3,6 +3,8 @@
   python -m fxpipe backfill --start 2020-01-01
   python -m fxpipe check                  # exit 1 si alguna serie no está "ok"
   python -m fxpipe healthcheck --report reporte.md   # prueba de contrato en vivo
+  python -m fxpipe semantic               # exit 1 si la curaduría (config/semantic.json) tiene huecos
+  python -m fxpipe semantic --write-docs  # regenera las tablas de docs/MODELO_SEMANTICO.md
 """
 from __future__ import annotations
 
@@ -12,7 +14,7 @@ import sys
 from datetime import date, timedelta
 from pathlib import Path
 
-from . import pipeline, store
+from . import pipeline, semantic, store
 from .providers import ConfigError, ContractError, FetchRequest, ProviderError, build_provider
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -109,11 +111,32 @@ def cmd_healthcheck(args) -> int:
     return 0 if ok else 1
 
 
+def cmd_semantic(args) -> int:
+    """Verifica que la curaduría cubra la configuración; con --write-docs regenera las tablas de la documentación."""
+    cfg = pipeline.load_config(args.config)
+    problems = ([cfg["_curation_problem"]] if cfg.get("_curation_problem") else []) \
+        + semantic.check_invariants(cfg) + semantic.check_curation(cfg, cfg.get("_curation"))
+    if problems:
+        print("Huecos o incoherencias del modelo semántico:")
+        for p in problems:
+            print(f"  - {p}")
+        return 1
+    print("Curaduría completa: todas las series, proveedores, monedas y países tienen su descripción en es y en.")
+    if args.write_docs:
+        model = semantic.build_model(cfg, cfg["_curation"], {}, {}, "", store.SCHEMA_VERSION)
+        doc = ROOT / "docs" / "MODELO_SEMANTICO.md"
+        text = doc.read_text(encoding="utf-8")
+        new = semantic.sync_doc(text, semantic.render_doc_blocks(model))
+        doc.write_text(new, encoding="utf-8")
+        print(f"{doc.relative_to(ROOT)}: {'actualizado' if new != text else 'sin cambios'}")
+    return 0
+
+
 def main(argv=None) -> int:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     ap = argparse.ArgumentParser(prog="fxpipe")
     sub = ap.add_subparsers(dest="cmd", required=True)
-    for name in ("update", "backfill", "check", "healthcheck"):
+    for name in ("update", "backfill", "check", "healthcheck", "semantic"):
         sp = sub.add_parser(name)
         _common(sp)
         if name in ("update", "backfill"):
@@ -122,6 +145,8 @@ def main(argv=None) -> int:
             sp.add_argument("--start", type=date.fromisoformat, required=True)
         if name == "healthcheck":
             sp.add_argument("--report", type=Path)
+        if name == "semantic":
+            sp.add_argument("--write-docs", action="store_true")
     args = ap.parse_args(argv)
     if args.cmd == "update":
         return cmd_update(args)
@@ -129,6 +154,8 @@ def main(argv=None) -> int:
         return cmd_update(args, backfill=args.start)
     if args.cmd == "check":
         return cmd_check(args)
+    if args.cmd == "semantic":
+        return cmd_semantic(args)
     return cmd_healthcheck(args)
 
 
