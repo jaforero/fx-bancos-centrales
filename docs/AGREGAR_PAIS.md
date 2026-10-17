@@ -116,7 +116,8 @@ rangos plausibles y umbrales. Correr `pytest` y `python -m fxpipe healthcheck`.
   Incapsula y una consulta mal formada (o, a veces, una válida) devuelve HTTP 200 con una página
   HTML de verificación: se reintenta y, si persiste, es error operativo; el contenedor de Claude
   recibe 403 del proxy, así que la validación en vivo se hace desde GitHub Actions.
-- Despliegue gradual: `primary: false` (config 1.9.0) y, con el dashboard adaptado, `primary: true`.
+- Despliegue gradual: `primary: false` (config 1.9.0) y, con el dashboard adaptado,
+  `primary: true` (config 1.10.0).
 
 ## Candidatos (NO verificados: confirmar contra la documentación oficial antes de construir)
 
