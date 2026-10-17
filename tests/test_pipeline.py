@@ -910,6 +910,113 @@ def test_outputs_match_schema(env):
     jsonschema = pytest.importorskip("jsonschema")
     cfg, data = env
     pipeline.run(cfg, data, AS_OF, http_get=fake_http())
-    for name in ("latest", "rates_daily"):
+    for name in ("latest", "rates_daily", "rates_daily_compact"):
         schema = json.loads((ROOT / "schema" / f"{name}.schema.json").read_text())
         jsonschema.validate(json.loads((data / f"{name}.json").read_text()), schema)
+
+
+# --- Archivo compacto (esquema 1.1.0) y guarda de pruebas ------------------------------------
+
+def test_guard_blocks_real_sleep_and_network(sin_esperas_ni_red_reales):
+    """La guarda de conftest.py convierte una espera o una conexión reales en un fallo inmediato."""
+    import socket
+    import time
+    with pytest.raises(AssertionError, match="espera real"):
+        time.sleep(5)
+    time.sleep(0)  # sin espera: no cuenta
+    with pytest.raises(AssertionError, match="red real|conexión de red"):
+        socket.create_connection(("example.com", 80), timeout=1)
+    assert len(sin_esperas_ni_red_reales) == 2
+    sin_esperas_ni_red_reales.clear()  # lo registrado era lo esperado
+
+
+def test_round_js_matches_javascript_tofixed():
+    """Valores verificados con Node: (18.03125).toFixed(4) = "18.0313"; (2.675).toFixed(2) = "2.67";
+    (1.005).toFixed(2) = "1.00". Python `round` difiere solo en el empate exacto."""
+    assert transform.round_js(18.03125, 4) == 18.0313 and round(18.03125, 4) == 18.0312
+    assert transform.round_js(0.03125, 4) == 0.0313
+    assert transform.round_js(2.675, 2) == 2.67
+    assert transform.round_js(1.005, 2) == 1.0
+    assert transform.round_js(441.60920000000004, 4) == 441.6092
+    assert transform.round_js(-18.03125, 4) == -18.0313
+
+
+@pytest.fixture
+def compact_run(env):
+    cfg, data = env
+    pipeline.run(cfg, data, AS_OF, http_get=fake_http())
+    wide = json.loads((data / "rates_daily.json").read_text())
+    compact = json.loads((data / "rates_daily_compact.json").read_text())
+    return cfg, data, wide, compact
+
+
+def test_compact_columns_come_from_metadata(compact_run):
+    cfg, data, wide, compact = compact_run
+    meta = wide["series"]
+    visible = [s for s, m in meta.items() if m["primary"]]
+    needed = {i for s in visible for i in meta[s].get("inputs", [])}
+    expected = [s for s in meta if "inputs" not in meta[s] and (meta[s]["primary"] or s in needed)]
+    assert list(compact["columns"]) == expected
+    assert not any("inputs" in meta[s] for s in compact["columns"]), "una cruzada no viaja como columna"
+    assert set(compact["series"]) == set(expected) | set(visible)
+    # las series ocultas que son insumo de una cruzada visible sí viajan; las demás no
+    assert "usd_cop_trm_mkt" in compact["columns"] and "usd_clp_obs_mkt" in compact["columns"]
+    assert "usd_mxn_liq" not in compact["columns"]
+    for sid in compact["series"]:
+        assert compact["series"][sid] == meta[sid]
+
+
+def test_compact_columns_are_aligned_and_filled_is_exact(compact_run):
+    cfg, data, wide, compact = compact_run
+    dates = compact["dates"]
+    assert dates == sorted(set(dates)), "fechas únicas y ordenadas"
+    by_date = {r["date"]: r for r in wide["rows"]}
+    for sid, col in compact["columns"].items():
+        assert len(col["values"]) == len(dates)
+        assert col["filled"] == sorted(set(col["filled"]))
+        for i, k in enumerate(dates):
+            row = by_date[k]
+            assert col["values"][i] == row[sid]
+            assert (i in col["filled"]) == (sid in row.get("filled", []))
+            if i in col["filled"]:
+                assert col["values"][i] is not None
+
+
+def test_compact_crosses_recompute_exactly_like_the_dashboard(compact_run):
+    """Lo que hace el navegador con el archivo compacto da, valor por valor y marca por marca,
+    lo mismo que publica rates_daily.json para cada cruzada visible."""
+    cfg, data, wide, compact = compact_run
+    dates, cols = compact["dates"], compact["columns"]
+    by_date = {r["date"]: r for r in wide["rows"]}
+    crosses = [s for s, m in compact["series"].items() if "inputs" in m]
+    assert len(crosses) >= 21
+    for cid in crosses:
+        num, den = compact["series"][cid]["inputs"]
+        dec = compact["series"][cid]["decimals"]
+        for i, k in enumerate(dates):
+            a, b = cols[num]["values"][i], cols[den]["values"][i]
+            got = None if a is None or b is None or b == 0 else transform.round_js(a / b, dec)
+            row = by_date[k]
+            assert got == row[cid], f"{cid} {k}"
+            if got is not None:
+                assert ((i in cols[num]["filled"]) or (i in cols[den]["filled"])) == (cid in row.get("filled", []))
+
+
+def test_compact_rejects_cross_of_cross():
+    meta = {
+        "usd_a": {"primary": True},
+        "usd_b": {"primary": True},
+        "ab_cross": {"primary": False, "inputs": ["usd_a", "usd_b"]},
+        "x_cross": {"primary": True, "inputs": ["ab_cross", "usd_a"]},
+    }
+    with pytest.raises(ValueError, match="ab_cross"):
+        transform.compact_columns(list(meta), meta)
+
+
+def test_compact_is_listed_in_manifest_and_schema_is_1_1(compact_run):
+    cfg, data, wide, compact = compact_run
+    manifest = json.loads((data / "manifest.json").read_text())
+    assert "rates_daily_compact.json" in manifest["files"]
+    for doc in (compact, wide, json.loads((data / "latest.json").read_text()), manifest):
+        assert doc["schema_version"] == "1.1.0"
+    assert compact["layout"] == "columnar"
