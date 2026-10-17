@@ -5,7 +5,7 @@
   "label": "Tasa cruzada PEN-BRL vía USD (PTAX ÷ interbancario, mismo día de mercado)",
   "quote_unit": "BRL por 1 PEN",
   "date_basis": "determinacion",
-  "primary": false,
+  "primary": true,
   "decimals": 4,
   "method": "cross_via_usd: usd_brl_ptax / usd_pen_interbank",
   "inputs": [

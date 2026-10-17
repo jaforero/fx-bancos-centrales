@@ -5,7 +5,7 @@
   "label": "Tasa cruzada PEN-ARS vía USD (A 3500 ÷ interbancario, mismo día de mercado)",
   "quote_unit": "ARS por 1 PEN",
   "date_basis": "determinacion",
-  "primary": false,
+  "primary": true,
   "decimals": 4,
   "method": "cross_via_usd: usd_ars_a3500 / usd_pen_interbank",
   "inputs": [

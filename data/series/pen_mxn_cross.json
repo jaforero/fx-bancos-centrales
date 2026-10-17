@@ -5,7 +5,7 @@
   "label": "Tasa cruzada PEN-MXN vía USD (FIX ÷ interbancario, mismo día de mercado)",
   "quote_unit": "MXN por 1 PEN",
   "date_basis": "determinacion",
-  "primary": false,
+  "primary": true,
   "decimals": 4,
   "method": "cross_via_usd: usd_mxn_fix / usd_pen_interbank",
   "inputs": [

@@ -5,7 +5,7 @@
   "label": "Tasa cruzada PEN-COP vía USD (TRM ÷ interbancario, mismo día de mercado)",
   "quote_unit": "COP por 1 PEN",
   "date_basis": "determinacion",
-  "primary": false,
+  "primary": true,
   "decimals": 4,
   "method": "cross_via_usd: usd_cop_trm_mkt / usd_pen_interbank",
   "inputs": [

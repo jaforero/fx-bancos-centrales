@@ -178,7 +178,7 @@
       "label": "Dólar interbancario venta (valor del día)",
       "quote_unit": "PEN por 1 USD",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 3,
       "source": {
         "provider": "bcrp",
@@ -390,7 +390,7 @@
       "label": "Tasa cruzada PEN-MXN vía USD (FIX ÷ interbancario, mismo día de mercado)",
       "quote_unit": "MXN por 1 PEN",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 4,
       "method": "cross_via_usd: usd_mxn_fix / usd_pen_interbank",
       "inputs": [
@@ -403,7 +403,7 @@
       "label": "Tasa cruzada PEN-COP vía USD (TRM ÷ interbancario, mismo día de mercado)",
       "quote_unit": "COP por 1 PEN",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 4,
       "method": "cross_via_usd: usd_cop_trm_mkt / usd_pen_interbank",
       "inputs": [
@@ -416,7 +416,7 @@
       "label": "Tasa cruzada PEN-ARS vía USD (A 3500 ÷ interbancario, mismo día de mercado)",
       "quote_unit": "ARS por 1 PEN",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 4,
       "method": "cross_via_usd: usd_ars_a3500 / usd_pen_interbank",
       "inputs": [
@@ -429,7 +429,7 @@
       "label": "Tasa cruzada PEN-BRL vía USD (PTAX ÷ interbancario, mismo día de mercado)",
       "quote_unit": "BRL por 1 PEN",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 4,
       "method": "cross_via_usd: usd_brl_ptax / usd_pen_interbank",
       "inputs": [
@@ -442,7 +442,7 @@
       "label": "Tasa cruzada PEN-CLP vía USD (dólar observado ÷ interbancario, mismo día de mercado)",
       "quote_unit": "CLP por 1 PEN",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 4,
       "method": "cross_via_usd: usd_clp_obs_mkt / usd_pen_interbank",
       "inputs": [
@@ -455,7 +455,7 @@
       "label": "Tasa cruzada PEN-UYU vía USD (interbancario Uruguay ÷ interbancario Perú, mismo día de mercado)",
       "quote_unit": "UYU por 1 PEN",
       "date_basis": "determinacion",
-      "primary": false,
+      "primary": true,
       "decimals": 4,
       "method": "cross_via_usd: usd_uyu_interbank / usd_pen_interbank",
       "inputs": [

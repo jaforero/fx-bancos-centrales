@@ -5,7 +5,7 @@
   "label": "Tasa cruzada PEN-CLP vía USD (dólar observado ÷ interbancario, mismo día de mercado)",
   "quote_unit": "CLP por 1 PEN",
   "date_basis": "determinacion",
-  "primary": false,
+  "primary": true,
   "decimals": 4,
   "method": "cross_via_usd: usd_clp_obs_mkt / usd_pen_interbank",
   "inputs": [
