@@ -75,3 +75,16 @@ jobs:
           else
             gh issue create --title "Pipeline de tasas degradado" --label fx-alerta --body "$BODY"
           fi
+
+      # Si la corrida llegó hasta aquí, "Verificar estado de las series" pasó: todas las series están en ok.
+      # Se cierran las alertas fx-alerta que quedaron abiertas. Nunca debe volver roja una corrida sana.
+      - name: Cerrar alertas abiertas al recuperarse
+        if: success()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BODY="Recuperado: la corrida ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} terminó con todas las series en ok. Se cierra la alerta; si vuelve a fallar se abrirá una nueva."
+          for NUM in $(gh issue list --label fx-alerta --state open --json number -q '.[].number'); do
+            gh issue close "$NUM" --comment "$BODY"
+          done
