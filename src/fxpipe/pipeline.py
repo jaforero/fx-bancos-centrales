@@ -280,6 +280,11 @@ def build_outputs(cfg, daily, meta, status, warnings, errors, as_of) -> dict[str
     }
     texts["rates_daily.json"] = store.render(wide, rows_key="rows")
 
+    # data/rates_daily_compact.json — lo que descarga el dashboard: solo las series oficiales
+    # que hacen falta, en columnas; las cruzadas se recalculan en el navegador
+    texts["rates_daily_compact.json"] = store.render_columnar(
+        transform.compact_document(order, meta, daily, as_of.isoformat(), store.SCHEMA_VERSION))
+
     # data/latest.json — tarjetas KPI del dashboard
     latest = {
         "schema_version": store.SCHEMA_VERSION,

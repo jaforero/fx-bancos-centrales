@@ -8,7 +8,7 @@ import os
 import tempfile
 from pathlib import Path
 
-SCHEMA_VERSION = "1.0.0"
+SCHEMA_VERSION = "1.1.0"  # 1.1.0: agrega rates_daily_compact.json (compatible con 1.0.x)
 
 
 def load_official(data_dir: Path, series_id: str) -> dict[str, float]:
@@ -40,6 +40,25 @@ def render(doc: dict, rows_key: str | None = None) -> str:
     body = body[:-2] + f',\n  "{rows_key}": {_dump_rows(doc[rows_key])}\n}}' if head else \
         f'{{\n  "{rows_key}": {_dump_rows(doc[rows_key])}\n}}'
     json.loads(body)  # verificación defensiva
+    return body + "\n"
+
+
+def render_columnar(doc: dict) -> str:
+    """JSON del formato en columnas: sin espacios en las listas largas y una
+    columna por línea, para que el archivo pese lo mínimo (lo descarga cada
+    visitante del dashboard). Los diffs diarios de git viven en `series/` y
+    `rates_daily.json`; este archivo es una vista derivada de ellos."""
+    def compact(x) -> str:
+        return json.dumps(x, ensure_ascii=False, separators=(",", ":"))
+
+    head = {k: v for k, v in doc.items() if k not in ("dates", "columns", "series")}
+    parts = [f"  {compact(k)}: {compact(v)}" for k, v in head.items()]
+    parts.append('  "series": ' + json.dumps(doc["series"], ensure_ascii=False, indent=2).replace("\n", "\n  "))
+    parts.append(f'  "dates": {compact(doc["dates"])}')
+    cols = ",\n".join(f"    {compact(k)}: {compact(v)}" for k, v in doc["columns"].items())
+    parts.append('  "columns": {\n' + cols + "\n  }")
+    body = "{\n" + ",\n".join(parts) + "\n}"
+    assert json.loads(body) == json.loads(json.dumps(doc)), "render_columnar alteró el documento"
     return body + "\n"
 
 

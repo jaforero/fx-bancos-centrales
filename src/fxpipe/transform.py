@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from datetime import date, timedelta
+from decimal import ROUND_HALF_UP, Decimal
 
 # Una serie diaria: {"YYYY-MM-DD": {"value": float, "filled": bool}}
 Daily = dict[str, dict]
@@ -9,6 +10,19 @@ Daily = dict[str, dict]
 
 def d(s: str) -> date:
     return date.fromisoformat(s)
+
+
+def round_js(x: float, decimals: int) -> float:
+    """Redondea igual que `Number(x.toFixed(decimals))` de JavaScript.
+
+    Opera sobre el valor binario exacto de `x` y, solo en un empate exacto
+    (p. ej. 18.03125 con 4 decimales), va al número mayor en magnitud. `round`
+    de Python resuelve ese empate al par: es la única diferencia entre los dos.
+    El dashboard recalcula las cruzadas en el navegador a partir de
+    `rates_daily_compact.json`; usar esta función aquí hace que ambos lados den
+    exactamente el mismo número.
+    """
+    return float(Decimal(x).quantize(Decimal(1).scaleb(-decimals), rounding=ROUND_HALF_UP))
 
 
 def fill_forward(official: dict[str, float], as_of: date, max_fill_days: int) -> Daily:
@@ -38,14 +52,17 @@ def fill_forward(official: dict[str, float], as_of: date, max_fill_days: int) ->
 
 
 def cross_rate(num: Daily, den: Daily, decimals: int) -> Daily:
-    """Tasa cruzada vía USD: (COP/USD) / (MXN/USD) = COP/MXN."""
+    """Tasa cruzada vía USD: (COP/USD) / (MXN/USD) = COP/MXN.
+
+    El redondeo es `round_js`: el navegador recalcula este mismo cociente.
+    """
     out: Daily = {}
     for key in sorted(set(num) & set(den)):
         a, b = num[key], den[key]
         if b["value"] == 0:
             continue
         out[key] = {
-            "value": round(a["value"] / b["value"], decimals),
+            "value": round_js(a["value"] / b["value"], decimals),
             "filled": bool(a["filled"] or b["filled"]),
         }
     return out
@@ -63,6 +80,54 @@ def jump_warnings(series: Daily, max_pct: float) -> list[str]:
         if v0 and abs(v1 / v0 - 1) * 100 > max_pct:
             warns.append(f"salto {k0}->{k1}: {v0} -> {v1} ({(v1 / v0 - 1) * 100:+.2f}%)")
     return warns
+
+
+def compact_columns(order: list[str], meta: dict[str, dict]) -> list[str]:
+    """Series que viajan como columna en `rates_daily_compact.json`.
+
+    Son las oficiales visibles (`primary`) más las oficiales que son insumo de
+    una cruzada visible, aunque estén ocultas (p. ej. la TRM por día de mercado).
+    Las cruzadas no viajan: se recalculan con `meta[id]["inputs"]`. Se deduce de
+    los metadatos, sin listas fijas.
+    """
+    needed = {i for s in order if meta[s]["primary"] for i in meta[s].get("inputs", [])}
+    for i in sorted(needed):
+        if meta[i].get("inputs"):
+            raise ValueError(f"El insumo {i} es una cruzada: el archivo compacto solo admite insumos oficiales")
+    return [s for s in order if not meta[s].get("inputs") and (meta[s]["primary"] or s in needed)]
+
+
+def compact_document(order: list[str], meta: dict[str, dict], daily: dict[str, Daily],
+                     as_of: str, schema_version: str) -> dict:
+    """Formato en columnas: una lista de valores por serie, alineada con `dates`.
+
+    - `dates`: unión de las fechas de las columnas, en orden.
+    - `columns[id].values[i]`: valor del día `dates[i]` (oficial o rellenado), o null si no hay.
+    - `columns[id].filled`: índices de `dates` donde el valor es relleno (no oficial).
+    - `series`: metadatos de las columnas y de las cruzadas visibles; cada cruzada trae
+      `inputs` [numerador, denominador] y `decimals`. El cliente la calcula como
+      `Number((num / den).toFixed(decimals))` y marca relleno si algún insumo lo está.
+    """
+    cols = compact_columns(order, meta)
+    visible = [s for s in order if s in cols or meta[s]["primary"]]
+    dates = sorted(set().union(*[daily[s].keys() for s in cols])) if cols else []
+    columns = {}
+    for sid in cols:
+        vals, filled = [], []
+        for i, k in enumerate(dates):
+            v = daily[sid].get(k)
+            vals.append(v["value"] if v else None)
+            if v and v["filled"]:
+                filled.append(i)
+        columns[sid] = {"filled": filled, "values": vals}
+    return {
+        "schema_version": schema_version,
+        "layout": "columnar",
+        "as_of": as_of,
+        "series": {s: meta[s] for s in visible},
+        "dates": dates,
+        "columns": columns,
+    }
 
 
 def last_official(series: Daily) -> str | None:
