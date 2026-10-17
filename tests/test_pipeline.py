@@ -400,7 +400,7 @@ def test_latest_overall_status_ignores_hidden_series(env):
     cfg, data = env
     for sid in ("usd_clp_obs", "usd_clp_obs_mkt"):  # una fuente cuyas series no muestra el dashboard
         cfg["series"][sid]["primary"] = False
-    for did in ("mxn_clp_cross", "clp_cop_cross", "clp_ars_cross", "brl_clp_cross", "uyu_clp_cross"):
+    for did in ("mxn_clp_cross", "clp_cop_cross", "clp_ars_cross", "brl_clp_cross", "uyu_clp_cross", "pen_clp_cross"):
         cfg["derived"][did]["primary"] = False
     r = pipeline.run(cfg, data, AS_OF, http_get=fake_http(fail="bcch"))
     assert r["manifest"]["overall_status"] == "degraded"  # la alerta fx-alerta sí se dispara
@@ -621,7 +621,7 @@ def test_uruguay_visible_in_dashboard(env):
     pipeline.run(cfg, data, AS_OF, http_get=fake_http())
     L = json.loads((data / "latest.json").read_text())["series"]
     assert all(L[i]["primary"] for i in UY)
-    assert sum(1 for v in L.values() if v["primary"]) == 21
+    assert sum(1 for v in L.values() if v["primary"]) >= 21  # 28 desde config 1.10.0 (Perú)
 
 
 def test_uruguay_failure_isolated(env):
@@ -790,13 +790,13 @@ def test_peru_end_to_end_crosses(env):
     assert all(L[i]["value"] > 1 for i in PE[1:])
 
 
-def test_peru_hidden_until_dashboard_ready(env):
-    """config 1.9.0: los datos de Perú ya se publican, pero el dashboard aún no los muestra."""
+def test_peru_visible_in_dashboard(env):
+    """config 1.10.0: el dashboard ya incorpora Perú; sus 7 series pasan a primary (28 en total)."""
     cfg, data = env
     pipeline.run(cfg, data, AS_OF, http_get=fake_http())
     L = json.loads((data / "latest.json").read_text())["series"]
-    assert all(not L[i]["primary"] for i in PE)
-    assert sum(1 for v in L.values() if v["primary"]) == 21
+    assert all(L[i]["primary"] for i in PE)
+    assert sum(1 for v in L.values() if v["primary"]) == 28
     assert json.loads((data / "manifest.json").read_text())["series_status"]["usd_pen_interbank"] == "ok"
 
 
