@@ -26,7 +26,7 @@ publicarla en paralelo bajo otra ruta durante una transición.
 
 ```json
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "as_of": "2026-10-04",
   "overall_status": "ok | degraded",
   "series": {
@@ -69,7 +69,7 @@ marcado en `filled`.
 
 ```json
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "as_of": "2026-10-04",
   "series": {"<id>": { metadatos como arriba }},
   "rows": [
@@ -93,7 +93,7 @@ sigue siendo el archivo para Power BI, Python y cualquier otro consumidor.
 
 ```json
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "layout": "columnar",
   "as_of": "2026-10-17",
   "series": {"<id>": { metadatos como arriba; las cruzadas traen "inputs": [numerador, denominador] }},
@@ -120,6 +120,33 @@ sigue siendo el archivo para Power BI, Python y cualquier otro consumidor.
 - El dashboard compara, al cargar, el último valor oficial de cada cruzada recalculada con el de
   `latest.json`; si alguno no coincide, descarta el compacto y carga `rates_daily.json`.
 
+## semantic_model.json y semantic_model.yaml (desde `schema_version` 1.2.0)
+
+El modelo semántico de la fuente: qué es cada serie, de dónde sale, cómo se calcula y se relaciona con las
+demás, qué reglas de calidad y de uso tiene, qué campos tiene cada archivo y cuál es la cobertura de la última
+corrida. Es un único documento (el YAML es equivalente campo por campo al JSON), bilingüe (`es`/`en` en cada
+texto), neutral frente a cualquier herramienta y de estructura fija. Se regenera en cada corrida; la lista de
+secciones y cómo reutilizarlo están en [MODELO_SEMANTICO.md](MODELO_SEMANTICO.md).
+
+```json
+{
+  "semantic_model_version": "1.0.0",
+  "schema_version": "1.2.0",
+  "dimensions": {"currencies": [], "countries": [], "providers": [], "pairs": [], "series": []},
+  "domains": {}, "measures": [], "metrics": [], "relationships": {}, "lineage": {}, "quality": {},
+  "files": [], "fields": [], "glossary": [], "known_issues": [], "curation": {}, "coverage": {}
+}
+```
+
+- `dimensions.series[].id` es la misma clave que nombra las columnas de `rates_daily.json`, las entradas de
+  `latest.json` y los archivos `series/<id>.json`.
+- `fields` documenta cada ruta de cada archivo (`latest.json#series.*.value`); una prueba lo compara con lo que
+  genera una corrida.
+- `curation.gaps` está vacío cuando toda serie, proveedor, moneda y país tiene su descripción en es y en.
+- `coverage` es lo único que cambia con cada corrida; el resto cambia solo cuando cambian la configuración o
+  la curaduría. Agregar secciones u opciones es un cambio compatible (versión menor).
+
 ## Validación
 
-Esquemas JSON en `schema/`. El CI valida las salidas contra ellos.
+Esquemas JSON en `schema/` (`latest`, `rates_daily`, `rates_daily_compact` y `semantic_model`). El CI valida las
+salidas contra ellos.

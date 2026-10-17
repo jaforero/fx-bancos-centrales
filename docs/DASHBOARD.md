@@ -19,6 +19,18 @@ cruzada recalculada con `latest.json` y, si no coincide, caer a `rates_daily.jso
 Alternativa con CDN (caché más larga, útil con mucho tráfico):
 `https://cdn.jsdelivr.net/gh/jaforero/fx-bancos-centrales@main/data/latest.json`
 
+## Metadatos de las series
+
+`data/semantic_model.json` (YAML equivalente: `semantic_model.yaml`) trae, por serie, el nombre en español e
+inglés, la descripción, la unidad, la fecha a la que se atribuye el valor, la fuente oficial, las reglas de
+calidad y de uso, y el diccionario de todos los campos ([MODELO_SEMANTICO.md](MODELO_SEMANTICO.md)). El dashboard
+no lo necesita para funcionar y conserva su propia copia de nombres y eventos; úsalo si quieres leer esos textos
+del origen en vez de duplicarlos.
+
+```
+https://raw.githubusercontent.com/jaforero/fx-bancos-centrales/main/data/semantic_model.json
+```
+
 ## JavaScript
 
 ```js

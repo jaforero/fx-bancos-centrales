@@ -12,7 +12,8 @@ sea obvia (como la TRM: BanRep la define, la SFC la certifica).
 ## Caso A: el banco central ya tiene conector (`kind` existente)
 
 Solo editar `config/sources.json`: añadir la serie con su `source_series_id`,
-rangos plausibles y umbrales. Correr `pytest` y `python -m fxpipe healthcheck`.
+rangos plausibles y umbrales. Curar el modelo semántico (ver abajo). Correr `pytest` y
+`python -m fxpipe healthcheck`.
 
 ## Caso B: API nueva
 
@@ -30,7 +31,22 @@ rangos plausibles y umbrales. Correr `pytest` y `python -m fxpipe healthcheck`.
    el mismo `date_basis`.
 6. Pruebas: parseo, detección de cambio de contrato, y caso end-to-end.
 7. Crear el secreto en GitHub si la API lo requiere y ejecutar backfill manual.
-8. Subir la versión menor de `config_version`.
+8. Curar el modelo semántico (ver abajo).
+9. Subir la versión menor de `config_version`.
+
+## Curar el modelo semántico (todo país o serie nuevos)
+
+El modelo (`data/semantic_model.json`, [MODELO_SEMANTICO.md](MODELO_SEMANTICO.md)) toma la estructura de
+`config/sources.json` y los textos de `config/semantic.json`. Las cruzadas nuevas se describen solas; hay que
+curar a mano:
+
+1. En `providers`: protocolo, cuándo publica, condiciones de reutilización y particularidades, con su fuente.
+2. En `series`: nombre, descripción, `rate_type` y relaciones de cada serie oficial (p. ej. la variante por día de mercado).
+3. En `currencies` y `countries`: el nombre en español e inglés de la moneda y del país.
+4. En `known_issues` o `events`, si aplica.
+
+Todo texto va en español **y** en inglés. `python -m fxpipe semantic` lista lo que falta y la CI falla mientras
+haya huecos. Después `python -m fxpipe semantic --write-docs` regenera las tablas de MODELO_SEMANTICO.md.
 
 ## Ejemplo resuelto: Argentina (config 1.2.0)
 
