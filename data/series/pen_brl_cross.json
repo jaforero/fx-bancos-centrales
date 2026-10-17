@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "id": "pen_brl_cross",
   "pair": "PEN-BRL",
   "label": "Tasa cruzada PEN-BRL vía USD (PTAX ÷ interbancario, mismo día de mercado)",

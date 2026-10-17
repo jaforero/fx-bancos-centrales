@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "id": "clp_ars_cross",
   "pair": "CLP-ARS",
   "label": "Tasa cruzada CLP-ARS vía USD (A 3500 ÷ dólar observado, mismo día de mercado)",

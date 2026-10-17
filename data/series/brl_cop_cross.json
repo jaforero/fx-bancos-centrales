@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "id": "brl_cop_cross",
   "pair": "BRL-COP",
   "label": "Tasa cruzada BRL-COP vía USD (TRM ÷ PTAX, mismo día de mercado)",

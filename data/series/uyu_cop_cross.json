@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "id": "uyu_cop_cross",
   "pair": "UYU-COP",
   "label": "Tasa cruzada UYU-COP vía USD (TRM ÷ interbancario, mismo día de mercado)",

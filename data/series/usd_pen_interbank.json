@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "id": "usd_pen_interbank",
   "pair": "USD-PEN",
   "label": "Dólar interbancario venta (valor del día)",

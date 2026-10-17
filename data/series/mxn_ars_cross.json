@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "id": "mxn_ars_cross",
   "pair": "MXN-ARS",
   "label": "Tasa cruzada MXN-ARS vía USD (A 3500 ÷ FIX, mismo día de mercado)",

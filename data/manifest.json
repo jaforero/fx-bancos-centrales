@@ -1,10 +1,10 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "config_version": "1.10.0",
-  "generated_at": "2026-10-17T13:07:22+00:00",
+  "generated_at": "2026-10-17T15:01:09+00:00",
   "as_of": "2026-10-17",
   "overall_status": "ok",
-  "data_hash": "29bb1bc4d564602df20594f0d1733a219b2d1252e11b87566423ee3592e1cf70",
+  "data_hash": "ffe0e744bb04229eeedd6e70cdc4347c2d1a3fcf9b84847a80c86998e0f6d5d2",
   "series_status": {
     "ars_cop_cross": "ok",
     "brl_ars_cross": "ok",
@@ -85,6 +85,8 @@
     "latest.json",
     "rates_daily.json",
     "rates_daily_compact.json",
+    "semantic_model.json",
+    "semantic_model.yaml",
     "series/ars_cop_cross.json",
     "series/brl_ars_cross.json",
     "series/brl_clp_cross.json",

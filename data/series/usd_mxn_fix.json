@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "id": "usd_mxn_fix",
   "pair": "USD-MXN",
   "label": "Tipo de cambio FIX (fecha de determinación)",
