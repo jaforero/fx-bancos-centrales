@@ -10,6 +10,11 @@ https://raw.githubusercontent.com/jaforero/fx-bancos-centrales/main/data/latest.
 https://raw.githubusercontent.com/jaforero/fx-bancos-centrales/main/data/rates_daily.json
 ```
 
+Para un gráfico en el navegador conviene `rates_daily_compact.json` (~56 KB comprimidos en
+vez de ~252 KB; formato y regla para recalcular las cruzadas en
+[CONTRATO_JSON.md](CONTRATO_JSON.md)). Quien lo use debe comparar el último valor de cada
+cruzada recalculada con `latest.json` y, si no coincide, caer a `rates_daily.json`.
+
 `raw.githubusercontent.com` permite CORS y aplica una caché corta (minutos).
 Alternativa con CDN (caché más larga, útil con mucho tráfico):
 `https://cdn.jsdelivr.net/gh/jaforero/fx-bancos-centrales@main/data/latest.json`

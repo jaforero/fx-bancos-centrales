@@ -26,7 +26,7 @@ publicarla en paralelo bajo otra ruta durante una transición.
 
 ```json
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "as_of": "2026-10-04",
   "overall_status": "ok | degraded",
   "series": {
@@ -69,7 +69,7 @@ marcado en `filled`.
 
 ```json
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "as_of": "2026-10-04",
   "series": {"<id>": { metadatos como arriba }},
   "rows": [
@@ -82,6 +82,43 @@ marcado en `filled`.
 
 Una fila por día calendario; `null` si la serie no tiene dato ese día. `filled`
 se omite cuando está vacío.
+
+## rates_daily_compact.json (desde `schema_version` 1.1.0)
+
+Lo mismo que `rates_daily.json` para el dashboard, sin las cruzadas: viajan solo las
+series oficiales que hacen falta, en columnas, y el cliente recalcula las cruzadas.
+Con 7 países pesa ~56 KB comprimidos contra ~252 KB de `rates_daily.json`, y crece
+~6 KB por país en vez de ~6 KB por cada cruzada nueva. `rates_daily.json` no cambia:
+sigue siendo el archivo para Power BI, Python y cualquier otro consumidor.
+
+```json
+{
+  "schema_version": "1.1.0",
+  "layout": "columnar",
+  "as_of": "2026-10-17",
+  "series": {"<id>": { metadatos como arriba; las cruzadas traen "inputs": [numerador, denominador] }},
+  "dates": ["2020-01-01", "2020-01-02"],
+  "columns": {
+    "usd_mxn_fix": {"filled": [0], "values": [null, 18.8817]}
+  }
+}
+```
+
+- `dates`: unión ordenada de las fechas de las columnas.
+- `columns[id].values[i]`: valor de `dates[i]` (oficial o relleno), o `null` si no hay.
+- `columns[id].filled`: índices de `dates` cuyo valor es relleno.
+- **Columnas**: las series oficiales `primary` y las oficiales que son insumo de una cruzada
+  `primary`, aunque estén ocultas (la TRM y el dólar observado por día de mercado,
+  `usd_cop_trm_mkt` y `usd_clp_obs_mkt`). Se deducen de los metadatos, sin listas fijas.
+  Un insumo que fuera una cruzada se rechaza.
+- **Cruzadas** (`series[id].inputs` y sin columna): en cada índice `i`, si el numerador y el
+  denominador tienen valor y el denominador no es 0, el valor es
+  `Number((num / den).toFixed(decimals))` y es relleno si cualquiera de los dos lo es; si no,
+  no hay dato. Da exactamente lo que publica `rates_daily.json`: el backend redondea con
+  `transform.round_js`, que replica `toFixed` (solo difiere de `round` de Python en un
+  empate exacto, p. ej. 18.03125 con 4 decimales).
+- El dashboard compara, al cargar, el último valor oficial de cada cruzada recalculada con el de
+  `latest.json`; si alguno no coincide, descarta el compacto y carga `rates_daily.json`.
 
 ## Validación
 
