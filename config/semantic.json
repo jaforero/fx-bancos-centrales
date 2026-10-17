@@ -1,5 +1,5 @@
 {
-  "semantic_version": "1.0.0",
+  "semantic_version": "1.0.1",
   "model": {
     "id": "fx-bancos-centrales",
     "name": {
@@ -84,8 +84,8 @@
       {
         "id": "fx-alerta",
         "when": {
-          "es": "Si alguna serie queda distinta de ok tras una corrida, el flujo abre o actualiza un issue con la etiqueta fx-alerta.",
-          "en": "If any series is not ok after a run, the workflow opens or updates an issue labelled fx-alerta."
+          "es": "Si alguna serie queda distinta de ok tras una corrida, el flujo abre o actualiza un issue con la etiqueta fx-alerta; cuando una corrida posterior termina con todas las series en ok, lo cierra solo con un comentario que enlaza esa corrida.",
+          "en": "If any series is not ok after a run, the workflow opens or updates an issue labelled fx-alerta; when a later run ends with every series ok, it closes the issue itself with a comment linking that run."
         },
         "source": ".github/workflows/daily-update.yml"
       },
@@ -3460,6 +3460,14 @@
     }
   ],
   "changelog": [
+    {
+      "version": "1.0.1",
+      "date": "2026-10-17",
+      "changes": {
+        "es": "La alerta fx-alerta ahora se cierra sola cuando una corrida posterior termina con todas las series en ok (antes quedaba abierta hasta cerrarla a mano). Sin cambios en los datos ni en el esquema 1.2.0.",
+        "en": "The fx-alerta alert now closes itself when a later run ends with every series ok (before, it stayed open until closed by hand). No change to the data or to schema 1.2.0."
+      }
+    },
     {
       "version": "1.0.0",
       "date": "2026-10-17",
