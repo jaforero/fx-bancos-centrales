@@ -1,0 +1,380 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "semantic_model.json / semantic_model.yaml — modelo semántico de fx-bancos-centrales (schema_version 1.2.0)",
+  "description": "Modelo semántico bilingüe (es/en) de la fuente de datos: dimensiones, dominios, medidas, métricas, relaciones, linaje, calidad, archivos, diccionario de campos, glosario, consumidores e incidencias. Lo valida igual el JSON y el YAML equivalente.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["semantic_model_version", "schema_version", "generated_from", "model", "scope", "domain", "conventions",
+               "dimensions", "domains", "measures", "metrics", "relationships", "hierarchies", "lineage", "quality",
+               "files", "fields", "glossary", "events", "consumers", "usage_guidance", "known_issues", "changelog",
+               "curation", "coverage"],
+  "properties": {
+    "semantic_model_version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$", "description": "Versión del contenido curado del modelo."},
+    "schema_version": {"type": "string", "pattern": "^1\\.", "description": "Versión del contrato de datos con que se publicó."},
+    "generated_from": {
+      "type": "object", "additionalProperties": false, "required": ["config_version", "files", "generator"],
+      "properties": {
+        "config_version": {"type": ["string", "null"]},
+        "files": {"type": "array", "items": {"type": "string"}},
+        "generator": {"type": "string"}
+      }
+    },
+    "model": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "name", "summary", "repository", "owner", "licence_note", "attribution_note"],
+      "properties": {
+        "id": {"type": "string"}, "name": {"$ref": "#/$defs/text"}, "summary": {"$ref": "#/$defs/text"},
+        "repository": {"type": "string", "format": "uri"}, "owner": {"type": "string"},
+        "licence_note": {"$ref": "#/$defs/text"}, "licence_note_source": {"type": "string"},
+        "attribution_note": {"$ref": "#/$defs/text"}, "attribution_source": {"type": "string"}
+      }
+    },
+    "scope": {
+      "type": "object", "additionalProperties": false, "required": ["in_scope", "out_of_scope", "source"],
+      "properties": {
+        "in_scope": {"type": "array", "items": {"$ref": "#/$defs/text"}},
+        "out_of_scope": {"type": "array", "items": {"$ref": "#/$defs/text"}},
+        "source": {"type": "string"}
+      }
+    },
+    "domain": {
+      "type": "object", "additionalProperties": false,
+      "required": ["subject", "grain", "reference_timezone_note", "schedule", "schedule_source", "alerts", "design_principle", "design_principle_source"],
+      "properties": {
+        "subject": {"$ref": "#/$defs/text"}, "grain": {"$ref": "#/$defs/text"},
+        "reference_timezone_note": {"$ref": "#/$defs/text"},
+        "schedule": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false, "required": ["cron", "note"],
+          "properties": {"cron": {"type": "string"}, "note": {"$ref": "#/$defs/text"}}}},
+        "schedule_source": {"type": "string"},
+        "alerts": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false, "required": ["id", "when", "source"],
+          "properties": {"id": {"type": "string", "pattern": "^[a-z][a-z0-9_-]*$", "description": "Etiqueta del issue que abre el workflow."}, "when": {"$ref": "#/$defs/text"}, "source": {"type": "string"}}}},
+        "design_principle": {"$ref": "#/$defs/text"}, "design_principle_source": {"type": "string"}
+      }
+    },
+    "conventions": {"type": "array", "items": {"$ref": "#/$defs/rule_entry"}},
+
+    "dimensions": {
+      "type": "object", "additionalProperties": false, "required": ["currencies", "countries", "providers", "pairs", "series"],
+      "properties": {
+        "currencies": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "name", "country", "role", "reference_pair", "pairs"],
+          "properties": {
+            "id": {"$ref": "#/$defs/currency_code"}, "name": {"$ref": "#/$defs/text"},
+            "country": {"$ref": "#/$defs/country_code"}, "role": {"enum": ["reference", "local"]},
+            "reference_pair": {"anyOf": [{"$ref": "#/$defs/pair_id"}, {"type": "null"}]},
+            "pairs": {"type": "array", "items": {"$ref": "#/$defs/pair_id"}}}}},
+        "countries": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false, "required": ["id", "name", "currency", "providers"],
+          "properties": {
+            "id": {"$ref": "#/$defs/country_code"}, "name": {"$ref": "#/$defs/text"},
+            "currency": {"$ref": "#/$defs/currency_code"}, "providers": {"type": "array", "items": {"$ref": "#/$defs/id"}}}}},
+        "providers": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "institution", "country", "role", "protocol", "publication", "terms", "access", "quirks", "series", "fallback_for"],
+          "properties": {
+            "id": {"$ref": "#/$defs/id"}, "institution": {"type": "string"}, "country": {"$ref": "#/$defs/country_code"},
+            "role": {"enum": ["primary", "verification_and_fallback", "unused"]},
+            "protocol": {"$ref": "#/$defs/text"}, "publication": {"$ref": "#/$defs/text"},
+            "terms": {"anyOf": [{"$ref": "#/$defs/text"}, {"type": "null"}]},
+            "access": {
+              "type": "object", "additionalProperties": false, "required": ["kind", "base_url", "docs_url", "token_required"],
+              "properties": {
+                "kind": {"type": "string"}, "base_url": {"type": "string", "format": "uri"}, "docs_url": {"type": "string", "format": "uri"},
+                "token_env": {"type": ["string", "null"], "description": "Nombre del secreto de GitHub (nunca su valor)."},
+                "token_required": {"type": "boolean"}, "max_days_per_request": {"type": "integer"},
+                "group": {"type": "integer"}, "expected_sender": {"type": "string"}}},
+            "authority": {"type": "string"}, "certified_by": {"type": "string"}, "legal_basis": {"type": "string"},
+            "quirks": {"type": "array", "items": {"$ref": "#/$defs/sourced_text"}},
+            "series": {"type": "array", "items": {"$ref": "#/$defs/id"}},
+            "fallback_for": {"type": "array", "items": {"$ref": "#/$defs/id"}},
+            "source": {"type": "string"}}}},
+        "pairs": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "base", "quote", "kind", "name", "quote_unit", "canonical_series", "series"],
+          "properties": {
+            "id": {"$ref": "#/$defs/pair_id"}, "base": {"$ref": "#/$defs/currency_code"}, "quote": {"$ref": "#/$defs/currency_code"},
+            "kind": {"enum": ["official", "cross"]}, "name": {"$ref": "#/$defs/text"}, "description": {"$ref": "#/$defs/text"},
+            "quote_unit": {"type": "string"}, "canonical_series": {"$ref": "#/$defs/id"},
+            "series": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/id"}}}}},
+        "series": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "kind", "name", "description", "label", "pair", "base_currency", "quote_currency", "quote_unit",
+                       "rate_type", "date_basis", "method", "primary", "decimals", "thresholds", "relations", "notes"],
+          "properties": {
+            "id": {"$ref": "#/$defs/id"}, "kind": {"enum": ["official", "cross"]},
+            "name": {"$ref": "#/$defs/text"}, "description": {"$ref": "#/$defs/text"}, "description_source": {"type": "string"},
+            "label": {"type": "string"}, "pair": {"$ref": "#/$defs/pair_id"},
+            "base_currency": {"$ref": "#/$defs/currency_code"}, "quote_currency": {"$ref": "#/$defs/currency_code"},
+            "quote_unit": {"type": "string"}, "rate_type": {"type": "string"},
+            "date_basis": {"type": "string"}, "method": {"type": "string"},
+            "primary": {"type": "boolean"}, "decimals": {"type": "integer", "minimum": 0},
+            "thresholds": {
+              "type": "object", "additionalProperties": false, "required": ["plausible_range", "max_daily_change_pct", "stale_after_days"],
+              "properties": {
+                "plausible_range": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "number"}},
+                "max_daily_change_pct": {"type": "number"}, "stale_after_days": {"type": "integer"},
+                "max_fill_days": {"type": "integer"}}},
+            "source": {
+              "type": "object", "additionalProperties": false, "required": ["provider", "institution", "country", "series_id", "docs_url"],
+              "properties": {
+                "provider": {"$ref": "#/$defs/id"}, "institution": {"type": "string"}, "country": {"$ref": "#/$defs/country_code"},
+                "series_id": {"type": "string"}, "docs_url": {"type": "string", "format": "uri"}, "options": {"type": "object"},
+                "verified_against": {
+                  "type": "object", "additionalProperties": false, "required": ["provider", "institution", "series_id", "docs_url"],
+                  "properties": {
+                    "provider": {"$ref": "#/$defs/id"}, "institution": {"type": "string"}, "series_id": {"type": "string"},
+                    "docs_url": {"type": "string", "format": "uri"}, "options": {"type": "object"}}}}},
+            "derivation": {
+              "type": "object", "additionalProperties": false, "required": ["numerator", "denominator", "formula", "implemented_in"],
+              "properties": {
+                "numerator": {"$ref": "#/$defs/id"}, "denominator": {"$ref": "#/$defs/id"},
+                "formula": {"type": "string"}, "implemented_in": {"type": "string"}}},
+            "relations": {"type": "array", "items": {
+              "type": "object", "additionalProperties": false, "required": ["type", "target"],
+              "properties": {"type": {"$ref": "#/$defs/id"}, "target": {"$ref": "#/$defs/id"}}}},
+            "notes": {"type": "array", "items": {"$ref": "#/$defs/sourced_text"}}}}}
+      }
+    },
+
+    "domains": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "status_source", "status_inheritance", "overall_status", "overall_status_scope", "date_basis",
+                   "date_basis_rule", "date_basis_source", "method", "series_kind", "rate_type"],
+      "properties": {
+        "status": {"type": "array", "minItems": 1, "items": {
+          "type": "object", "additionalProperties": false, "required": ["value", "keeps_last_value", "meaning", "dashboard"],
+          "properties": {"value": {"type": "string"}, "keeps_last_value": {"type": "boolean"},
+                         "meaning": {"$ref": "#/$defs/text"}, "dashboard": {"$ref": "#/$defs/text"}}}},
+        "status_source": {"type": "string"}, "status_inheritance": {"$ref": "#/$defs/text"},
+        "overall_status": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/enum_value"}},
+        "overall_status_scope": {"$ref": "#/$defs/text"},
+        "date_basis": {"type": "array", "minItems": 1, "items": {
+          "type": "object", "additionalProperties": false, "required": ["value", "meaning", "crossable", "used_by"],
+          "properties": {"value": {"type": "string"}, "meaning": {"$ref": "#/$defs/text"}, "crossable": {"type": "boolean"},
+                         "used_by": {"type": "array", "items": {"$ref": "#/$defs/id"}}}}},
+        "date_basis_rule": {"$ref": "#/$defs/text"}, "date_basis_source": {"type": "string"},
+        "method": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/enum_value"}},
+        "series_kind": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/enum_value_used"}},
+        "rate_type": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/enum_value_used"}}
+      }
+    },
+
+    "measures": {"type": "array", "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "field", "name", "description", "unit", "additivity", "source"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "field": {"type": "string"}, "name": {"$ref": "#/$defs/text"}, "description": {"$ref": "#/$defs/text"},
+        "unit": {"type": "string"}, "additivity": {"enum": ["non_additive", "count_only", "additive", "semi_additive"]},
+        "time_aggregation": {"type": "array", "items": {"enum": ["last", "first", "mean", "min", "max"]}},
+        "forbidden_aggregations": {"type": "array", "items": {"enum": ["sum", "last", "first", "mean", "min", "max"]}},
+        "cross_series": {"$ref": "#/$defs/text"}, "nullable": {"type": "boolean"},
+        "formula": {"type": "string"}, "implemented_in": {"type": "string"}, "source": {"type": "string"}}}},
+    "metrics": {"type": "array", "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "name", "definition", "implemented_in", "source"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "name": {"$ref": "#/$defs/text"}, "definition": {"$ref": "#/$defs/text"},
+        "formula": {"type": "string"}, "implemented_in": {"type": "string"}, "published_as": {"type": "string"},
+        "note": {"$ref": "#/$defs/text"}, "source": {"type": "string"},
+        "scope": {"enum": ["pipeline", "consumer"]}, "verifiable_in_repo": {"type": "boolean"}}}},
+
+    "relationships": {
+      "type": "object", "additionalProperties": false, "required": ["reference_format", "types", "instances"],
+      "properties": {
+        "reference_format": {"type": "string"},
+        "types": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false, "required": ["type", "cardinality", "from", "to", "description"],
+          "properties": {
+            "type": {"$ref": "#/$defs/id"}, "cardinality": {"type": "string", "pattern": "^[1NM]:[1NM]$"},
+            "from": {"$ref": "#/$defs/entity"}, "to": {"$ref": "#/$defs/entity"}, "description": {"$ref": "#/$defs/text"}}}},
+        "instances": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false, "required": ["type", "from", "to"],
+          "properties": {"type": {"$ref": "#/$defs/id"}, "from": {"$ref": "#/$defs/ref"}, "to": {"$ref": "#/$defs/ref"}}}}
+      }
+    },
+    "hierarchies": {"type": "array", "items": {
+      "type": "object", "additionalProperties": false, "required": ["id", "levels", "description"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "levels": {"type": "array", "minItems": 2, "items": {"type": "string"}},
+        "aggregation": {"enum": ["last", "mean", "min", "max"]}, "description": {"$ref": "#/$defs/text"}}}},
+
+    "lineage": {
+      "type": "object", "additionalProperties": false, "required": ["stages", "series"],
+      "properties": {
+        "stages": {"type": "array", "minItems": 1, "items": {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "order", "name", "description", "implemented_in", "reads", "config_keys"],
+          "properties": {
+            "id": {"$ref": "#/$defs/id"}, "order": {"type": "integer", "minimum": 1}, "name": {"$ref": "#/$defs/text"},
+            "description": {"$ref": "#/$defs/text"}, "implemented_in": {"type": "string"},
+            "reads": {"type": "array", "items": {"type": "string"}},
+            "config_keys": {"type": "array", "items": {"type": "string"}}}}},
+        "series": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false,
+          "required": ["series", "upstream", "root_providers", "stages", "published_in", "compact_representation"],
+          "properties": {
+            "series": {"$ref": "#/$defs/id"},
+            "upstream": {"type": "array", "minItems": 1, "items": {
+              "type": "object", "additionalProperties": false, "required": ["type", "id", "role"],
+              "properties": {"type": {"enum": ["provider", "series"]}, "id": {"$ref": "#/$defs/id"},
+                             "series_id": {"type": "string"}, "role": {"enum": ["source", "verification_and_fallback", "numerator", "denominator"]}}}},
+            "root_providers": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/id"}},
+            "stages": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/id"}},
+            "published_in": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+            "compact_representation": {"enum": ["column", "recomputed_from_inputs", "absent"]}}}}
+      }
+    },
+
+    "quality": {
+      "type": "object", "additionalProperties": false, "required": ["rules"],
+      "properties": {"rules": {"type": "array", "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "severity", "outcome", "check", "implemented_in", "source"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"}, "severity": {"enum": ["error", "warning", "info"]}, "outcome": {"type": "string"},
+          "check": {"$ref": "#/$defs/text"}, "threshold_key": {"type": "string"},
+          "applies_to": {"type": "array", "items": {"$ref": "#/$defs/id"}},
+          "implemented_in": {"type": "string"}, "source": {"type": "string"}, "verifiable_in_repo": {"type": "boolean"}}}}}
+    },
+
+    "files": {"type": "array", "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "role", "format", "schema", "since", "grain", "primary_key", "description", "consumers"],
+      "properties": {
+        "path": {"type": "string"}, "role": {"type": "string"}, "format": {"enum": ["json", "yaml"]},
+        "schema": {"type": ["string", "null"]}, "since": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
+        "grain": {"$ref": "#/$defs/text"}, "primary_key": {"type": "array", "items": {"type": "string"}},
+        "description": {"$ref": "#/$defs/text"}, "consumers": {"type": "array", "items": {"$ref": "#/$defs/id"}},
+        "typical_size": {"$ref": "#/$defs/text"}, "typical_size_source": {"type": "string"},
+        "one_file_per": {"type": "string"}, "persistent_store": {"type": "boolean"}}}},
+    "fields": {"type": "array", "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "type", "role", "since", "description", "locations", "optional"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "type": {"type": "string"},
+        "role": {"enum": ["metadata", "timestamp", "status", "container", "key", "attribute", "flag", "measure"]},
+        "since": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"}, "description": {"$ref": "#/$defs/text"},
+        "locations": {"type": "array", "minItems": 1, "items": {
+          "type": "object", "additionalProperties": false, "required": ["file", "path"],
+          "properties": {"file": {"type": "string"}, "path": {"type": "string"}}}},
+        "optional": {"type": "boolean"}, "unit": {"type": "string"}, "pattern": {"type": "string"},
+        "domain_ref": {"enum": ["status", "overall_status", "date_basis", "method", "series_kind", "rate_type"]},
+        "convention_ref": {"$ref": "#/$defs/id"}}}},
+
+    "glossary": {"type": "array", "items": {
+      "type": "object", "additionalProperties": false, "required": ["term", "es", "en", "source"],
+      "properties": {"term": {"type": "string"}, "es": {"type": "string", "minLength": 1}, "en": {"type": "string", "minLength": 1}, "source": {"type": "string"}}}},
+    "events": {
+      "type": "object", "additionalProperties": false, "required": ["note", "source", "items"],
+      "properties": {
+        "note": {"$ref": "#/$defs/text"}, "source": {"type": "string"},
+        "items": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false, "required": ["date", "series", "name", "short"],
+          "properties": {"date": {"$ref": "#/$defs/date"}, "series": {"$ref": "#/$defs/id"},
+                         "name": {"$ref": "#/$defs/text"}, "short": {"$ref": "#/$defs/text"}}}}}
+    },
+    "consumers": {"type": "array", "items": {
+      "type": "object", "additionalProperties": false, "required": ["id", "kind", "name", "reads", "source"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "kind": {"type": "string"}, "name": {"$ref": "#/$defs/text"},
+        "url": {"type": "string", "format": "uri"}, "repository": {"type": "string", "format": "uri"}, "path": {"type": "string"},
+        "reads": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false, "required": ["file", "use"],
+          "properties": {"file": {"type": "string"}, "use": {"$ref": "#/$defs/text"}}}},
+        "origins": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false, "required": ["role", "host"],
+          "properties": {"role": {"enum": ["primary", "fallback"]}, "host": {"type": "string"}}}},
+        "contract_accepted": {"type": "string"},
+        "guards": {"type": "array", "items": {"$ref": "#/$defs/text"}},
+        "fixed_lists": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false, "required": ["name", "what"],
+          "properties": {"name": {"type": "string"}, "what": {"$ref": "#/$defs/text"}}}},
+        "display_rules": {"type": "array", "items": {"$ref": "#/$defs/text"}},
+        "experience_quality": {"type": "object"},
+        "source": {"type": "string"}}}},
+    "usage_guidance": {"type": "array", "items": {"$ref": "#/$defs/rule_entry"}},
+    "known_issues": {"type": "array", "items": {
+      "type": "object", "required": ["id", "status", "affects", "title", "summary"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "status": {"enum": ["open", "monitoring", "resolved"]},
+        "resolved_on": {"$ref": "#/$defs/date"}, "affects": {"type": "string"},
+        "title": {"$ref": "#/$defs/text"}, "summary": {"$ref": "#/$defs/text"},
+        "reported": {"type": "object"}, "metric": {"type": "object"},
+        "root_cause": {"type": "object", "required": ["es", "en"]}, "resolution": {"type": "object", "required": ["es", "en", "commit"]},
+        "measurements": {"type": "array", "items": {
+          "type": "object", "required": ["id", "date", "kind", "method", "source", "after", "unit"],
+          "properties": {"id": {"$ref": "#/$defs/id"}, "date": {"$ref": "#/$defs/date"}, "kind": {"enum": ["lab", "lab_stress", "live", "field"]},
+                         "method": {"$ref": "#/$defs/text"}, "source": {"type": "string"}, "unit": {"type": "string"}}}},
+        "residual_risks": {"type": "array", "items": {"$ref": "#/$defs/text"}},
+        "field_validation": {"type": "object", "required": ["status", "note"]}}}},
+    "changelog": {"type": "array", "minItems": 1, "items": {
+      "type": "object", "additionalProperties": false, "required": ["version", "date", "changes"],
+      "properties": {"version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"}, "date": {"$ref": "#/$defs/date"}, "changes": {"$ref": "#/$defs/text"}}}},
+
+    "curation": {
+      "type": "object", "additionalProperties": false, "required": ["complete", "gaps", "languages", "note"],
+      "properties": {
+        "complete": {"type": "boolean"}, "gaps": {"type": "array", "items": {"type": "string"}},
+        "languages": {"type": "array", "items": {"enum": ["es", "en"]}, "minItems": 2},
+        "currencies_source": {"type": ["string", "null"]}, "note": {"$ref": "#/$defs/text"}}
+    },
+    "coverage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["as_of", "series_count", "official_series_count", "cross_series_count", "primary_series_count", "pair_count",
+                   "currency_count", "provider_count", "date_range", "status_counts", "series"],
+      "description": "Lo único que cambia con cada corrida.",
+      "properties": {
+        "as_of": {"$ref": "#/$defs/date"},
+        "series_count": {"type": "integer"}, "official_series_count": {"type": "integer"}, "cross_series_count": {"type": "integer"},
+        "primary_series_count": {"type": "integer"}, "pair_count": {"type": "integer"}, "currency_count": {"type": "integer"},
+        "provider_count": {"type": "integer"},
+        "date_range": {"type": "object", "additionalProperties": false, "required": ["first", "last"],
+                       "properties": {"first": {"$ref": "#/$defs/date_or_null"}, "last": {"$ref": "#/$defs/date_or_null"}}},
+        "status_counts": {"type": "object", "additionalProperties": {"type": "integer"}},
+        "series": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "status", "first_date", "last_date", "last_official_date", "observations", "official_observations", "filled_observations"],
+          "properties": {
+            "id": {"$ref": "#/$defs/id"}, "status": {"type": "string", "pattern": "^(ok|stale|error:[a-z]+)$"},
+            "first_date": {"$ref": "#/$defs/date_or_null"}, "last_date": {"$ref": "#/$defs/date_or_null"},
+            "last_official_date": {"$ref": "#/$defs/date_or_null"},
+            "observations": {"type": "integer", "minimum": 0}, "official_observations": {"type": "integer", "minimum": 0},
+            "filled_observations": {"type": "integer", "minimum": 0}}}}
+      }
+    }
+  },
+
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "date": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+    "date_or_null": {"anyOf": [{"$ref": "#/$defs/date"}, {"type": "null"}]},
+    "currency_code": {"type": "string", "pattern": "^[A-Z]{3}$"},
+    "country_code": {"type": "string", "pattern": "^[A-Z]{2}$"},
+    "pair_id": {"type": "string", "pattern": "^[A-Z]{3}-[A-Z]{3}$"},
+    "entity": {"enum": ["series", "providers", "pairs", "currencies", "countries"]},
+    "ref": {"type": "string", "pattern": "^(series|providers|pairs|currencies|countries):[A-Za-z0-9_-]+$"},
+    "text": {
+      "type": "object", "additionalProperties": false, "required": ["es", "en"],
+      "properties": {"es": {"type": "string", "minLength": 1}, "en": {"type": "string", "minLength": 1}}
+    },
+    "sourced_text": {
+      "type": "object", "additionalProperties": false, "required": ["es", "en", "source"],
+      "properties": {"es": {"type": "string", "minLength": 1}, "en": {"type": "string", "minLength": 1}, "source": {"type": "string", "minLength": 1}}
+    },
+    "rule_entry": {
+      "type": "object", "additionalProperties": false, "required": ["id", "rule", "source"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "rule": {"$ref": "#/$defs/text"}, "source": {"type": "string", "minLength": 1}}
+    },
+    "enum_value": {
+      "type": "object", "additionalProperties": false, "required": ["value", "meaning"],
+      "properties": {"value": {"type": "string"}, "meaning": {"$ref": "#/$defs/text"}}
+    },
+    "enum_value_used": {
+      "type": "object", "additionalProperties": false, "required": ["value", "meaning", "used_by"],
+      "properties": {"value": {"type": "string"}, "meaning": {"$ref": "#/$defs/text"}, "used_by": {"type": "array", "items": {"$ref": "#/$defs/id"}}}
+    }
+  }
+}
