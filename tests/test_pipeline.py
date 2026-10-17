@@ -57,8 +57,40 @@ def bcu_response(data: bytes, values=None) -> str:
     return head + "".join(tpl.format(f=k, v=f"{v:.6f}") for k, v in sorted(vals.items())) + tail
 
 
-def fake_http(banxico=None, trm=None, bcra=None, banrep=None, bcb=None, bcch=None, fail=None):
+INCAPSULA = (FIX / "bcrp_desafio_incapsula_real.html").read_text(encoding="utf-8")
+INCAPSULA_VACIA = ('<!DOCTYPE html>\n<html>\n<head><script src="/oly-Almost-That-hane-Sey-a-sleepe-Atter-Macduffe" '
+                   'async></script>\n<title></title>\n</head>\n<body>\n</body>\n</html>')  # variante real de 155 caracteres
+
+
+def bcrp_response(url: str) -> str:
+    """Simula BCRPData con el formato de la respuesta real: lista todos los días hábiles de la ventana
+    y marca «n.d.» donde no hay dato (los valores reales son los de sep-oct 2026 del fixture)."""
+    import re as _re
+    from datetime import timedelta
+    from fxpipe.providers.bcrp_series import MONTHS
+    m = _re.search(r"/(\w+)/json/([\d-]+)/([\d-]+)/esp$", url)
+    a, b = date.fromisoformat(m.group(2)), date.fromisoformat(m.group(3))
+    real = (FIX / "bcrp_interbancario_venta_real.json").read_text(encoding="utf-8")
+    known = {}
+    for p in json.loads(real)["periods"]:
+        d, mon, y = p["name"].split(".")
+        known[date(2000 + int(y), MONTHS[mon.lower()], int(d))] = p["values"][0]
+    names = "Ene Feb Mar Abr May Jun Jul Ago Set Oct Nov Dic".split()
+    periods, cur = [], a
+    while cur <= b:
+        if cur.weekday() < 5:
+            periods.append('{\n"name":"%02d.%s.%02d",\n"values":["%s"]\n}' % (cur.day, names[cur.month - 1], cur.year % 100, known.get(cur, "n.d.")))
+        cur += timedelta(days=1)
+    return real[: real.index('"periods"')] + '"periods":\n[\n' + ",\n".join(periods) + "\n]\n}"
+
+
+def fake_http(banxico=None, trm=None, bcra=None, banrep=None, bcb=None, bcch=None, fail=None, bcrp=None):
     def get(url, headers, data=None):
+        if "bcrp.gob.pe" in url:
+            if fail == "bcrp":
+                from fxpipe.providers import ProviderError
+                raise ProviderError("simulado: HTTP 503 BCRP")
+            return bcrp if bcrp is not None else bcrp_response(url)
         if "bcu.gub.uy" in url:
             if fail == "bcu":
                 from fxpipe.providers import ProviderError
@@ -108,6 +140,9 @@ def env(tmp_path, monkeypatch):
     monkeypatch.setattr(bcch_bde, "today_santiago", lambda: AS_OF)
     from fxpipe.providers import bcu_ws
     monkeypatch.setattr(bcu_ws, "today_montevideo", lambda: AS_OF)
+    from fxpipe.providers import bcrp_series
+    monkeypatch.setattr(bcrp_series, "today_lima", lambda: AS_OF)
+    monkeypatch.setattr(bcrp_series.time, "sleep", lambda s: None)  # sin esperas reales en los reintentos
     cfg = pipeline.load_config(ROOT / "config" / "sources.json")
     return cfg, tmp_path
 
@@ -423,7 +458,7 @@ def test_chile_failure_isolated(env):
     cfg, data = env
     st = pipeline.run(cfg, data, AS_OF, http_get=fake_http(fail="bcch"))["manifest"]["series_status"]
     chile = ["usd_clp_obs", "usd_clp_obs_mkt", "mxn_clp_cross", "clp_cop_cross", "clp_ars_cross", "brl_clp_cross",
-             "uyu_clp_cross"]  # la cruzada con Uruguay también depende del observado
+             "uyu_clp_cross", "pen_clp_cross"]  # las cruzadas con Uruguay y Perú también dependen del observado
     assert all(st[i] == "error:provider" for i in chile)
     assert all(v == "ok" for k, v in st.items() if k not in chile)
 
@@ -592,8 +627,193 @@ def test_uruguay_visible_in_dashboard(env):
 def test_uruguay_failure_isolated(env):
     cfg, data = env
     st = pipeline.run(cfg, data, AS_OF, http_get=fake_http(fail="bcu"))["manifest"]["series_status"]
-    assert all(st[i] == "error:provider" for i in UY)
-    assert all(v == "ok" for k, v in st.items() if k not in UY)
+    uruguay = UY + ["pen_uyu_cross"]  # la cruzada con Perú también depende del interbancario de Uruguay
+    assert all(st[i] == "error:provider" for i in uruguay)
+    assert all(v == "ok" for k, v in st.items() if k not in uruguay)
+
+
+# ---------- Perú: tipo de cambio interbancario (BCRP, API de series) ----------
+
+PE = ["usd_pen_interbank", "pen_mxn_cross", "pen_cop_cross", "pen_ars_cross", "pen_brl_cross", "pen_clp_cross",
+      "pen_uyu_cross"]
+BCRP_NAME = "TC Interbancario (S/ por US$) - Venta"
+
+
+def test_bcrp_parse_real_response():
+    """Respuesta real de PD04638PD (1-sep al 16-oct-2026), capturada el 2026-10-16, byte a byte."""
+    from fxpipe.providers.bcrp_series import parse_payload as bcrp_parse
+    rows = bcrp_parse((FIX / "bcrp_interbancario_venta_real.json").read_text(encoding="utf-8"), BCRP_NAME)
+    assert len(rows) == 32  # 34 periodos: dos «n.d.»
+    assert rows["2026-10-15"] == 3.42821428571429  # sin redondear: el BCRP declara 3 decimales y entrega 14
+    assert rows["2026-09-01"] == 3.36585714285714  # septiembre llega como «Set»
+    assert "2026-10-08" not in rows  # feriado peruano: «n.d.»
+    assert "2026-10-16" not in rows  # el día de hoy aún no tiene dato
+    assert all(date.fromisoformat(k).weekday() < 5 for k in rows)
+
+
+def test_bcrp_contract_drift_detected():
+    from fxpipe.providers.bcrp_series import parse_payload as bcrp_parse
+    real = (FIX / "bcrp_interbancario_venta_real.json").read_text(encoding="utf-8")
+    with pytest.raises(ContractError):  # el código llegó a otra serie (p. ej. Compra en vez de Venta)
+        bcrp_parse(real.replace("- Venta", "- Compra"), BCRP_NAME)
+    with pytest.raises(ContractError):  # mes desconocido
+        bcrp_parse(real.replace("05.Oct.26", "05.Xyz.26"), BCRP_NAME)
+    with pytest.raises(ContractError):  # fecha con otro formato
+        bcrp_parse(real.replace("05.Oct.26", "2026-10-05"), BCRP_NAME)
+    with pytest.raises(ContractError):  # valor no numérico
+        bcrp_parse(real.replace("3.42714285714286", "abc"), BCRP_NAME)
+    with pytest.raises(ContractError):  # valor no positivo
+        bcrp_parse(real.replace("3.42714285714286", "0"), BCRP_NAME)
+    with pytest.raises(ContractError):  # fecha repetida
+        bcrp_parse(real.replace("06.Oct.26", "05.Oct.26"), BCRP_NAME)
+    with pytest.raises(ContractError):  # valor en domingo: la base de fecha cambió
+        bcrp_parse(real.replace("05.Oct.26", "04.Oct.26"), BCRP_NAME)
+    with pytest.raises(ContractError):  # falta periods
+        bcrp_parse(real.replace('"periods"', '"periodos"'), BCRP_NAME)
+    with pytest.raises(ContractError):
+        bcrp_parse(INCAPSULA, BCRP_NAME)  # HTML en lugar de JSON, leído sin pasar por el conector
+
+
+def _bcrp_provider(cfg, replies, calls=None, sleeps=None):
+    from fxpipe.providers import build_provider
+    seq = list(replies)
+
+    def get(url, headers, data=None):
+        if calls is not None:
+            calls.append((url, headers))
+        r = seq.pop(0) if len(seq) > 1 else seq[0]
+        if isinstance(r, Exception):
+            raise r
+        return r
+    prov = build_provider("bcrp", cfg["providers"]["bcrp"], http_get=get)
+    prov.sleep = (lambda s: sleeps.append(s)) if sleeps is not None else (lambda s: None)
+    return prov
+
+
+def _bcrp_req(code="PD04638PD"):
+    from fxpipe.providers.base import FetchRequest as FR
+    return FR("usd_pen_interbank", code, (("expected_name", BCRP_NAME),))
+
+
+def test_bcrp_url_headers_and_window(env):
+    cfg, _ = env
+    calls = []
+    real = (FIX / "bcrp_interbancario_venta_real.json").read_text(encoding="utf-8")
+    prov = _bcrp_provider(cfg, [real], calls)
+    out = prov.fetch([_bcrp_req()], date(2026, 9, 28), date(2026, 10, 11))
+    assert len(calls) == 1
+    url, headers = calls[0]
+    # La ventana se recorta a hoy en Lima (AS_OF): el futuro solo trae «n.d.» y no se consulta
+    assert url == "https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PD04638PD/json/2026-09-28/2026-10-04/esp"
+    assert "json" not in headers["Accept"]  # el transporte entrega texto: el conector distingue el JSON del HTML
+    assert out["usd_pen_interbank"]["2026-10-02"] == 3.43814285714286
+    assert max(out["usd_pen_interbank"]) == "2026-10-02"  # lo posterior a la ventana no se devuelve
+    assert prov.fetch([_bcrp_req()], date(2026, 10, 10), date(2026, 10, 11)) == {"usd_pen_interbank": {}}  # todo futuro
+    assert len(calls) == 1  # y no genera consulta
+
+
+def test_bcrp_rejects_malformed_series_code(env):
+    from fxpipe.providers import ConfigError
+    cfg, _ = env
+    for bad in ("04638", "pd04638pd", "PD04638PD/json", "PD04638PD-PD04637PD"):
+        with pytest.raises(ConfigError):
+            _bcrp_provider(cfg, ["{}"]).fetch([_bcrp_req(bad)], date(2026, 9, 28), date(2026, 10, 2))
+
+
+def test_bcrp_firewall_page_is_retried_then_operational(env):
+    from fxpipe.providers import ProviderError
+    cfg, _ = env
+    real = (FIX / "bcrp_interbancario_venta_real.json").read_text(encoding="utf-8")
+    # Página de verificación dos veces y luego el JSON: se recupera sola, con espera creciente
+    calls, sleeps = [], []
+    out = _bcrp_provider(cfg, [INCAPSULA, INCAPSULA_VACIA, real], calls, sleeps).fetch([_bcrp_req()], date(2026, 9, 28), date(2026, 10, 2))
+    assert len(calls) == 3 and sleeps == [4, 8] and out["usd_pen_interbank"]["2026-09-30"] == 3.432
+    # Persistente: error operativo (no de contrato) con la pista del firewall
+    calls, sleeps = [], []
+    with pytest.raises(ProviderError) as exc:
+        _bcrp_provider(cfg, [INCAPSULA], calls, sleeps).fetch([_bcrp_req()], date(2026, 9, 28), date(2026, 10, 2))
+    assert not isinstance(exc.value, ContractError) and len(calls) == 4 and len(sleeps) == 3
+    assert "Incapsula" in str(exc.value) and "GitHub Actions" in str(exc.value)
+    # HTTP 403 del firewall: también se reintenta; otro error HTTP (503) no
+    calls = []
+    out = _bcrp_provider(cfg, [ProviderError("HTTP 403 (credenciales o permisos) en x"), real], calls).fetch(
+        [_bcrp_req()], date(2026, 9, 28), date(2026, 10, 2))
+    assert len(calls) == 2 and out["usd_pen_interbank"]
+    calls = []
+    with pytest.raises(ProviderError):
+        _bcrp_provider(cfg, [ProviderError("HTTP 503 en x")], calls).fetch([_bcrp_req()], date(2026, 9, 28), date(2026, 10, 2))
+    assert len(calls) == 1
+    # Una respuesta JSON de otra serie sí es cambio de contrato y no se reintenta
+    calls = []
+    with pytest.raises(ContractError):
+        _bcrp_provider(cfg, [real.replace("- Venta", "- Compra")], calls).fetch([_bcrp_req()], date(2026, 9, 28), date(2026, 10, 2))
+    assert len(calls) == 1
+
+
+def test_http_get_returns_text_so_the_firewall_page_is_not_a_json_error(monkeypatch):
+    """default_http_get con Accept sin «json» devuelve el texto; con «json» una página HTML sería ContractError."""
+    from fxpipe.providers import base
+
+    class Resp:
+        headers = {"Content-Type": "text/html; charset=UTF-8"}
+        def read(self):
+            return INCAPSULA.encode("utf-8")
+        def __enter__(self):
+            return self
+        def __exit__(self, *a):
+            return False
+    monkeypatch.setattr(base.urllib.request, "urlopen", lambda req, timeout: Resp())
+    assert "Incapsula" in base.default_http_get("https://estadisticas.bcrp.gob.pe/x", {"Accept": "text/plain, */*;q=0.8"})
+    with pytest.raises(ContractError):
+        base.default_http_get("https://estadisticas.bcrp.gob.pe/x", {"Accept": "application/json"})
+
+
+def test_peru_end_to_end_crosses(env):
+    cfg, data = env
+    r = pipeline.run(cfg, data, AS_OF, http_get=fake_http())
+    assert r["overall_status"] == "ok"
+    L = json.loads((data / "latest.json").read_text())["series"]
+    pe = L["usd_pen_interbank"]
+    assert pe["value"] == 3.43814285714286 and pe["date"] == "2026-10-02" and pe["date_basis"] == "determinacion"
+    assert pe["decimals"] == 3 and pe["pair"] == "USD-PEN" and "next" not in pe
+    assert pe["source"]["country"] == "PE" and pe["source"]["institution"].startswith("Banco Central de Reserva del Perú")
+    assert pe["source"]["series_id"] == "PD04638PD" and pe["source"]["docs_url"].endswith("/series/ayuda/api")
+    # Mismo día de mercado (2-oct) sin desplazar; el sol vale más que las otras seis monedas: cifras mayores que 1
+    p = 3.43814285714286
+    assert L["pen_mxn_cross"]["value"] == round(18.20 / p, 4) and L["pen_mxn_cross"]["pair"] == "PEN-MXN"
+    assert L["pen_cop_cross"]["value"] == round(3273.49 / p, 4)
+    assert L["pen_ars_cross"]["value"] == round(1523.0868 / p, 4)
+    assert L["pen_brl_cross"]["value"] == round(5.275 / p, 4)
+    assert L["pen_clp_cross"]["value"] == round(984.82 / p, 4)
+    assert L["pen_uyu_cross"]["value"] == round(40.342 / p, 4)
+    assert all(L[i]["date"] == "2026-10-02" and L[i]["method"].startswith("cross_via_usd") for i in PE[1:])
+    assert all(L[i]["value"] > 1 for i in PE[1:])
+
+
+def test_peru_hidden_until_dashboard_ready(env):
+    """config 1.9.0: los datos de Perú ya se publican, pero el dashboard aún no los muestra."""
+    cfg, data = env
+    pipeline.run(cfg, data, AS_OF, http_get=fake_http())
+    L = json.loads((data / "latest.json").read_text())["series"]
+    assert all(not L[i]["primary"] for i in PE)
+    assert sum(1 for v in L.values() if v["primary"]) == 21
+    assert json.loads((data / "manifest.json").read_text())["series_status"]["usd_pen_interbank"] == "ok"
+
+
+def test_peru_failure_isolated(env):
+    cfg, data = env
+    st = pipeline.run(cfg, data, AS_OF, http_get=fake_http(fail="bcrp"))["manifest"]["series_status"]
+    assert all(st[i] == "error:provider" for i in PE)
+    assert all(v == "ok" for k, v in st.items() if k not in PE)
+
+
+def test_peru_firewall_block_is_operational_not_contract(env):
+    """Si el firewall del BCRP bloquea al ejecutor, la serie queda en error operativo y el resto sigue."""
+    cfg, data = env
+    r = pipeline.run(cfg, data, AS_OF, http_get=fake_http(bcrp=INCAPSULA))
+    st = r["manifest"]["series_status"]
+    assert all(st[i] == "error:provider" for i in PE) and all(v == "ok" for k, v in st.items() if k not in PE)
+    assert "Incapsula" in r["manifest"]["errors"]["usd_pen_interbank"]
 
 
 # ---------- Transformaciones ----------
