@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "id": "mxn_clp_cross",
   "pair": "MXN-CLP",
   "label": "Tasa cruzada MXN-CLP vía USD (dólar observado ÷ FIX, mismo día de mercado)",

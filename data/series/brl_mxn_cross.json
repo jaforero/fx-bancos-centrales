@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "id": "brl_mxn_cross",
   "pair": "BRL-MXN",
   "label": "Tasa cruzada BRL-MXN vía USD (FIX ÷ PTAX, mismo día de mercado)",

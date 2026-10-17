@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "id": "usd_clp_obs_mkt",
   "pair": "USD-CLP",
   "label": "Dólar observado por fecha de mercado (insumo de las cruzadas)",

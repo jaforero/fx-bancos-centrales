@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "id": "pen_ars_cross",
   "pair": "PEN-ARS",
   "label": "Tasa cruzada PEN-ARS vía USD (A 3500 ÷ interbancario, mismo día de mercado)",

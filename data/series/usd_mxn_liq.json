@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "id": "usd_mxn_liq",
   "pair": "USD-MXN",
   "label": "Tipo de cambio FIX para pagos (fecha de liquidación, FIX de 2 días hábiles antes)",

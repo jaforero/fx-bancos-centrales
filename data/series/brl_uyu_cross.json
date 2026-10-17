@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "id": "brl_uyu_cross",
   "pair": "BRL-UYU",
   "label": "Tasa cruzada BRL-UYU vía USD (interbancario ÷ PTAX, mismo día de mercado)",

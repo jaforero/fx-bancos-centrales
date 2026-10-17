@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "id": "pen_mxn_cross",
   "pair": "PEN-MXN",
   "label": "Tasa cruzada PEN-MXN vía USD (FIX ÷ interbancario, mismo día de mercado)",
