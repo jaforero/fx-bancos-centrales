@@ -87,6 +87,10 @@
       "prev_date": "2026-10-15",
       "change_abs": -27.19,
       "change_pct": -0.8503,
+      "next": {
+        "date": "2026-10-17",
+        "value": 3174.67
+      },
       "status": "ok"
     },
     "usd_cop_trm_mkt": {
@@ -114,13 +118,13 @@
         "fallback_used": false
       },
       "method": "official",
-      "value": 3170.46,
-      "date": "2026-10-15",
-      "days_since_official": 1,
-      "prev_value": 3197.65,
-      "prev_date": "2026-10-14",
-      "change_abs": -27.19,
-      "change_pct": -0.8503,
+      "value": 3174.67,
+      "date": "2026-10-16",
+      "days_since_official": 0,
+      "prev_value": 3170.46,
+      "prev_date": "2026-10-15",
+      "change_abs": 4.21,
+      "change_pct": 0.1328,
       "status": "ok"
     },
     "usd_ars_a3500": {
@@ -254,6 +258,31 @@
       "change_pct": -0.0947,
       "status": "ok"
     },
+    "usd_pen_interbank": {
+      "pair": "USD-PEN",
+      "label": "Dólar interbancario venta (valor del día)",
+      "quote_unit": "PEN por 1 USD",
+      "date_basis": "determinacion",
+      "primary": false,
+      "decimals": 3,
+      "source": {
+        "provider": "bcrp",
+        "institution": "Banco Central de Reserva del Perú (BCRP)",
+        "country": "PE",
+        "series_id": "PD04638PD",
+        "docs_url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/ayuda/api",
+        "authority": "Banco Central de Reserva del Perú: publica en BCRPData el tipo de cambio interbancario (valor diario)"
+      },
+      "method": "official",
+      "value": 3.42821428571429,
+      "date": "2026-10-15",
+      "days_since_official": 1,
+      "prev_value": 3.43914285714286,
+      "prev_date": "2026-10-14",
+      "change_abs": -0.010929,
+      "change_pct": -0.3178,
+      "status": "ok"
+    },
     "mxn_cop_cross": {
       "pair": "MXN-COP",
       "label": "Tasa cruzada MXN-COP vía USD (TRM ÷ FIX, mismo día de mercado)",
@@ -266,13 +295,13 @@
         "usd_cop_trm_mkt",
         "usd_mxn_fix"
       ],
-      "value": 172.0738,
-      "date": "2026-10-15",
-      "days_since_official": 1,
-      "prev_value": 172.9507,
-      "prev_date": "2026-10-14",
-      "change_abs": -0.8769,
-      "change_pct": -0.507,
+      "value": 171.6687,
+      "date": "2026-10-16",
+      "days_since_official": 0,
+      "prev_value": 172.0738,
+      "prev_date": "2026-10-15",
+      "change_abs": -0.4051,
+      "change_pct": -0.2354,
       "status": "ok"
     },
     "mxn_ars_cross": {
@@ -308,13 +337,13 @@
         "usd_cop_trm_mkt",
         "usd_ars_a3500"
       ],
-      "value": 2.0942,
-      "date": "2026-10-15",
-      "days_since_official": 1,
-      "prev_value": 2.1113,
-      "prev_date": "2026-10-14",
-      "change_abs": -0.0171,
-      "change_pct": -0.8099,
+      "value": 2.0961,
+      "date": "2026-10-16",
+      "days_since_official": 0,
+      "prev_value": 2.0942,
+      "prev_date": "2026-10-15",
+      "change_abs": 0.0019,
+      "change_pct": 0.0907,
       "status": "ok"
     },
     "brl_mxn_cross": {
@@ -350,13 +379,13 @@
         "usd_cop_trm_mkt",
         "usd_brl_ptax"
       ],
-      "value": 627.5529,
-      "date": "2026-10-15",
-      "days_since_official": 1,
-      "prev_value": 633.9387,
-      "prev_date": "2026-10-14",
-      "change_abs": -6.3858,
-      "change_pct": -1.0073,
+      "value": 624.6154,
+      "date": "2026-10-16",
+      "days_since_official": 0,
+      "prev_value": 627.5529,
+      "prev_date": "2026-10-15",
+      "change_abs": -2.9375,
+      "change_pct": -0.4681,
       "status": "ok"
     },
     "brl_ars_cross": {
@@ -413,13 +442,13 @@
         "usd_cop_trm_mkt",
         "usd_clp_obs_mkt"
       ],
-      "value": 3.2217,
-      "date": "2026-10-15",
-      "days_since_official": 1,
-      "prev_value": 3.2397,
-      "prev_date": "2026-10-14",
-      "change_abs": -0.018,
-      "change_pct": -0.5556,
+      "value": 3.234,
+      "date": "2026-10-16",
+      "days_since_official": 0,
+      "prev_value": 3.2217,
+      "prev_date": "2026-10-15",
+      "change_abs": 0.0123,
+      "change_pct": 0.3818,
       "status": "ok"
     },
     "clp_ars_cross": {
@@ -497,13 +526,13 @@
         "usd_cop_trm_mkt",
         "usd_uyu_interbank"
       ],
-      "value": 78.9949,
-      "date": "2026-10-15",
-      "days_since_official": 1,
-      "prev_value": 79.4724,
-      "prev_date": "2026-10-14",
-      "change_abs": -0.4775,
-      "change_pct": -0.6008,
+      "value": 79.1748,
+      "date": "2026-10-16",
+      "days_since_official": 0,
+      "prev_value": 78.9949,
+      "prev_date": "2026-10-15",
+      "change_abs": 0.1799,
+      "change_pct": 0.2277,
       "status": "ok"
     },
     "uyu_ars_cross": {
@@ -567,6 +596,132 @@
       "prev_date": "2026-10-15",
       "change_abs": -0.0376,
       "change_pct": -0.1533,
+      "status": "ok"
+    },
+    "pen_mxn_cross": {
+      "pair": "PEN-MXN",
+      "label": "Tasa cruzada PEN-MXN vía USD (FIX ÷ interbancario, mismo día de mercado)",
+      "quote_unit": "MXN por 1 PEN",
+      "date_basis": "determinacion",
+      "primary": false,
+      "decimals": 4,
+      "method": "cross_via_usd: usd_mxn_fix / usd_pen_interbank",
+      "inputs": [
+        "usd_mxn_fix",
+        "usd_pen_interbank"
+      ],
+      "value": 5.3745,
+      "date": "2026-10-15",
+      "days_since_official": 1,
+      "prev_value": 5.376,
+      "prev_date": "2026-10-14",
+      "change_abs": -0.0015,
+      "change_pct": -0.0279,
+      "status": "ok"
+    },
+    "pen_cop_cross": {
+      "pair": "PEN-COP",
+      "label": "Tasa cruzada PEN-COP vía USD (TRM ÷ interbancario, mismo día de mercado)",
+      "quote_unit": "COP por 1 PEN",
+      "date_basis": "determinacion",
+      "primary": false,
+      "decimals": 4,
+      "method": "cross_via_usd: usd_cop_trm_mkt / usd_pen_interbank",
+      "inputs": [
+        "usd_cop_trm_mkt",
+        "usd_pen_interbank"
+      ],
+      "value": 924.8138,
+      "date": "2026-10-15",
+      "days_since_official": 1,
+      "prev_value": 929.7811,
+      "prev_date": "2026-10-14",
+      "change_abs": -4.9673,
+      "change_pct": -0.5342,
+      "status": "ok"
+    },
+    "pen_ars_cross": {
+      "pair": "PEN-ARS",
+      "label": "Tasa cruzada PEN-ARS vía USD (A 3500 ÷ interbancario, mismo día de mercado)",
+      "quote_unit": "ARS por 1 PEN",
+      "date_basis": "determinacion",
+      "primary": false,
+      "decimals": 4,
+      "method": "cross_via_usd: usd_ars_a3500 / usd_pen_interbank",
+      "inputs": [
+        "usd_ars_a3500",
+        "usd_pen_interbank"
+      ],
+      "value": 441.6092,
+      "date": "2026-10-15",
+      "days_since_official": 1,
+      "prev_value": 440.3904,
+      "prev_date": "2026-10-14",
+      "change_abs": 1.2188,
+      "change_pct": 0.2768,
+      "status": "ok"
+    },
+    "pen_brl_cross": {
+      "pair": "PEN-BRL",
+      "label": "Tasa cruzada PEN-BRL vía USD (PTAX ÷ interbancario, mismo día de mercado)",
+      "quote_unit": "BRL por 1 PEN",
+      "date_basis": "determinacion",
+      "primary": false,
+      "decimals": 4,
+      "method": "cross_via_usd: usd_brl_ptax / usd_pen_interbank",
+      "inputs": [
+        "usd_brl_ptax",
+        "usd_pen_interbank"
+      ],
+      "value": 1.4737,
+      "date": "2026-10-15",
+      "days_since_official": 1,
+      "prev_value": 1.4667,
+      "prev_date": "2026-10-14",
+      "change_abs": 0.007,
+      "change_pct": 0.4773,
+      "status": "ok"
+    },
+    "pen_clp_cross": {
+      "pair": "PEN-CLP",
+      "label": "Tasa cruzada PEN-CLP vía USD (dólar observado ÷ interbancario, mismo día de mercado)",
+      "quote_unit": "CLP por 1 PEN",
+      "date_basis": "determinacion",
+      "primary": false,
+      "decimals": 4,
+      "method": "cross_via_usd: usd_clp_obs_mkt / usd_pen_interbank",
+      "inputs": [
+        "usd_clp_obs_mkt",
+        "usd_pen_interbank"
+      ],
+      "value": 287.0562,
+      "date": "2026-10-15",
+      "days_since_official": 1,
+      "prev_value": 286.9988,
+      "prev_date": "2026-10-14",
+      "change_abs": 0.0574,
+      "change_pct": 0.02,
+      "status": "ok"
+    },
+    "pen_uyu_cross": {
+      "pair": "PEN-UYU",
+      "label": "Tasa cruzada PEN-UYU vía USD (interbancario Uruguay ÷ interbancario Perú, mismo día de mercado)",
+      "quote_unit": "UYU por 1 PEN",
+      "date_basis": "determinacion",
+      "primary": false,
+      "decimals": 4,
+      "method": "cross_via_usd: usd_uyu_interbank / usd_pen_interbank",
+      "inputs": [
+        "usd_uyu_interbank",
+        "usd_pen_interbank"
+      ],
+      "value": 11.7073,
+      "date": "2026-10-15",
+      "days_since_official": 1,
+      "prev_value": 11.6994,
+      "prev_date": "2026-10-14",
+      "change_abs": 0.0079,
+      "change_pct": 0.0675,
       "status": "ok"
     }
   }
