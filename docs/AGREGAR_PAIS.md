@@ -93,9 +93,33 @@ rangos plausibles y umbrales. Correr `pytest` y `python -m fxpipe healthcheck`.
 - Despliegue gradual: `primary: false` (config 1.7.0) y, con el dashboard adaptado,
   `primary: true` (config 1.8.0).
 
+## Ejemplo resuelto: Perú (config 1.9.0)
+
+- Fuente: API de series estadísticas del Banco Central de Reserva del Perú (BCRPData),
+  `GET /estadisticas/series/api/{código}/json/{desde}/{hasta}/esp`, sin token. Las condiciones
+  de uso permiten reproducir la información citando la fuente.
+- Tasa: `PD04638PD` «TC Interbancario (S/ por US$) - Venta». Ojo con el código: `PD04637PD` es
+  Compra. El nombre que devuelve la propia API es la comprobación (`expected_name`). Las otras
+  series diarias de la página son el sistema bancario SBS (`PD04639PD`/`PD04640PD`), el cierre
+  de las 13:30 (`PD04645PD`/`PD04646PD`) y el euro; no se usan.
+- Valor: hasta 14 decimales (el BCRP declara 3; en la mayoría de los días son múltiplos de 1/7,
+  lo que sugiere un promedio de siete cotizaciones, no documentado). Se guarda sin redondear.
+- `date_basis: determinacion`. Prueba empírica (1.693 días): la variación diaria correlaciona
+  0,43 con el observado de Chile por día de mercado, 0,38 con el FIX, 0,36 con la TRM por día de
+  mercado, 0,35 con la PTAX y 0,26 con el interbancario de Uruguay, el mismo día; con ±1 día de
+  desfase, entre -0,03 y 0,07.
+- Orientación de las cruzadas: «moneda por 1 PEN», porque el sol vale más que las otras seis y
+  así todas las cifras son mayores que 1 (como «COP por 1 UYU» o «UYU por 1 MXN»).
+- Trampas: fechas `DD.Mmm.AA` con el mes abreviado (septiembre es «Set» incluso con `ing`);
+  los días sin dato llegan como `"n.d."` (feriados peruanos y el día corriente), nunca fines de
+  semana; la respuesta es JSON pero se sirve como `text/html`; el sitio está detrás de Imperva
+  Incapsula y una consulta mal formada (o, a veces, una válida) devuelve HTTP 200 con una página
+  HTML de verificación: se reintenta y, si persiste, es error operativo; el contenedor de Claude
+  recibe 403 del proxy, así que la validación en vivo se hace desde GitHub Actions.
+- Despliegue gradual: `primary: false` (config 1.9.0) y, con el dashboard adaptado, `primary: true`.
+
 ## Candidatos (NO verificados: confirmar contra la documentación oficial antes de construir)
 
 | País | Institución | Pista de API |
 |---|---|---|
-| Perú | BCRP | API de series estadísticas, abierta |
 | Zona euro | BCE | Data Portal (SDMX), abierta |
