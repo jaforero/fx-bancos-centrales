@@ -7,6 +7,7 @@ from .banrep_sdmx import BanrepSdmxProvider
 from .banxico import BanxicoProvider
 from .bcb_ptax import BcbPtaxProvider
 from .bcch_bde import BcchBdeProvider
+from .bcrp_series import BcrpSeriesProvider
 from .bcu_ws import BcuWsProvider
 from .bcra_cambiarias import BcraCambiariasProvider
 from .base import ConfigError, ContractError, FetchRequest, Provider, ProviderError
@@ -20,6 +21,7 @@ REGISTRY: dict[str, type[Provider]] = {
     BcbPtaxProvider.kind: BcbPtaxProvider,
     BcchBdeProvider.kind: BcchBdeProvider,
     BcuWsProvider.kind: BcuWsProvider,
+    BcrpSeriesProvider.kind: BcrpSeriesProvider,
 }
 
 
