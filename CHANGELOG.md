@@ -1,5 +1,17 @@
 # Cambios
 
+## operación — 2026-10-17
+- `daily-update.yml` cierra solo las alertas `fx-alerta` abiertas cuando una corrida termina con todas las
+  series en ok, con un comentario que enlaza esa corrida. El paso nuevo no puede volver roja una corrida sana
+  (`continue-on-error`). Antes la alerta solo se abría o se comentaba y quedaba abierta hasta cerrarla a mano.
+- Se cerró así el issue #1 «Pipeline de tasas degradado», abierto el 2026-10-12 por las corridas #19 y #20 del
+  despliegue de Chile: en la #19 el BCCh respondió en una codificación que el conector no leía (`error:contract`,
+  «Respuesta no es UTF-8») y en la #20, con el arreglo ya publicado, `usd_clp_obs_mkt` y sus cuatro cruzadas
+  quedaron en `error:empty`. La corrida siguiente, sin cambios de código entre medias, salió en ok, y las 17
+  corridas diarias posteriores también.
+- Modelo semántico 1.0.1: la alerta `fx-alerta` describe el cierre automático. Sin cambios en los datos ni en
+  el esquema 1.2.0.
+
 ## esquema 1.2.0 — 2026-10-17
 - Nuevo modelo semántico, publicado en `data/semantic_model.json` y `data/semantic_model.yaml` (equivalentes
   campo por campo) y descrito por `schema/semantic_model.schema.json`: dimensiones (monedas, países,

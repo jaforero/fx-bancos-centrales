@@ -121,7 +121,8 @@ dashboard en [docs/DASHBOARD.md](docs/DASHBOARD.md).
 
 - `daily-update.yml`: corre lunes a viernes 19:30 UTC y todos los días 01:00 UTC.
   Solo hace commit si cambian los datos. Si una serie queda degradada, abre o
-  actualiza un issue con etiqueta `fx-alerta`.
+  actualiza un issue con etiqueta `fx-alerta`; cuando una corrida posterior termina
+  con todas las series en ok, cierra ese issue con un comentario que enlaza la corrida.
 - `healthcheck.yml`: cada lunes prueba el contrato de cada API en vivo. Si detecta
   un cambio de formato, abre un issue `api-drift`.
 - `ci.yml`: pruebas en cada push o PR.
