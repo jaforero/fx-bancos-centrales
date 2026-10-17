@@ -1,5 +1,24 @@
 # Cambios
 
+## esquema 1.2.0 — 2026-10-17
+- Nuevo modelo semántico, publicado en `data/semantic_model.json` y `data/semantic_model.yaml` (equivalentes
+  campo por campo) y descrito por `schema/semantic_model.schema.json`: dimensiones (monedas, países,
+  proveedores, pares y series), dominios, medidas y métricas, relaciones, jerarquías, linaje, reglas de calidad,
+  archivos y diccionario de todos los campos, glosario, consumidores, incidencias conocidas y cobertura de la
+  corrida. Es bilingüe (es/en) y neutral frente a cualquier herramienta. Ver `docs/MODELO_SEMANTICO.md`.
+- Se genera en cada corrida (`fxpipe.semantic`) desde `config/sources.json` (estructura y umbrales),
+  `config/semantic.json` (curaduría, nueva) y la corrida (cobertura). En la corrida diaria es indulgente: si
+  falta curaduría o el generador falla, los datos se publican igual y el hueco queda en `curation.gaps` o en el
+  registro. En las pruebas es estricto: agregar una serie, moneda o país sin curarlos hace fallar la CI.
+- Incluye el registro de la incidencia del CLS de 0,022 en en-US del dashboard (resuelta el 2026-10-17 en
+  `jaforero/dashboards@0a25d85`), con la causa, la corrección, las mediciones de laboratorio y en vivo y lo que
+  sigue sin verificar (datos de usuarios reales, Safari y Firefox).
+- Comando nuevo `python -m fxpipe semantic [--write-docs]`. `pyyaml` se agrega a las dependencias de desarrollo
+  (solo las pruebas leen el YAML; la corrida diaria no tiene dependencias).
+- `rates_daily.json`, `rates_daily_compact.json`, `latest.json`, `series/` y `manifest.json` conservan su forma;
+  todos pasan a `schema_version` 1.2.0 (cambio compatible: los consumidores aceptan `1.x`). El manifest lista
+  los dos archivos nuevos.
+
 ## esquema 1.1.0 — 2026-10-17
 - Nuevo `data/rates_daily_compact.json`: series oficiales en columnas (las `primary` y los
   insumos de las cruzadas `primary`, 9 columnas hoy) más los metadatos de las 28 series

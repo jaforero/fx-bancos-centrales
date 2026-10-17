@@ -91,6 +91,7 @@ silencio.
 | `data/rates_daily.json` | **Todas las tasas**, una fila por día calendario (Power BI, Python, respaldo del dashboard) |
 | `data/series/<id>.json` | Histórico por serie con metadatos y fuente |
 | `data/manifest.json` | Estado de la última corrida, errores, advertencias |
+| `data/semantic_model.json` (y `.yaml`) | **Modelo semántico**: significado, fuente, linaje, calidad y relaciones de cada serie, y el diccionario de todos los campos (es/en). Ver [docs/MODELO_SEMANTICO.md](docs/MODELO_SEMANTICO.md) |
 
 Contrato completo en [docs/CONTRATO_JSON.md](docs/CONTRATO_JSON.md). Conexión del
 dashboard en [docs/DASHBOARD.md](docs/DASHBOARD.md).
@@ -136,12 +137,14 @@ export BANXICO_TOKEN=...            # nunca lo subas al repo
 export BCCH_TOKEN=...
 PYTHONPATH=src python -m fxpipe update --dry-run
 PYTHONPATH=src python -m fxpipe healthcheck
+PYTHONPATH=src python -m fxpipe semantic            # ¿la curaduría cubre toda la configuración?
 pytest -q
 ```
 
 ## Escalar a otros países
 
-Ver [docs/AGREGAR_PAIS.md](docs/AGREGAR_PAIS.md).
+Ver [docs/AGREGAR_PAIS.md](docs/AGREGAR_PAIS.md). Cada país nuevo también se cura en
+`config/semantic.json` (la CI lo exige); ver [docs/MODELO_SEMANTICO.md](docs/MODELO_SEMANTICO.md).
 
 ## Atribución
 
