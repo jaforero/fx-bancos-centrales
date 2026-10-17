@@ -1,5 +1,12 @@
 # Cambios
 
+## config 1.10.0 — 2026-10-16
+- Perú visible en el dashboard: `primary: true` en `usd_pen_interbank`, `pen_mxn_cross`,
+  `pen_cop_cross`, `pen_ars_cross`, `pen_brl_cross`, `pen_clp_cross` y `pen_uyu_cross`
+  (28 series primary en total).
+- Publicar después del dashboard que ya trae Perú.
+- Sin cambios de esquema JSON.
+
 ## config 1.9.0 — 2026-10-16
 - Perú: nuevo conector `bcrp_series` (API de series estadísticas del Banco Central de Reserva
   del Perú, BCRPData, sin token) y serie `usd_pen_interbank` (código `PD04638PD`, «TC

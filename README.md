@@ -38,7 +38,8 @@ este repositorio para alimentar dashboards. Se actualiza solo con GitHub Actions
 | `pen_uyu_cross` | PEN-UYU | Cruzada: interbancario de Uruguay ÷ interbancario de Perú (UYU por 1 PEN) | Derivada |
 
 Perú entró igual que Uruguay: primero los datos con `primary: false` (config 1.9.0) y,
-con el dashboard adaptado, `primary: true` en el interbancario y sus seis cruzadas.
+con el dashboard adaptado, `primary: true` en el interbancario y sus seis cruzadas
+(config 1.10.0).
 Su fuente (BCRPData) está detrás de un firewall anti-bots que a veces responde con una
 página HTML en lugar de JSON; el conector la reintenta y, si persiste, la reporta como
 error operativo (ver `src/fxpipe/providers/bcrp_series.py`).
