@@ -1,5 +1,21 @@
 # Cambios
 
+## esquema 1.1.0 — 2026-10-17
+- Nuevo `data/rates_daily_compact.json`: series oficiales en columnas (las `primary` y los
+  insumos de las cruzadas `primary`, 9 columnas hoy) más los metadatos de las 28 series
+  visibles. Las cruzadas no viajan: el cliente las recalcula con `inputs` y `decimals`. Pasa de
+  ~252 KB a ~56 KB comprimidos (2,5 MB a 0,26 MB sin comprimir) y crece linealmente con el número
+  de países, no con el de cruzadas. Esquema en `schema/rates_daily_compact.schema.json`.
+- `rates_daily.json`, `latest.json` y `series/` conservan su forma. Todos los archivos pasan a
+  `schema_version` 1.1.0 (cambio compatible: los consumidores aceptan `1.x`).
+- Las cruzadas se redondean con `transform.round_js` en lugar de `round`, para que el navegador
+  (`Number(x.toFixed(d))`) dé exactamente el mismo número. Solo cambia el resultado en un empate
+  exacto de la quinta cifra; en las 52.101 celdas publicadas hasta hoy la diferencia es 0.
+- Pruebas: `tests/conftest.py` bloquea `time.sleep` y las conexiones de red reales. La corrida #12
+  tardó 10 min 27 s por reintentos con esperas reales; ahora ese error falla en menos de un segundo.
+- Publicar antes que el dashboard: el dashboard nuevo lee el archivo compacto y, si no existe
+  o no cuadra con `latest.json`, cae a `rates_daily.json`.
+
 ## config 1.10.0 — 2026-10-16
 - Perú visible en el dashboard: `primary: true` en `usd_pen_interbank`, `pen_mxn_cross`,
   `pen_cop_cross`, `pen_ars_cross`, `pen_brl_cross`, `pen_clp_cross` y `pen_uyu_cross`

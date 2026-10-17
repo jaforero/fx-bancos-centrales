@@ -87,7 +87,8 @@ silencio.
 | Archivo | Uso |
 |---|---|
 | `data/latest.json` | Tarjetas KPI: valor vigente, variación, estado, próximo valor ya publicado |
-| `data/rates_daily.json` | **Todas las tasas**, una fila por día calendario (gráficos, tablas) |
+| `data/rates_daily_compact.json` | Lo que descarga el dashboard: series oficiales en columnas (~56 KB comprimidos); las cruzadas se recalculan en el navegador |
+| `data/rates_daily.json` | **Todas las tasas**, una fila por día calendario (Power BI, Python, respaldo del dashboard) |
 | `data/series/<id>.json` | Histórico por serie con metadatos y fuente |
 | `data/manifest.json` | Estado de la última corrida, errores, advertencias |
 
