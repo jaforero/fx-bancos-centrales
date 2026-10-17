@@ -1,5 +1,30 @@
 # Cambios
 
+## config 1.9.0 — 2026-10-16
+- Perú: nuevo conector `bcrp_series` (API de series estadísticas del Banco Central de Reserva
+  del Perú, BCRPData, sin token) y serie `usd_pen_interbank` (código `PD04638PD`, «TC
+  Interbancario (S/ por US$) - Venta»). El conector exige el nombre de la serie
+  (`source_options.expected_name`): el código de Compra es `PD04637PD` y el de Venta el
+  `PD04638PD`, y un código equivocado pero válido no debe producir datos falsos.
+- `date_basis: determinacion`: la variación diaria correlaciona 0,26-0,43 el mismo día con
+  la PTAX, el FIX, la TRM y el observado de Chile por día de mercado y el interbancario de
+  Uruguay (1.693 días), y entre -0,03 y 0,07 con un día de desfase. Sin serie por día de
+  mercado: se cruza directamente.
+- El valor se guarda como llega (hasta 14 decimales; el BCRP declara 3) y se muestra con 3.
+- Cruzadas por día de mercado, escritas «moneda por 1 PEN» porque el sol vale más que las
+  otras seis: `pen_mxn_cross`, `pen_cop_cross`, `pen_ars_cross`, `pen_brl_cross`,
+  `pen_clp_cross` y `pen_uyu_cross`. Malla completa entre MXN, COP, ARS, BRL, CLP, UYU y PEN.
+- Las siete series nuevas salen con `primary: false` hasta adaptar el dashboard.
+- El sitio del BCRP está detrás de Imperva Incapsula: una consulta mal formada y, de forma
+  intermitente, una válida devuelven HTTP 200 con una página HTML de verificación. El
+  conector reintenta con espera creciente y, si persiste, lanza `ProviderError` (falla
+  operativa, no cambio de contrato). Si solo ocurre desde GitHub Actions, el firewall está
+  bloqueando al ejecutor.
+- Septiembre llega como «Set» (también con `ing`); el conector pide `esp` y acepta ambas grafías.
+- Pruebas con respuestas reales: `bcrp_interbancario_venta_real.json` (1-sep a 16-oct-2026) y
+  `bcrp_desafio_incapsula_real.html` (página de verificación).
+- Sin cambios de esquema JSON.
+
 ## config 1.8.0 — 2026-10-15
 - Uruguay visible en el dashboard: `primary: true` en `usd_uyu_interbank`,
   `mxn_uyu_cross`, `uyu_cop_cross`, `uyu_ars_cross`, `brl_uyu_cross` y `uyu_clp_cross`

@@ -14,6 +14,7 @@ este repositorio para alimentar dashboards. Se actualiza solo con GitHub Actions
 | `usd_clp_obs` | USD-CLP | Dólar observado, fecha de vigencia | Banco Central de Chile, API BDE `F073.TCO.PRE.Z.D` |
 | `usd_clp_obs_mkt` | USD-CLP | Dólar observado indexado por día de mercado (insumo de las cruzadas) | Misma fuente |
 | `usd_uyu_interbank` | USD-UYU | Dólar interbancario billete, promedio del día | Banco Central del Uruguay, web service de cotizaciones (código `2225`) |
+| `usd_pen_interbank` | USD-PEN | Dólar interbancario venta, valor del día | Banco Central de Reserva del Perú, BCRPData `PD04638PD` |
 | `mxn_cop_cross` | MXN-COP | Cruzada: TRM ÷ FIX del **mismo día de mercado** | Derivada |
 | `mxn_ars_cross` | MXN-ARS | Cruzada: A 3500 ÷ FIX (ARS por 1 MXN) | Derivada |
 | `ars_cop_cross` | ARS-COP | Cruzada: TRM ÷ A 3500 (COP por 1 ARS) | Derivada |
@@ -29,6 +30,18 @@ este repositorio para alimentar dashboards. Se actualiza solo con GitHub Actions
 | `uyu_ars_cross` | UYU-ARS | Cruzada: A 3500 ÷ interbancario (ARS por 1 UYU) | Derivada |
 | `brl_uyu_cross` | BRL-UYU | Cruzada: interbancario ÷ PTAX (UYU por 1 BRL) | Derivada |
 | `uyu_clp_cross` | UYU-CLP | Cruzada: dólar observado ÷ interbancario (CLP por 1 UYU) | Derivada |
+| `pen_mxn_cross` | PEN-MXN | Cruzada: FIX ÷ interbancario de Perú (MXN por 1 PEN) | Derivada |
+| `pen_cop_cross` | PEN-COP | Cruzada: TRM ÷ interbancario de Perú (COP por 1 PEN) | Derivada |
+| `pen_ars_cross` | PEN-ARS | Cruzada: A 3500 ÷ interbancario de Perú (ARS por 1 PEN) | Derivada |
+| `pen_brl_cross` | PEN-BRL | Cruzada: PTAX ÷ interbancario de Perú (BRL por 1 PEN) | Derivada |
+| `pen_clp_cross` | PEN-CLP | Cruzada: dólar observado ÷ interbancario de Perú (CLP por 1 PEN) | Derivada |
+| `pen_uyu_cross` | PEN-UYU | Cruzada: interbancario de Uruguay ÷ interbancario de Perú (UYU por 1 PEN) | Derivada |
+
+Perú entró igual que Uruguay: primero los datos con `primary: false` (config 1.9.0) y,
+con el dashboard adaptado, `primary: true` en el interbancario y sus seis cruzadas.
+Su fuente (BCRPData) está detrás de un firewall anti-bots que a veces responde con una
+página HTML en lugar de JSON; el conector la reintenta y, si persiste, la reporta como
+error operativo (ver `src/fxpipe/providers/bcrp_series.py`).
 
 Uruguay entró igual que Chile: primero los datos con `primary: false` (config 1.7.0) y,
 con el dashboard adaptado, `primary: true` en el interbancario y sus cinco cruzadas
@@ -59,6 +72,7 @@ Cada tasa se descarga de la institución que la define oficialmente:
 | Brasil | PTAX | Banco Central do Brasil (la calcula y publica; Resolução BCB nº 45/2020) | API PTAX del BCB (Olinda, OData) |
 | Chile | Dólar observado | Banco Central de Chile (lo calcula y publica; Compendio de Normas de Cambios Internacionales, Cap. I, sección VII) | API REST de la Base de Datos Estadísticos (BDE), con token |
 | Uruguay | Interbancario | Banco Central del Uruguay (publica el promedio de las operaciones interbancarias del día en BEVSA) | Web service SOAP de cotizaciones del BCU, sin token |
+| Perú | Interbancario venta | Banco Central de Reserva del Perú (publica el tipo de cambio interbancario en BCRPData) | API de series estadísticas del BCRP, sin token |
 
 Por qué importa: la fuente oficial define la metodología, el horario y las
 correcciones; un agregador puede redondear, retrasarse o mezclar tasas
@@ -133,5 +147,6 @@ Datos: Banco de México (SIE), Banco de la República de Colombia (SDMX; TRM
 calculada y certificada por la Superintendencia Financiera) y Banco Central de
 la República Argentina (API Estadísticas Cambiarias), Banco Central do Brasil
 (API PTAX, licencia ODbL), Banco Central de Chile (Base de Datos Estadísticos) y
-Banco Central del Uruguay (web service de cotizaciones).
+Banco Central del Uruguay (web service de cotizaciones) y Banco Central de Reserva del Perú
+(BCRPData; la información puede reproducirse citando la fuente).
 Las tasas cruzadas son cálculos propios, no tasas oficiales.
