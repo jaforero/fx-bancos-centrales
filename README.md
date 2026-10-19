@@ -119,13 +119,17 @@ dashboard en [docs/DASHBOARD.md](docs/DASHBOARD.md).
 
 ## Operación
 
+Guía de operación (qué corre solo, dónde mirar cuando algo falla, diagnóstico por síntoma y procedimientos):
+[docs/OPERACION.md](docs/OPERACION.md).
+
 - `daily-update.yml`: corre lunes a viernes 19:30 UTC y todos los días 01:00 UTC.
   Solo hace commit si cambian los datos. Si una serie queda degradada, abre o
   actualiza un issue con etiqueta `fx-alerta`; cuando una corrida posterior termina
   con todas las series en ok, cierra ese issue con un comentario que enlaza la corrida.
 - `healthcheck.yml`: cada lunes prueba el contrato de cada API en vivo. Si detecta
   un cambio de formato, abre un issue `api-drift`.
-- `ci.yml`: pruebas en cada push o PR.
+- `ci.yml`: pruebas en cada push o PR, en Ubuntu 24.04 (el runner de los otros dos workflows, fijado a propósito) y en
+  Ubuntu 26.04 como canario.
 
 Regla de diseño: **una fuente caída nunca borra datos buenos**. La serie conserva
 su histórico, se marca `error:*` o `stale` y el dashboard puede mostrarlo.

@@ -1,5 +1,15 @@
 # Cambios
 
+## operación — 2026-10-18
+- Nuevo `docs/OPERACION.md` (manual de operación) enlazado desde el README.
+- Workflows: `actions/checkout@v7` y `actions/setup-python@v7` (Node 24; las versiones `@v4` y `@v5` declaraban
+  Node 20, cuyo retiro GitHub fijó para el 2026-09-23). `daily-update.yml` y `healthcheck.yml` quedan fijados a
+  `ubuntu-24.04` en vez de `ubuntu-latest`, que GitHub migra a Ubuntu 26.04 entre el 2026-10-19 y el 2026-11-19;
+  `ci.yml` prueba en 24.04 y en 26.04 (canario). Procedimiento para moverse a 26.04 en `docs/OPERACION.md` 5.8.
+- Modelo semántico 1.0.2: corrige la descripción de la herencia de estado en las cruzadas. Solo se heredan los
+  `error:*` del primer insumo roto (numerador antes que denominador); `stale` y `error:empty` no se heredan y se
+  evalúan aparte. Es una corrección del texto: el comportamiento del pipeline no cambia. Sin cambios en el esquema 1.2.0.
+
 ## operación — 2026-10-17
 - `daily-update.yml` cierra solo las alertas `fx-alerta` abiertas cuando una corrida termina con todas las
   series en ok, con un comentario que enlaza esa corrida. El paso nuevo no puede volver roja una corrida sana
