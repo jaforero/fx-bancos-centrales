@@ -8,10 +8,17 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    name: pytest (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    # ubuntu-24.04 es el runner de producción (daily-update y healthcheck). ubuntu-26.04 es el canario:
+    # si falla, la CI sale en roja y es el aviso de que todavía no hay que mover los otros workflows (OPERACION.md 5.8).
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-26.04]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - run: pip install -e ".[dev]"

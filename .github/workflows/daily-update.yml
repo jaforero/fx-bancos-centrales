@@ -24,7 +24,9 @@ concurrency:
 
 jobs:
   update:
-    runs-on: ubuntu-latest
+    # Runner fijado a propósito: ubuntu-latest pasa a Ubuntu 26.04 entre el 2026-10-19 y el 2026-11-19 y
+    # un cambio de imagen no debe romper en silencio una corrida desatendida. ci.yml ya prueba 26.04.
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
       PYTHONPATH: src
@@ -32,9 +34,9 @@ jobs:
       DATOS_GOV_CO_APP_TOKEN: ${{ secrets.DATOS_GOV_CO_APP_TOKEN }}
       BCCH_TOKEN: ${{ secrets.BCCH_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
