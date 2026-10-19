@@ -16,7 +16,7 @@ La actualización diaria no necesita a nadie. El código de producción no tiene
 |---|---|---|
 | `daily-update.yml` («Actualización diaria de tasas») | Lunes a viernes 19:30 UTC y todos los días 01:00 UTC; también a mano (`workflow_dispatch`, con `backfill_start` opcional) | Descarga, valida, calcula cruzadas y publica `data/` (solo hay commit si cambian los datos). Después verifica el estado de las series: si alguna no está en `ok`, abre o actualiza un issue `fx-alerta` que enlaza la corrida; si todas lo están, cierra los `fx-alerta` abiertos con un comentario que enlaza la corrida |
 | `healthcheck.yml` | Lunes 13:00 UTC y a mano | Consulta los últimos 20 días de cada fuente y verifica su contrato. Si una fuente cambió su contrato, falla por un motivo operativo, no devuelve registros, o el último manifest no está en `ok`, abre o actualiza un issue `api-drift` (este **se cierra a mano**). Un fallo solo del respaldo (la SFC) no lo dispara |
-| `ci.yml` («Pruebas») | Cada push a `main` (salvo cambios solo en `data/`) y cada PR | `pytest -q`. Falla si la curaduría del modelo semántico tiene huecos |
+| `ci.yml` («Pruebas») | Cada push a `main` (salvo cambios solo en `data/`) y cada PR | `pytest -q` en `ubuntu-24.04` (el runner de producción) y en `ubuntu-26.04` (canario, ver 5.8). Falla si la curaduría del modelo semántico tiene huecos |
 
 Lo que el pipeline hace por sí mismo:
 
@@ -36,8 +36,8 @@ Lo que necesita a una persona:
 - Una API que cambió su formato, su endpoint o su codificación (`error:contract`, issue `api-drift`).
 - Una serie descontinuada o movida (`error:empty`, o `stale` que no se explica por un feriado).
 - Un país o una serie nueva.
-- Los avisos de GitHub sobre las acciones y el ejecutor (versiones de `actions/checkout`, `actions/setup-python`,
-  imagen `ubuntu-latest`): se atienden subiendo versiones en los tres workflows y comprobando una corrida manual.
+- Los avisos de GitHub sobre las acciones y el ejecutor (versiones de `actions/checkout` y `actions/setup-python`,
+  imagen del runner): se atienden subiendo versiones en los tres workflows y comprobando una corrida manual (ver 5.8).
 - Los workflows programados que GitHub desactiva en un repositorio público tras 60 días sin actividad
   ([documentación de GitHub](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/disable-and-enable-workflows)).
   No está documentado si los commits del bot cuentan como actividad: si un día no hay corridas, revisa la pestaña Actions.
@@ -183,6 +183,27 @@ PYTHONPATH=src python -m fxpipe healthcheck
 PYTHONPATH=src python -m fxpipe semantic           # ¿la curaduría cubre toda la configuración?
 pytest -q
 ```
+
+### 5.8 Cambiar el runner o las versiones de las actions
+
+Estado desde 2026-10-18: los tres workflows usan `actions/checkout@v7` y `actions/setup-python@v7` (ambas corren en
+Node 24; `@v4` y `@v5` declaraban Node 20, cuyo retiro GitHub fijó para el 2026-09-23). `daily-update.yml` y `healthcheck.yml`
+están fijados a `ubuntu-24.04` en vez de `ubuntu-latest` porque GitHub mueve `ubuntu-latest` a Ubuntu 26.04 de forma
+gradual entre el 2026-10-19 y el 2026-11-19 y un cambio de imagen no debe romper en silencio una corrida desatendida.
+Fuentes: [Ubuntu 26 y migración de `latest`](https://github.blog/changelog/2026-09-17-ubuntu-26-generally-available-and-latest-migration),
+[retiro de Node 20](https://github.blog/changelog/2026-03-19-deprecation-of-node-20-on-github-actions-runners/).
+
+Para pasar a Ubuntu 26.04:
+
+1. `ci.yml` ya corre `pytest -q` en `ubuntu-26.04`. Si ese trabajo está en rojo, todavía no hay que mover nada: su
+   registro dice qué falló.
+2. Con el canario en verde, cambia `runs-on` a `ubuntu-26.04` en `daily-update.yml` y `healthcheck.yml`.
+3. Ejecuta `daily-update` a mano y comprueba que el manifest queda en `ok`. Para probar el paso que hace `git push`
+   necesitas una corrida en la que cambien los datos; si la corrida manual no cambió nada, espera a la siguiente.
+
+Para subir una acción: abre su `action.yml` en la versión nueva y confirma que `runs.using` es `node24` (o posterior),
+cambia la etiqueta mayor en los tres workflows y ejecuta `daily-update` a mano. `ubuntu-24.04` fijado no se mueve
+solo, pero tampoco es eterno: revisa este punto cuando GitHub anuncie su retiro.
 
 ## 6. Reglas del proyecto
 
