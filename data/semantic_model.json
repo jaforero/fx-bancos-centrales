@@ -1,5 +1,5 @@
 {
-  "semantic_model_version": "1.0.1",
+  "semantic_model_version": "1.0.2",
   "schema_version": "1.2.0",
   "generated_from": {
     "config_version": "1.10.0",
@@ -2794,8 +2794,8 @@
     ],
     "status_source": "docs/CONTRATO_JSON.md; src/fxpipe/pipeline.py; README.md",
     "status_inheritance": {
-      "es": "Una cruzada hereda el primer estado distinto de ok de sus insumos y su error dice «insumo degradado: …».",
-      "en": "A cross rate inherits the first non-ok status of its inputs and its error says “insumo degradado: …”."
+      "es": "Una cruzada hereda el estado error:* (provider, contract o validation) de su primer insumo roto, el numerador antes que el denominador, y su error dice «insumo degradado: …». Si un insumo está stale o en error:empty, la cruzada no lo hereda: se evalúa aparte con su propio stale_after_days.",
+      "en": "A cross rate inherits the error:* status (provider, contract or validation) of its first broken input, numerator before denominator, and its error says “insumo degradado: …”. If an input is stale or error:empty, the cross rate does not inherit it: it is evaluated separately with its own stale_after_days."
     },
     "overall_status": [
       {
@@ -4291,8 +4291,8 @@
           "en": "Compute cross rates"
         },
         "description": {
-          "es": "Para cada serie derivada divide numerador entre denominador en los días en que ambos existen y redondea con round_js. Si un insumo no está en ok, la cruzada hereda su estado.",
-          "en": "For each derived series it divides numerator by denominator on the days where both exist and rounds with round_js. If an input is not ok, the cross rate inherits its status."
+          "es": "Para cada serie derivada divide numerador entre denominador en los días en que ambos existen y redondea con round_js. Si un insumo tiene un estado error:* (provider, contract o validation), la cruzada hereda el del primer insumo roto; stale y error:empty no se heredan.",
+          "en": "For each derived series it divides numerator by denominator on the days where both exist and rounds with round_js. If an input has an error:* status (provider, contract or validation), the cross rate inherits that of the first broken input; stale and error:empty are not inherited."
         },
         "implemented_in": "fxpipe.transform.cross_rate",
         "reads": [],
@@ -7890,6 +7890,14 @@
     }
   ],
   "changelog": [
+    {
+      "version": "1.0.2",
+      "date": "2026-10-18",
+      "changes": {
+        "es": "Corrige la descripción de la herencia de estado en las cruzadas: solo se heredan los estados error:* del primer insumo roto (numerador antes que denominador); stale y error:empty no se heredan y se evalúan aparte con el stale_after_days de la propia cruzada. El comportamiento del pipeline no cambia. Sin cambios en los datos ni en el esquema 1.2.0.",
+        "en": "Fixes the description of status inheritance in cross rates: only the error:* statuses of the first broken input are inherited (numerator before denominator); stale and error:empty are not inherited and are evaluated separately with the cross rate's own stale_after_days. Pipeline behaviour is unchanged. No change to the data or to schema 1.2.0."
+      }
+    },
     {
       "version": "1.0.1",
       "date": "2026-10-17",
