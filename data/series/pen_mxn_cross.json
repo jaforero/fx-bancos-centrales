@@ -13,7 +13,7 @@
     "usd_pen_interbank"
   ],
   "first_date": "2020-01-02",
-  "last_date": "2026-10-21",
+  "last_date": "2026-10-22",
   "last_official_date": "2026-10-20",
   "observations": [
     {"date": "2020-01-02", "value": 5.7163, "filled": false},
@@ -2500,6 +2500,7 @@
     {"date": "2026-10-18", "value": 5.3942, "filled": true},
     {"date": "2026-10-19", "value": 5.3573, "filled": false},
     {"date": "2026-10-20", "value": 5.3688, "filled": false},
-    {"date": "2026-10-21", "value": 5.4337, "filled": true}
+    {"date": "2026-10-21", "value": 5.4337, "filled": true},
+    {"date": "2026-10-22", "value": 5.4337, "filled": true}
   ]
 }
