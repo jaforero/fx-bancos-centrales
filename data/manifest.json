@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2.0",
   "config_version": "1.10.0",
-  "generated_at": "2026-10-26T05:34:43+00:00",
+  "generated_at": "2026-10-26T23:13:39+00:00",
   "as_of": "2026-10-26",
   "overall_status": "ok",
-  "data_hash": "7acada682cbabaf4e26e31ab7f142ce31bb532e9cfb72c9a0d6961f318f6b8b8",
+  "data_hash": "1aff1baa41385bc028a45fcf8085818277861ee59cd8467bfead098570fb61be",
   "series_status": {
     "ars_cop_cross": "ok",
     "brl_ars_cross": "ok",
@@ -69,10 +69,15 @@
       "salto 2025-04-11->2025-04-14: 1078.375 -> 1182.4167 (+9.65%)",
       "salto 2025-04-16->2025-04-21: 1172.8333 -> 1070.4167 (-8.73%)"
     ],
+    "usd_brl_ptax": [
+      "salto 2026-10-23->2026-10-26: 5.0377 -> 5.5007 (+9.19%)"
+    ],
     "usd_cop_trm": [
+      "sfc_trm tiene datos hasta 2026-10-27; la fuente principal hasta 2026-10-26",
       "salto 2020-03-09->2020-03-10: 3584.58 -> 3803.6 (+6.11%)"
     ],
     "usd_cop_trm_mkt": [
+      "sfc_trm tiene datos hasta 2026-10-26; la fuente principal hasta 2026-10-23",
       "salto 2020-03-06->2020-03-09: 3584.58 -> 3803.6 (+6.11%)"
     ],
     "uyu_ars_cross": [
