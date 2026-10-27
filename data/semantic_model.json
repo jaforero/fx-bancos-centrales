@@ -7939,7 +7939,7 @@
     "provider_count": 8,
     "date_range": {
       "first": "2020-01-01",
-      "last": "2026-10-28"
+      "last": "2026-10-29"
     },
     "status_counts": {
       "ok": 31
@@ -7950,13 +7950,23 @@
         "status": "ok",
         "first_date": "2020-01-02",
         "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
+        "last_official_date": "2026-10-27",
         "observations": 2491,
-        "official_observations": 1716,
-        "filled_observations": 775
+        "official_observations": 1717,
+        "filled_observations": 774
       },
       {
         "id": "usd_mxn_liq",
+        "status": "ok",
+        "first_date": "2020-01-01",
+        "last_date": "2026-10-29",
+        "last_official_date": "2026-10-29",
+        "observations": 2494,
+        "official_observations": 2494,
+        "filled_observations": 0
+      },
+      {
+        "id": "usd_cop_trm",
         "status": "ok",
         "first_date": "2020-01-01",
         "last_date": "2026-10-28",
@@ -7966,17 +7976,247 @@
         "filled_observations": 0
       },
       {
-        "id": "usd_cop_trm",
+        "id": "usd_cop_trm_mkt",
         "status": "ok",
-        "first_date": "2020-01-01",
+        "first_date": "2020-01-02",
         "last_date": "2026-10-27",
         "last_official_date": "2026-10-27",
-        "observations": 2492,
-        "official_observations": 2492,
-        "filled_observations": 0
+        "observations": 2491,
+        "official_observations": 1616,
+        "filled_observations": 875
       },
       {
-        "id": "usd_cop_trm_mkt",
+        "id": "usd_ars_a3500",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1659,
+        "filled_observations": 832
+      },
+      {
+        "id": "usd_brl_ptax",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1712,
+        "filled_observations": 779
+      },
+      {
+        "id": "usd_clp_obs",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-28",
+        "last_official_date": "2026-10-28",
+        "observations": 2492,
+        "official_observations": 1701,
+        "filled_observations": 791
+      },
+      {
+        "id": "usd_clp_obs_mkt",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1700,
+        "filled_observations": 791
+      },
+      {
+        "id": "usd_uyu_interbank",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1696,
+        "filled_observations": 795
+      },
+      {
+        "id": "usd_pen_interbank",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-26",
+        "observations": 2491,
+        "official_observations": 1701,
+        "filled_observations": 790
+      },
+      {
+        "id": "mxn_cop_cross",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1587,
+        "filled_observations": 904
+      },
+      {
+        "id": "mxn_ars_cross",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1627,
+        "filled_observations": 864
+      },
+      {
+        "id": "ars_cop_cross",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1551,
+        "filled_observations": 940
+      },
+      {
+        "id": "brl_mxn_cross",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1675,
+        "filled_observations": 816
+      },
+      {
+        "id": "brl_cop_cross",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1579,
+        "filled_observations": 912
+      },
+      {
+        "id": "brl_ars_cross",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1628,
+        "filled_observations": 863
+      },
+      {
+        "id": "mxn_clp_cross",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1659,
+        "filled_observations": 832
+      },
+      {
+        "id": "clp_cop_cross",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1577,
+        "filled_observations": 914
+      },
+      {
+        "id": "clp_ars_cross",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1614,
+        "filled_observations": 877
+      },
+      {
+        "id": "brl_clp_cross",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1655,
+        "filled_observations": 836
+      },
+      {
+        "id": "mxn_uyu_cross",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1665,
+        "filled_observations": 826
+      },
+      {
+        "id": "uyu_cop_cross",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1581,
+        "filled_observations": 910
+      },
+      {
+        "id": "uyu_ars_cross",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1623,
+        "filled_observations": 868
+      },
+      {
+        "id": "brl_uyu_cross",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1670,
+        "filled_observations": 821
+      },
+      {
+        "id": "uyu_clp_cross",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-27",
+        "observations": 2491,
+        "official_observations": 1644,
+        "filled_observations": 847
+      },
+      {
+        "id": "pen_mxn_cross",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-26",
+        "observations": 2491,
+        "official_observations": 1666,
+        "filled_observations": 825
+      },
+      {
+        "id": "pen_cop_cross",
+        "status": "ok",
+        "first_date": "2020-01-02",
+        "last_date": "2026-10-27",
+        "last_official_date": "2026-10-26",
+        "observations": 2491,
+        "official_observations": 1575,
+        "filled_observations": 916
+      },
+      {
+        "id": "pen_ars_cross",
         "status": "ok",
         "first_date": "2020-01-02",
         "last_date": "2026-10-27",
@@ -7986,157 +8226,7 @@
         "filled_observations": 876
       },
       {
-        "id": "usd_ars_a3500",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1658,
-        "filled_observations": 833
-      },
-      {
-        "id": "usd_brl_ptax",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1711,
-        "filled_observations": 780
-      },
-      {
-        "id": "usd_clp_obs",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-27",
-        "observations": 2491,
-        "official_observations": 1700,
-        "filled_observations": 791
-      },
-      {
-        "id": "usd_clp_obs_mkt",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1699,
-        "filled_observations": 792
-      },
-      {
-        "id": "usd_uyu_interbank",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1695,
-        "filled_observations": 796
-      },
-      {
-        "id": "usd_pen_interbank",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-23",
-        "observations": 2491,
-        "official_observations": 1700,
-        "filled_observations": 791
-      },
-      {
-        "id": "mxn_cop_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1586,
-        "filled_observations": 905
-      },
-      {
-        "id": "mxn_ars_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1626,
-        "filled_observations": 865
-      },
-      {
-        "id": "ars_cop_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1550,
-        "filled_observations": 941
-      },
-      {
-        "id": "brl_mxn_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1674,
-        "filled_observations": 817
-      },
-      {
-        "id": "brl_cop_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1578,
-        "filled_observations": 913
-      },
-      {
-        "id": "brl_ars_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1627,
-        "filled_observations": 864
-      },
-      {
-        "id": "mxn_clp_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1658,
-        "filled_observations": 833
-      },
-      {
-        "id": "clp_cop_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1576,
-        "filled_observations": 915
-      },
-      {
-        "id": "clp_ars_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1613,
-        "filled_observations": 878
-      },
-      {
-        "id": "brl_clp_cross",
+        "id": "pen_brl_cross",
         "status": "ok",
         "first_date": "2020-01-02",
         "last_date": "2026-10-27",
@@ -8144,116 +8234,26 @@
         "observations": 2491,
         "official_observations": 1654,
         "filled_observations": 837
-      },
-      {
-        "id": "mxn_uyu_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1664,
-        "filled_observations": 827
-      },
-      {
-        "id": "uyu_cop_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1580,
-        "filled_observations": 911
-      },
-      {
-        "id": "uyu_ars_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1622,
-        "filled_observations": 869
-      },
-      {
-        "id": "brl_uyu_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1669,
-        "filled_observations": 822
-      },
-      {
-        "id": "uyu_clp_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-26",
-        "observations": 2491,
-        "official_observations": 1643,
-        "filled_observations": 848
-      },
-      {
-        "id": "pen_mxn_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-23",
-        "observations": 2491,
-        "official_observations": 1665,
-        "filled_observations": 826
-      },
-      {
-        "id": "pen_cop_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-23",
-        "observations": 2491,
-        "official_observations": 1574,
-        "filled_observations": 917
-      },
-      {
-        "id": "pen_ars_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-23",
-        "observations": 2491,
-        "official_observations": 1614,
-        "filled_observations": 877
-      },
-      {
-        "id": "pen_brl_cross",
-        "status": "ok",
-        "first_date": "2020-01-02",
-        "last_date": "2026-10-27",
-        "last_official_date": "2026-10-23",
-        "observations": 2491,
-        "official_observations": 1653,
-        "filled_observations": 838
       },
       {
         "id": "pen_clp_cross",
         "status": "ok",
         "first_date": "2020-01-02",
         "last_date": "2026-10-27",
-        "last_official_date": "2026-10-23",
+        "last_official_date": "2026-10-26",
         "observations": 2491,
-        "official_observations": 1654,
-        "filled_observations": 837
+        "official_observations": 1655,
+        "filled_observations": 836
       },
       {
         "id": "pen_uyu_cross",
         "status": "ok",
         "first_date": "2020-01-02",
         "last_date": "2026-10-27",
-        "last_official_date": "2026-10-23",
+        "last_official_date": "2026-10-26",
         "observations": 2491,
-        "official_observations": 1645,
-        "filled_observations": 846
+        "official_observations": 1646,
+        "filled_observations": 845
       }
     ]
   }
