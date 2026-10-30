@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2.0",
   "config_version": "1.10.0",
-  "generated_at": "2026-10-30T06:37:51+00:00",
+  "generated_at": "2026-10-30T23:04:56+00:00",
   "as_of": "2026-10-30",
   "overall_status": "degraded",
-  "data_hash": "eaf9af0dbe185ec6696c932f8c4380ce87d8a76123575429b75863c0c94fb583",
+  "data_hash": "61cef9a7de96494193b0f529b91188707c5b82d0589f796353f8394720c321c3",
   "series_status": {
     "ars_cop_cross": "ok",
     "brl_ars_cross": "ok",
