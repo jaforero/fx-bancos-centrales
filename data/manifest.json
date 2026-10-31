@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2.0",
   "config_version": "1.10.0",
-  "generated_at": "2026-10-30T23:04:56+00:00",
-  "as_of": "2026-10-30",
+  "generated_at": "2026-10-31T06:27:13+00:00",
+  "as_of": "2026-10-31",
   "overall_status": "degraded",
-  "data_hash": "61cef9a7de96494193b0f529b91188707c5b82d0589f796353f8394720c321c3",
+  "data_hash": "4f7e6d5742b93f672fe0c8dbda23bb1965a3f0319e50894233d87bfa3fe975d6",
   "series_status": {
     "ars_cop_cross": "ok",
     "brl_ars_cross": "ok",
@@ -45,7 +45,7 @@
     "pen_cop_cross": "insumo degradado: usd_pen_interbank (error:provider)",
     "pen_mxn_cross": "insumo degradado: usd_pen_interbank (error:provider)",
     "pen_uyu_cross": "insumo degradado: usd_pen_interbank (error:provider)",
-    "usd_pen_interbank": "BCRP: página de verificación del firewall Imperva Incapsula en lugar de JSON tras 4 intentos en https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PD04638PD/json/2026-10-13/2026-10-30/esp. Si ocurre solo desde GitHub Actions, el firewall del BCRP está bloqueando al ejecutor; si ocurre siempre, revisa el código de serie y el rango de fechas de la consulta."
+    "usd_pen_interbank": "BCRP: página de verificación del firewall Imperva Incapsula en lugar de JSON tras 4 intentos en https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PD04638PD/json/2026-10-13/2026-10-31/esp. Si ocurre solo desde GitHub Actions, el firewall del BCRP está bloqueando al ejecutor; si ocurre siempre, revisa el código de serie y el rango de fechas de la consulta."
   },
   "warnings": {
     "ars_cop_cross": [
