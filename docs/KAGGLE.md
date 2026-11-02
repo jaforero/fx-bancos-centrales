@@ -71,10 +71,10 @@ Kaggle). Nunca en el repositorio.
 explícito (`true` salvo `--visibility public`, que exige la compuerta de licencias en PASS). Después, revisar las
 etiquetas aplicadas con `kaggle datasets metadata <id> -p /tmp/meta`: Kaggle ignora las que no existen.
 
-Con las 8 etiquetas actuales, `create` (CLI 2.2.5) respondió «You have exceeded the max category limit» pero
-**sí creó** el dataset, privado, con todos los archivos y sin etiquetas (2026-11-02); `metadata --update` aplicó
-después las 8. Ante ese mensaje, comprueba con `datasets status` antes de reintentar: un segundo `create` falla
-porque el slug ya existe.
+Kaggle admite **como máximo 5 etiquetas**. Con 8, `create` (CLI 2.2.5) respondió «You have exceeded the max
+category limit» pero **sí creó** el dataset, privado, con todos los archivos y sin etiquetas; `metadata --update`
+aceptó las 8 y la versión siguiente las recortó a 5 (2026-11-02). Por eso la plantilla lleva 5. Ante ese mensaje,
+comprueba con `datasets status` antes de reintentar: un segundo `create` falla porque el slug ya existe.
 
 **Versiones siguientes:** el workflow «Publicar versión en Kaggle» (secreto `KAGGLE_API_TOKEN`) descarga
 `SOURCE_COMMIT.txt` y `fx_series_metadata.csv` de la versión publicada, reconstruye, compara `package_hash` y solo

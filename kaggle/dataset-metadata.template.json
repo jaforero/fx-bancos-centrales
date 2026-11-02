@@ -3,14 +3,11 @@
   "title": "Latin America Central Bank FX Rates",
   "subtitle": "Daily official central-bank FX reference rates and calculated LatAm cross rates",
   "keywords": [
-    "finance",
     "economics",
     "currencies and foreign exchange",
     "banking",
     "south america",
-    "north america",
-    "time series analysis",
-    "tabular"
+    "time series analysis"
   ],
   "expectedUpdateFrequency": "daily"
 }
