@@ -1,5 +1,15 @@
 # Cambios
 
+## kaggle — 2026-11-02
+- Nueva capa de distribución en Kaggle (`docs/KAGGLE.md`): `scripts/build_kaggle_dataset.py` construye
+  `dist/kaggle/` desde `data/` (CSV largo y ancho, metadatos por serie, snapshot, modelo semántico y manifest sin
+  cambios, documentación generada y `SOURCE_COMMIT.txt`), con compuertas de validación, procedencia, frescura y
+  licencias. No toca la adquisición, el cálculo, los datos ni el contrato JSON.
+- `kaggle/licenses.json`: revisión de condiciones de los ocho proveedores en sus páginas oficiales (2026-11-02).
+  La publicación pública queda bloqueada por el BCU (prohíbe redistribuir sin autorización expresa) y por tres
+  cruzadas que combinan la ODbL del BCB con condiciones no comerciales (BanRep, BCRA) o con el BCU.
+- `publish-kaggle.yml` (solo manual) y `tests/test_kaggle_export.py`. `dist/` queda en `.gitignore`.
+
 ## operación — 2026-10-18
 - Nuevo `docs/OPERACION.md` (manual de operación) enlazado desde el README.
 - Workflows: `actions/checkout@v7` y `actions/setup-python@v7` (Node 24; las versiones `@v4` y `@v5` declaraban
