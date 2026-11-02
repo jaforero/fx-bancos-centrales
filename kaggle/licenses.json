@@ -1,0 +1,98 @@
+{
+  "_about": "Revisión de condiciones de reutilización por proveedor para la capa Kaggle. Evidencia curada a mano a partir de páginas oficiales de cada institución; scripts/build_kaggle_dataset.py la usa para la compuerta de licencias y para generar SOURCES_AND_LICENSES.md y PUBLICATION_BLOCKERS.md. Los textos son paráfrasis, no citas. Si una institución concede una autorización, se registra en «resolutions» con su referencia: nunca se borra el bloqueo a mano.",
+  "review_date": "2026-11-02",
+  "reviewed_by": "Revisión documental (no es asesoría legal); fuentes: solo páginas oficiales de cada institución",
+  "kaggle_license": "other",
+  "kaggle_license_rationale": "No existe una licencia única que represente a todas las fuentes: el BCB publica bajo ODbL (share-alike), la SFC bajo CC BY-SA 4.0, el BanRep y el BCRA exigen autorización previa para uso comercial, y el BCU prohíbe la redistribución sin autorización expresa. Elegir CC0, CC BY u ODbL para la recopilación concedería derechos que este proyecto no tiene. Se usa «other» y cada fuente conserva sus condiciones, documentadas por proveedor.",
+  "providers": {
+    "banxico": {
+      "license_status": "VERIFIED",
+      "license": "Institutional terms (general authorization to reproduce)",
+      "terms_url": "https://www.banxico.org.mx/footer-es/salvedad-politicas-uso-banco-.html",
+      "redistribution": "allowed_with_conditions",
+      "attribution": "Cite Banco de México as the source and give Banco de México's web address so third parties can verify the data (other Banxico notices also ask for the date of access).",
+      "commercial_reuse": "not_stated",
+      "derived_works": "not_stated",
+      "share_alike": false,
+      "notes": "Banxico grants a general authorization for the information it publishes in the exercise of its functions to be reproduced or used, provided the source and Banxico's web address are cited. Banxico assumes no liability for third-party use."
+    },
+    "banrep": {
+      "license_status": "VERIFIED",
+      "license": "Institutional terms (Aviso legal)",
+      "terms_url": "https://www.banrep.gov.co/es/aviso-legal",
+      "redistribution": "allowed_with_conditions",
+      "attribution": "Cite Banco de la República as the source and state the date the portal was consulted; do not alter the content.",
+      "commercial_reuse": "requires_authorization",
+      "derived_works": "non_commercial_only",
+      "share_alike": false,
+      "notes": "Statistical economic information may be freely reproduced or disclosed by anyone if its content is not altered, its source is indicated and the access date is mentioned. Statistics exposed through SDMX follow the same notice. Any use, transformation or exploitation for commercial or promotional purposes requires prior authorization from the Bank. Data that the Bank takes from external sources (e.g. Bloomberg, Refinitiv) may not be reproduced; the TRM is not such data."
+    },
+    "sfc_trm": {
+      "license_status": "VERIFIED",
+      "license": "CC-BY-SA-4.0",
+      "terms_url": "https://www.datos.gov.co/api/views/32sa-8pi3.json",
+      "redistribution": "allowed_with_conditions",
+      "attribution": "Superintendencia Financiera de Colombia (SUPERFINANCIERA), https://www.superfinanciera.gov.co/",
+      "commercial_reuse": "allowed",
+      "derived_works": "share_alike",
+      "share_alike": true,
+      "notes": "Dataset 32sa-8pi3 on datos.gov.co declares Creative Commons Attribution-ShareAlike 4.0. In this repository the SFC is a verification source and a declared fallback for the TRM: values only come from it when the BanRep source fails (source.fallback_used). Observations are not tagged by origin, and the pipeline has verified BanRep and SFC publish identical values."
+    },
+    "bcra": {
+      "license_status": "VERIFIED",
+      "license": "Institutional terms (Aviso legal)",
+      "terms_url": "https://www.bcra.gob.ar/aviso-legal/",
+      "redistribution": "allowed_with_conditions",
+      "attribution": "Cite the full source: “Banco Central de la República Argentina” or “BCRA”; do not alter the meaning, context or integrity of the content.",
+      "commercial_reuse": "requires_authorization",
+      "derived_works": "non_commercial_only",
+      "share_alike": false,
+      "notes": "Reuse is permitted for informational, educational or academic purposes with full citation and without altering meaning or context. Commercial, advertising or campaign use requires prior and express authorization. No terms specific to the Estadísticas Cambiarias API were found; the site-wide legal notice is applied."
+    },
+    "bcb": {
+      "license_status": "VERIFIED",
+      "license": "ODbL-1.0",
+      "terms_url": "https://dadosabertos.bcb.gov.br/dataset/dolar-americano-usd-todos-os-boletins-diarios",
+      "redistribution": "allowed_with_conditions",
+      "attribution": "Banco Central do Brasil (Departamento das Reservas Internacionais), PTAX via the BCB open data portal.",
+      "commercial_reuse": "allowed",
+      "derived_works": "share_alike",
+      "share_alike": true,
+      "notes": "The BCB open data portal lists the PTAX daily-quotation datasets (served by the Olinda PTAX API) under the Open Data Commons Open Database License (ODbL). ODbL requires attribution and that a publicly used derivative database be offered under ODbL (share-alike)."
+    },
+    "bcch": {
+      "license_status": "VERIFIED",
+      "license": "Institutional terms (Términos y Condiciones de Uso, API BDE)",
+      "terms_url": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+      "redistribution": "allowed_with_conditions",
+      "attribution": "State that the information belongs to Banco Central de Chile; for adaptations, state that the source data belongs to the Bank and that the adaptation is the responsibility of whoever makes it.",
+      "commercial_reuse": "not_stated",
+      "derived_works": "allowed",
+      "share_alike": false,
+      "notes": "The BDE API terms allow consulting, reproducing, disseminating, publishing or adapting BDE information, always mentioning that it is the Bank's property. The Bank may modify, limit or revoke these rights. The general website terms of bcentral.cl are stricter; the BDE-specific terms are the ones that govern the API used here."
+    },
+    "bcu": {
+      "license_status": "VERIFIED",
+      "license": "Institutional terms (Términos de uso del sitio)",
+      "terms_url": "https://www.bcu.gub.uy/Paginas/Condiciones-de-uso.aspx",
+      "redistribution": "prohibited_without_authorization",
+      "attribution": "Cite Banco Central del Uruguay as the source.",
+      "commercial_reuse": "prohibited_without_authorization",
+      "derived_works": "not_stated",
+      "share_alike": false,
+      "notes": "The terms allow viewing, downloading, printing or reproducing the material for personal, academic or organizational use, without profit and citing the source, but strictly prohibit redistribution, recirculation, retransmission or commercialization in any form without express authorization from the BCU. The only exception is regulatory information; exchange-rate quotations are statistical information, so the exception cannot be assumed to apply. No separate terms for the quotations web service were found."
+    },
+    "bcrp": {
+      "license_status": "VERIFIED",
+      "license": "Institutional terms (Condiciones de uso)",
+      "terms_url": "https://www.bcrp.gob.pe/condiciones-de-uso.html",
+      "redistribution": "allowed_with_conditions",
+      "attribution": "Cite Banco Central de Reserva del Perú (BCRP), BCRPData, as the source.",
+      "commercial_reuse": "not_stated",
+      "derived_works": "not_stated",
+      "share_alike": false,
+      "notes": "Content may be reproduced in whole or in part without express authorization provided the source is cited. Responsibility for statistics from sources external to the Bank lies with the original provider."
+    }
+  },
+  "resolutions": []
+}

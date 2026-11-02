@@ -126,6 +126,8 @@ Guía de operación (qué corre solo, dónde mirar cuando algo falla, diagnósti
   Solo hace commit si cambian los datos. Si una serie queda degradada, abre o
   actualiza un issue con etiqueta `fx-alerta`; cuando una corrida posterior termina
   con todas las series en ok, cierra ese issue con un comentario que enlaza la corrida.
+- `publish-kaggle.yml`: manual; crea una versión del dataset de Kaggle a partir de `data/` solo si cambiaron
+  los datos. Ver [docs/KAGGLE.md](docs/KAGGLE.md).
 - `healthcheck.yml`: cada lunes prueba el contrato de cada API en vivo. Si detecta
   un cambio de formato, abre un issue `api-drift`.
 - `ci.yml`: pruebas en cada push o PR, en Ubuntu 24.04 (el runner de los otros dos workflows, fijado a propósito) y en
