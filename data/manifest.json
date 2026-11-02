@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2.0",
   "config_version": "1.10.0",
-  "generated_at": "2026-11-01T07:00:19+00:00",
-  "as_of": "2026-11-01",
+  "generated_at": "2026-11-02T06:58:56+00:00",
+  "as_of": "2026-11-02",
   "overall_status": "degraded",
-  "data_hash": "c31fef8d0bc194a39682b9a44e97a6e08f851c38b3fbd8ad33ac466e9fbbbf12",
+  "data_hash": "3fffbe2cf6ef2fbf8179924a8fd03319b446bcf37ae1a9f10b5256f5bb6fd589",
   "series_status": {
     "ars_cop_cross": "ok",
     "brl_ars_cross": "ok",
@@ -45,7 +45,7 @@
     "pen_cop_cross": "insumo degradado: usd_pen_interbank (error:provider)",
     "pen_mxn_cross": "insumo degradado: usd_pen_interbank (error:provider)",
     "pen_uyu_cross": "insumo degradado: usd_pen_interbank (error:provider)",
-    "usd_pen_interbank": "BCRP: página de verificación del firewall Imperva Incapsula en lugar de JSON tras 4 intentos en https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PD04638PD/json/2026-10-13/2026-11-01/esp. Si ocurre solo desde GitHub Actions, el firewall del BCRP está bloqueando al ejecutor; si ocurre siempre, revisa el código de serie y el rango de fechas de la consulta."
+    "usd_pen_interbank": "BCRP: página de verificación del firewall Imperva Incapsula en lugar de JSON tras 4 intentos en https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PD04638PD/json/2026-10-13/2026-11-02/esp. Si ocurre solo desde GitHub Actions, el firewall del BCRP está bloqueando al ejecutor; si ocurre siempre, revisa el código de serie y el rango de fechas de la consulta."
   },
   "warnings": {
     "ars_cop_cross": [
@@ -81,11 +81,9 @@
       "salto 2026-10-23->2026-10-26: 5.0377 -> 5.5007 (+9.19%)"
     ],
     "usd_cop_trm": [
-      "fuente principal no disponible (Fallo tras 4 intentos en https://totoro.banrep.gov.co/nsi-jax-ws/rest/data/ESTAT,DF_TRM_DAILY_HIST,1.0/all/ALL/?startPeriod=2026: HTTP Error 500: ); se usó el respaldo sfc_trm",
       "salto 2020-03-09->2020-03-10: 3584.58 -> 3803.6 (+6.11%)"
     ],
     "usd_cop_trm_mkt": [
-      "fuente principal no disponible (Fallo tras 4 intentos en https://totoro.banrep.gov.co/nsi-jax-ws/rest/data/ESTAT,DF_TRM_DAILY_HIST,1.0/all/ALL/?startPeriod=2026: HTTP Error 500: ); se usó el respaldo sfc_trm",
       "salto 2020-03-06->2020-03-09: 3584.58 -> 3803.6 (+6.11%)"
     ],
     "uyu_ars_cross": [
