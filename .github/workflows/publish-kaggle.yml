@@ -1,0 +1,90 @@
+name: Publicar versión en Kaggle
+
+# Fase 2, solo manual. Crea una versión nueva del dataset de Kaggle a partir de los datos canónicos ya
+# publicados en main por «Actualización diaria de tasas»; no descarga nada de los bancos centrales ni usa
+# sus secretos. La primera publicación (crear el dataset privado) se hace a mano: ver docs/KAGGLE.md.
+#
+# Para encadenarlo a la corrida diaria, cuando se decida, agregar bajo `on:`
+#   workflow_run:
+#     workflows: ["Actualización diaria de tasas"]
+#     types: [completed]
+# sin filtrar por conclusión: la corrida diaria sale en rojo si una serie está degradada aunque haya
+# publicado sus datos. La detección de cambios (package_hash) evita versiones repetidas.
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Crear la versión aunque los datos no hayan cambiado (p. ej. solo cambió la documentación)"
+        type: boolean
+        default: false
+      visibility:
+        description: "private mantiene el dataset privado; public exige la compuerta de licencias en PASS"
+        type: choice
+        options: [private, public]
+        default: private
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kaggle-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PYTHONPATH: src
+      DATASET: jaforero/latin-america-central-bank-fx-rates
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main   # el último commit de datos del bot, no el SHA que disparó la corrida
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: pip install -e ".[dev]" "kaggle==2.2.5" six
+
+      - name: Pruebas
+        run: pytest -q
+
+      - name: Descargar la versión publicada (para comparar)
+        env:
+          KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}
+        run: |
+          test -n "$KAGGLE_API_TOKEN" || { echo "::error::Falta el secreto KAGGLE_API_TOKEN"; exit 1; }
+          mkdir -p prev
+          for f in SOURCE_COMMIT.txt fx_series_metadata.csv; do
+            kaggle datasets download "$DATASET" -f "$f" -p prev -o -q
+          done
+          for z in prev/*.zip; do [ -e "$z" ] && unzip -o -q "$z" -d prev && rm "$z"; done
+          test -f prev/SOURCE_COMMIT.txt || { echo "::error::No se pudo leer la versión publicada de $DATASET"; exit 1; }
+
+      - name: Construir, validar y comparar
+        id: build
+        run: |
+          python scripts/build_kaggle_dataset.py --compare-with prev \
+            --visibility "${{ inputs.visibility }}" --github-output "$GITHUB_OUTPUT"
+
+      - name: Resumen
+        if: always()
+        run: test -f dist/kaggle_readiness.md && cat dist/kaggle_readiness.md >> "$GITHUB_STEP_SUMMARY" || true
+
+      - name: Crear versión
+        if: steps.build.outputs.update_required == 'true' || inputs.force
+        env:
+          KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}
+          MESSAGE: ${{ steps.build.outputs.version_message }}
+        run: |
+          # Nunca --delete-old-versions: las versiones anteriores son parte de la trazabilidad.
+          kaggle datasets version -p dist/kaggle -m "$MESSAGE"
+          kaggle datasets metadata "$DATASET" --update -p dist/kaggle
+
+      - name: Sin cambios de datos
+        if: steps.build.outputs.update_required != 'true' && !inputs.force
+        run: echo "NO KAGGLE DATA UPDATE REQUIRED" | tee -a "$GITHUB_STEP_SUMMARY"
