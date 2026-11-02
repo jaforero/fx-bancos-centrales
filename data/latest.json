@@ -1,7 +1,7 @@
 {
   "schema_version": "1.2.0",
   "as_of": "2026-11-02",
-  "overall_status": "degraded",
+  "overall_status": "ok",
   "series": {
     "usd_mxn_fix": {
       "pair": "USD-MXN",
@@ -138,13 +138,13 @@
         "docs_url": "https://www.bcra.gob.ar/archivos/Catalogo/Content/files/pdf/estadisticascambiarias-v1.pdf"
       },
       "method": "official",
-      "value": 1537.3487,
-      "date": "2026-10-30",
-      "days_since_official": 3,
-      "prev_value": 1539.593,
-      "prev_date": "2026-10-29",
-      "change_abs": -2.2443,
-      "change_pct": -0.1458,
+      "value": 1544.6507,
+      "date": "2026-11-02",
+      "days_since_official": 0,
+      "prev_value": 1537.3487,
+      "prev_date": "2026-10-30",
+      "change_abs": 7.302,
+      "change_pct": 0.475,
       "status": "ok"
     },
     "usd_brl_ptax": {
@@ -266,15 +266,14 @@
         "authority": "Banco Central de Reserva del Perú: publica en BCRPData el tipo de cambio interbancario (valor diario)"
       },
       "method": "official",
-      "value": 3.454,
-      "date": "2026-10-28",
-      "days_since_official": 5,
-      "prev_value": 3.44971428571429,
-      "prev_date": "2026-10-27",
-      "change_abs": 0.004286,
-      "change_pct": 0.1242,
-      "status": "error:provider",
-      "error": "BCRP: página de verificación del firewall Imperva Incapsula en lugar de JSON tras 4 intentos en https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PD04638PD/json/2026-10-13/2026-11-02/esp. Si ocurre solo desde GitHub Actions, el firewall del BCRP está bloqueando al ejecutor; si ocurre siempre, revisa el código de serie y el rango de fechas de la consulta."
+      "value": 3.46057142857143,
+      "date": "2026-10-29",
+      "days_since_official": 4,
+      "prev_value": 3.454,
+      "prev_date": "2026-10-28",
+      "change_abs": 0.006571,
+      "change_pct": 0.1903,
+      "status": "ok"
     },
     "mxn_cop_cross": {
       "pair": "MXN-COP",
@@ -603,15 +602,14 @@
         "usd_mxn_fix",
         "usd_pen_interbank"
       ],
-      "value": 5.4045,
-      "date": "2026-10-28",
-      "days_since_official": 5,
-      "prev_value": 5.407,
-      "prev_date": "2026-10-27",
-      "change_abs": -0.0025,
-      "change_pct": -0.0462,
-      "status": "error:provider",
-      "error": "insumo degradado: usd_pen_interbank (error:provider)"
+      "value": 5.4369,
+      "date": "2026-10-29",
+      "days_since_official": 4,
+      "prev_value": 5.4045,
+      "prev_date": "2026-10-28",
+      "change_abs": 0.0324,
+      "change_pct": 0.5995,
+      "status": "ok"
     },
     "pen_cop_cross": {
       "pair": "PEN-COP",
@@ -625,15 +623,14 @@
         "usd_cop_trm_mkt",
         "usd_pen_interbank"
       ],
-      "value": 915.5617,
-      "date": "2026-10-28",
-      "days_since_official": 5,
-      "prev_value": 912.5451,
-      "prev_date": "2026-10-27",
-      "change_abs": 3.0166,
-      "change_pct": 0.3306,
-      "status": "error:provider",
-      "error": "insumo degradado: usd_pen_interbank (error:provider)"
+      "value": 915.1408,
+      "date": "2026-10-29",
+      "days_since_official": 4,
+      "prev_value": 915.5617,
+      "prev_date": "2026-10-28",
+      "change_abs": -0.4209,
+      "change_pct": -0.046,
+      "status": "ok"
     },
     "pen_ars_cross": {
       "pair": "PEN-ARS",
@@ -647,15 +644,14 @@
         "usd_ars_a3500",
         "usd_pen_interbank"
       ],
-      "value": 445.418,
-      "date": "2026-10-28",
-      "days_since_official": 5,
-      "prev_value": 446.0488,
-      "prev_date": "2026-10-27",
-      "change_abs": -0.6308,
-      "change_pct": -0.1414,
-      "status": "error:provider",
-      "error": "insumo degradado: usd_pen_interbank (error:provider)"
+      "value": 444.8956,
+      "date": "2026-10-29",
+      "days_since_official": 4,
+      "prev_value": 445.418,
+      "prev_date": "2026-10-28",
+      "change_abs": -0.5224,
+      "change_pct": -0.1173,
+      "status": "ok"
     },
     "pen_brl_cross": {
       "pair": "PEN-BRL",
@@ -669,15 +665,14 @@
         "usd_brl_ptax",
         "usd_pen_interbank"
       ],
-      "value": 1.5466,
-      "date": "2026-10-28",
-      "days_since_official": 5,
-      "prev_value": 1.5464,
-      "prev_date": "2026-10-27",
-      "change_abs": 0.0002,
-      "change_pct": 0.0129,
-      "status": "error:provider",
-      "error": "insumo degradado: usd_pen_interbank (error:provider)"
+      "value": 1.553,
+      "date": "2026-10-29",
+      "days_since_official": 4,
+      "prev_value": 1.5466,
+      "prev_date": "2026-10-28",
+      "change_abs": 0.0064,
+      "change_pct": 0.4138,
+      "status": "ok"
     },
     "pen_clp_cross": {
       "pair": "PEN-CLP",
@@ -691,15 +686,14 @@
         "usd_clp_obs_mkt",
         "usd_pen_interbank"
       ],
-      "value": 284.0417,
-      "date": "2026-10-28",
-      "days_since_official": 5,
-      "prev_value": 285.5715,
-      "prev_date": "2026-10-27",
-      "change_abs": -1.5298,
-      "change_pct": -0.5357,
-      "status": "error:provider",
-      "error": "insumo degradado: usd_pen_interbank (error:provider)"
+      "value": 287.0104,
+      "date": "2026-10-29",
+      "days_since_official": 4,
+      "prev_value": 284.0417,
+      "prev_date": "2026-10-28",
+      "change_abs": 2.9687,
+      "change_pct": 1.0452,
+      "status": "ok"
     },
     "pen_uyu_cross": {
       "pair": "PEN-UYU",
@@ -713,15 +707,14 @@
         "usd_uyu_interbank",
         "usd_pen_interbank"
       ],
-      "value": 11.6086,
-      "date": "2026-10-28",
-      "days_since_official": 5,
-      "prev_value": 11.656,
-      "prev_date": "2026-10-27",
-      "change_abs": -0.0474,
-      "change_pct": -0.4067,
-      "status": "error:provider",
-      "error": "insumo degradado: usd_pen_interbank (error:provider)"
+      "value": 11.614,
+      "date": "2026-10-29",
+      "days_since_official": 4,
+      "prev_value": 11.6086,
+      "prev_date": "2026-10-28",
+      "change_abs": 0.0054,
+      "change_pct": 0.0465,
+      "status": "ok"
     }
   }
 }
