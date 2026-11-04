@@ -2512,7 +2512,7 @@
     {"date": "2026-10-30", "value": 1.565, "filled": false},
     {"date": "2026-10-31", "value": 1.565, "filled": true},
     {"date": "2026-11-01", "value": 1.565, "filled": true},
-    {"date": "2026-11-02", "value": 1.565, "filled": true},
-    {"date": "2026-11-03", "value": 1.565, "filled": true}
+    {"date": "2026-11-02", "value": 1.5666, "filled": true},
+    {"date": "2026-11-03", "value": 1.5875, "filled": true}
   ]
 }
