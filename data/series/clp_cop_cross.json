@@ -13,7 +13,7 @@
     "usd_clp_obs_mkt"
   ],
   "first_date": "2020-01-02",
-  "last_date": "2026-11-07",
+  "last_date": "2026-11-08",
   "last_official_date": "2026-11-06",
   "observations": [
     {"date": "2020-01-02", "value": 4.3212, "filled": false},
@@ -2517,6 +2517,7 @@
     {"date": "2026-11-04", "value": 3.3176, "filled": false},
     {"date": "2026-11-05", "value": 3.3249, "filled": false},
     {"date": "2026-11-06", "value": 3.3043, "filled": false},
-    {"date": "2026-11-07", "value": 3.3043, "filled": true}
+    {"date": "2026-11-07", "value": 3.3043, "filled": true},
+    {"date": "2026-11-08", "value": 3.3043, "filled": true}
   ]
 }

@@ -22,11 +22,11 @@
       "series_id": "32sa-8pi3",
       "docs_url": "https://dev.socrata.com/foundry/www.datos.gov.co/32sa-8pi3"
     },
-    "fallback_used": false
+    "fallback_used": true
   },
   "method": "official",
   "first_date": "2020-01-02",
-  "last_date": "2026-11-07",
+  "last_date": "2026-11-08",
   "last_official_date": "2026-11-06",
   "observations": [
     {"date": "2020-01-02", "value": 3258.84, "filled": false},
@@ -2530,6 +2530,7 @@
     {"date": "2026-11-04", "value": 3221.19, "filled": false},
     {"date": "2026-11-05", "value": 3228.26, "filled": false},
     {"date": "2026-11-06", "value": 3237.83, "filled": false},
-    {"date": "2026-11-07", "value": 3237.83, "filled": true}
+    {"date": "2026-11-07", "value": 3237.83, "filled": true},
+    {"date": "2026-11-08", "value": 3237.83, "filled": true}
   ]
 }
