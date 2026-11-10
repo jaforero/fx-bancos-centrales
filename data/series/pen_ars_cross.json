@@ -2516,9 +2516,9 @@
     {"date": "2026-11-03", "value": 447.4524, "filled": false},
     {"date": "2026-11-04", "value": 449.2109, "filled": false},
     {"date": "2026-11-05", "value": 448.1083, "filled": false},
-    {"date": "2026-11-06", "value": 448.1083, "filled": true},
-    {"date": "2026-11-07", "value": 448.1083, "filled": true},
-    {"date": "2026-11-08", "value": 448.1083, "filled": true},
-    {"date": "2026-11-09", "value": 448.1083, "filled": true}
+    {"date": "2026-11-06", "value": 450.7409, "filled": true},
+    {"date": "2026-11-07", "value": 450.7409, "filled": true},
+    {"date": "2026-11-08", "value": 450.7409, "filled": true},
+    {"date": "2026-11-09", "value": 450.7409, "filled": true}
   ]
 }
