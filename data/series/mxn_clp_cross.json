@@ -13,7 +13,7 @@
     "usd_mxn_fix"
   ],
   "first_date": "2020-01-02",
-  "last_date": "2026-11-09",
+  "last_date": "2026-11-10",
   "last_official_date": "2026-11-09",
   "observations": [
     {"date": "2020-01-02", "value": 39.9413, "filled": false},
@@ -2519,6 +2519,7 @@
     {"date": "2026-11-06", "value": 52.5977, "filled": false},
     {"date": "2026-11-07", "value": 52.5977, "filled": true},
     {"date": "2026-11-08", "value": 52.5977, "filled": true},
-    {"date": "2026-11-09", "value": 52.1446, "filled": false}
+    {"date": "2026-11-09", "value": 52.1446, "filled": false},
+    {"date": "2026-11-10", "value": 52.1446, "filled": true}
   ]
 }
