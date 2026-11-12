@@ -14,7 +14,7 @@
   ],
   "first_date": "2020-01-02",
   "last_date": "2026-11-11",
-  "last_official_date": "2026-11-10",
+  "last_official_date": "2026-11-11",
   "observations": [
     {"date": "2020-01-02", "value": 1.9684, "filled": false},
     {"date": "2020-01-03", "value": 1.9759, "filled": false},
@@ -2521,6 +2521,6 @@
     {"date": "2026-11-08", "value": 2.1712, "filled": true},
     {"date": "2026-11-09", "value": 2.1739, "filled": false},
     {"date": "2026-11-10", "value": 2.1705, "filled": false},
-    {"date": "2026-11-11", "value": 2.1705, "filled": true}
+    {"date": "2026-11-11", "value": 2.1761, "filled": false}
   ]
 }
