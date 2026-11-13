@@ -1,7 +1,7 @@
 {
   "schema_version": "1.2.0",
   "as_of": "2026-11-12",
-  "overall_status": "degraded",
+  "overall_status": "ok",
   "series": {
     "usd_mxn_fix": {
       "pair": "USD-MXN",
@@ -18,13 +18,13 @@
         "docs_url": "https://www.banxico.org.mx/SieAPIRest/service/v1/"
       },
       "method": "official",
-      "value": 18.6192,
-      "date": "2026-11-11",
-      "days_since_official": 1,
-      "prev_value": 18.6678,
-      "prev_date": "2026-11-10",
-      "change_abs": -0.0486,
-      "change_pct": -0.2603,
+      "value": 18.6188,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 18.6192,
+      "prev_date": "2026-11-11",
+      "change_abs": -0.0004,
+      "change_pct": -0.0021,
       "status": "ok"
     },
     "usd_mxn_liq": {
@@ -87,6 +87,10 @@
       "prev_date": "2026-11-10",
       "change_abs": 27.19,
       "change_pct": 0.8315,
+      "next": {
+        "date": "2026-11-13",
+        "value": 3301.91
+      },
       "status": "ok"
     },
     "usd_cop_trm_mkt": {
@@ -114,13 +118,13 @@
         "fallback_used": false
       },
       "method": "official",
-      "value": 3297.07,
-      "date": "2026-11-10",
-      "days_since_official": 2,
-      "prev_value": 3269.88,
-      "prev_date": "2026-11-09",
-      "change_abs": 27.19,
-      "change_pct": 0.8315,
+      "value": 3301.91,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 3297.07,
+      "prev_date": "2026-11-10",
+      "change_abs": 4.84,
+      "change_pct": 0.1468,
       "status": "ok"
     },
     "usd_ars_a3500": {
@@ -138,13 +142,13 @@
         "docs_url": "https://www.bcra.gob.ar/archivos/Catalogo/Content/files/pdf/estadisticascambiarias-v1.pdf"
       },
       "method": "official",
-      "value": 1547.9128,
-      "date": "2026-11-11",
-      "days_since_official": 1,
-      "prev_value": 1545.3974,
-      "prev_date": "2026-11-05",
-      "change_abs": 2.5154,
-      "change_pct": 0.1628,
+      "value": 1544.432,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 1547.9128,
+      "prev_date": "2026-11-11",
+      "change_abs": -3.4808,
+      "change_pct": -0.2249,
       "status": "ok"
     },
     "usd_brl_ptax": {
@@ -164,13 +168,13 @@
         "legal_basis": "Resolução BCB nº 45/2020 (metodología PTAX; reemplazó la Circular 3.506/2010)"
       },
       "method": "official",
-      "value": 5.5606,
-      "date": "2026-11-11",
-      "days_since_official": 1,
-      "prev_value": 5.584,
-      "prev_date": "2026-11-10",
-      "change_abs": -0.0234,
-      "change_pct": -0.4191,
+      "value": 5.6143,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 5.5606,
+      "prev_date": "2026-11-11",
+      "change_abs": 0.0537,
+      "change_pct": 0.9657,
       "status": "ok"
     },
     "usd_clp_obs": {
@@ -197,6 +201,10 @@
       "prev_date": "2026-11-11",
       "change_abs": 7.44,
       "change_pct": 0.7615,
+      "next": {
+        "date": "2026-11-13",
+        "value": 992.48
+      },
       "status": "ok"
     },
     "usd_clp_obs_mkt": {
@@ -216,13 +224,13 @@
         "legal_basis": "Compendio de Normas de Cambios Internacionales, Capítulo I, sección VII"
       },
       "method": "official",
-      "value": 984.49,
-      "date": "2026-11-11",
-      "days_since_official": 1,
-      "prev_value": 977.05,
-      "prev_date": "2026-11-10",
-      "change_abs": 7.44,
-      "change_pct": 0.7615,
+      "value": 992.48,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 984.49,
+      "prev_date": "2026-11-11",
+      "change_abs": 7.99,
+      "change_pct": 0.8116,
       "status": "ok"
     },
     "usd_uyu_interbank": {
@@ -241,13 +249,13 @@
         "authority": "Banco Central del Uruguay: publica la cotización interbancaria (promedio de las operaciones del día en BEVSA)"
       },
       "method": "official",
-      "value": 40.517,
-      "date": "2026-11-11",
-      "days_since_official": 1,
-      "prev_value": 40.519,
-      "prev_date": "2026-11-10",
-      "change_abs": -0.002,
-      "change_pct": -0.0049,
+      "value": 40.589,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 40.517,
+      "prev_date": "2026-11-11",
+      "change_abs": 0.072,
+      "change_pct": 0.1777,
       "status": "ok"
     },
     "usd_pen_interbank": {
@@ -266,13 +274,13 @@
         "authority": "Banco Central de Reserva del Perú: publica en BCRPData el tipo de cambio interbancario (valor diario)"
       },
       "method": "official",
-      "value": 3.41621428571429,
-      "date": "2026-11-10",
-      "days_since_official": 2,
-      "prev_value": 3.41214285714286,
-      "prev_date": "2026-11-09",
-      "change_abs": 0.004071,
-      "change_pct": 0.1193,
+      "value": 3.41085714285714,
+      "date": "2026-11-11",
+      "days_since_official": 1,
+      "prev_value": 3.41621428571429,
+      "prev_date": "2026-11-10",
+      "change_abs": -0.005357,
+      "change_pct": -0.1568,
       "status": "ok"
     },
     "mxn_cop_cross": {
@@ -287,13 +295,13 @@
         "usd_cop_trm_mkt",
         "usd_mxn_fix"
       ],
-      "value": 176.618,
-      "date": "2026-11-10",
-      "days_since_official": 2,
-      "prev_value": 175.8161,
-      "prev_date": "2026-11-09",
-      "change_abs": 0.8019,
-      "change_pct": 0.4561,
+      "value": 177.3428,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 176.618,
+      "prev_date": "2026-11-10",
+      "change_abs": 0.7248,
+      "change_pct": 0.4104,
       "status": "ok"
     },
     "mxn_ars_cross": {
@@ -308,13 +316,13 @@
         "usd_ars_a3500",
         "usd_mxn_fix"
       ],
-      "value": 83.1353,
-      "date": "2026-11-11",
-      "days_since_official": 1,
-      "prev_value": 82.5767,
-      "prev_date": "2026-11-05",
-      "change_abs": 0.5586,
-      "change_pct": 0.6765,
+      "value": 82.9501,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 83.1353,
+      "prev_date": "2026-11-11",
+      "change_abs": -0.1852,
+      "change_pct": -0.2228,
       "status": "ok"
     },
     "ars_cop_cross": {
@@ -329,14 +337,14 @@
         "usd_cop_trm_mkt",
         "usd_ars_a3500"
       ],
-      "value": 2.089,
-      "date": "2026-11-05",
-      "days_since_official": 7,
-      "prev_value": 2.0802,
-      "prev_date": "2026-11-04",
-      "change_abs": 0.0088,
-      "change_pct": 0.423,
-      "status": "stale"
+      "value": 2.1379,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 2.089,
+      "prev_date": "2026-11-05",
+      "change_abs": 0.0489,
+      "change_pct": 2.3408,
+      "status": "ok"
     },
     "brl_mxn_cross": {
       "pair": "BRL-MXN",
@@ -350,13 +358,13 @@
         "usd_mxn_fix",
         "usd_brl_ptax"
       ],
-      "value": 3.3484,
-      "date": "2026-11-11",
-      "days_since_official": 1,
-      "prev_value": 3.3431,
-      "prev_date": "2026-11-10",
-      "change_abs": 0.0053,
-      "change_pct": 0.1585,
+      "value": 3.3163,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 3.3484,
+      "prev_date": "2026-11-11",
+      "change_abs": -0.0321,
+      "change_pct": -0.9587,
       "status": "ok"
     },
     "brl_cop_cross": {
@@ -371,13 +379,13 @@
         "usd_cop_trm_mkt",
         "usd_brl_ptax"
       ],
-      "value": 590.4495,
-      "date": "2026-11-10",
-      "days_since_official": 2,
-      "prev_value": 592.9496,
-      "prev_date": "2026-11-09",
-      "change_abs": -2.5001,
-      "change_pct": -0.4216,
+      "value": 588.125,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 590.4495,
+      "prev_date": "2026-11-10",
+      "change_abs": -2.3245,
+      "change_pct": -0.3937,
       "status": "ok"
     },
     "brl_ars_cross": {
@@ -392,13 +400,13 @@
         "usd_ars_a3500",
         "usd_brl_ptax"
       ],
-      "value": 278.3715,
-      "date": "2026-11-11",
-      "days_since_official": 1,
-      "prev_value": 282.931,
-      "prev_date": "2026-11-05",
-      "change_abs": -4.5595,
-      "change_pct": -1.6115,
+      "value": 275.089,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 278.3715,
+      "prev_date": "2026-11-11",
+      "change_abs": -3.2825,
+      "change_pct": -1.1792,
       "status": "ok"
     },
     "mxn_clp_cross": {
@@ -413,13 +421,13 @@
         "usd_clp_obs_mkt",
         "usd_mxn_fix"
       ],
-      "value": 52.875,
-      "date": "2026-11-11",
-      "days_since_official": 1,
-      "prev_value": 52.3388,
-      "prev_date": "2026-11-10",
-      "change_abs": 0.5362,
-      "change_pct": 1.0245,
+      "value": 53.3053,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 52.875,
+      "prev_date": "2026-11-11",
+      "change_abs": 0.4303,
+      "change_pct": 0.8138,
       "status": "ok"
     },
     "clp_cop_cross": {
@@ -434,13 +442,13 @@
         "usd_cop_trm_mkt",
         "usd_clp_obs_mkt"
       ],
-      "value": 3.3745,
-      "date": "2026-11-10",
-      "days_since_official": 2,
-      "prev_value": 3.3717,
-      "prev_date": "2026-11-09",
-      "change_abs": 0.0028,
-      "change_pct": 0.083,
+      "value": 3.3269,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 3.3745,
+      "prev_date": "2026-11-10",
+      "change_abs": -0.0476,
+      "change_pct": -1.4106,
       "status": "ok"
     },
     "clp_ars_cross": {
@@ -455,13 +463,13 @@
         "usd_ars_a3500",
         "usd_clp_obs_mkt"
       ],
-      "value": 1.572299,
-      "date": "2026-11-11",
-      "days_since_official": 1,
-      "prev_value": 1.591651,
-      "prev_date": "2026-11-05",
-      "change_abs": -0.019352,
-      "change_pct": -1.2158,
+      "value": 1.556134,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 1.572299,
+      "prev_date": "2026-11-11",
+      "change_abs": -0.016165,
+      "change_pct": -1.0281,
       "status": "ok"
     },
     "brl_clp_cross": {
@@ -476,13 +484,13 @@
         "usd_clp_obs_mkt",
         "usd_brl_ptax"
       ],
-      "value": 177.0474,
-      "date": "2026-11-11",
-      "days_since_official": 1,
-      "prev_value": 174.9731,
-      "prev_date": "2026-11-10",
-      "change_abs": 2.0743,
-      "change_pct": 1.1855,
+      "value": 176.7772,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 177.0474,
+      "prev_date": "2026-11-11",
+      "change_abs": -0.2702,
+      "change_pct": -0.1526,
       "status": "ok"
     },
     "mxn_uyu_cross": {
@@ -497,13 +505,13 @@
         "usd_uyu_interbank",
         "usd_mxn_fix"
       ],
-      "value": 2.1761,
-      "date": "2026-11-11",
-      "days_since_official": 1,
-      "prev_value": 2.1705,
-      "prev_date": "2026-11-10",
-      "change_abs": 0.0056,
-      "change_pct": 0.258,
+      "value": 2.18,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 2.1761,
+      "prev_date": "2026-11-11",
+      "change_abs": 0.0039,
+      "change_pct": 0.1792,
       "status": "ok"
     },
     "uyu_cop_cross": {
@@ -518,13 +526,13 @@
         "usd_cop_trm_mkt",
         "usd_uyu_interbank"
       ],
-      "value": 81.371,
-      "date": "2026-11-10",
-      "days_since_official": 2,
-      "prev_value": 80.8756,
-      "prev_date": "2026-11-09",
-      "change_abs": 0.4954,
-      "change_pct": 0.6125,
+      "value": 81.3499,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 81.371,
+      "prev_date": "2026-11-10",
+      "change_abs": -0.0211,
+      "change_pct": -0.0259,
       "status": "ok"
     },
     "uyu_ars_cross": {
@@ -539,13 +547,13 @@
         "usd_ars_a3500",
         "usd_uyu_interbank"
       ],
-      "value": 38.204,
-      "date": "2026-11-11",
-      "days_since_official": 1,
-      "prev_value": 38.3407,
-      "prev_date": "2026-11-05",
-      "change_abs": -0.1367,
-      "change_pct": -0.3565,
+      "value": 38.0505,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 38.204,
+      "prev_date": "2026-11-11",
+      "change_abs": -0.1535,
+      "change_pct": -0.4018,
       "status": "ok"
     },
     "brl_uyu_cross": {
@@ -560,13 +568,13 @@
         "usd_uyu_interbank",
         "usd_brl_ptax"
       ],
-      "value": 7.2864,
-      "date": "2026-11-11",
-      "days_since_official": 1,
-      "prev_value": 7.2563,
-      "prev_date": "2026-11-10",
-      "change_abs": 0.0301,
-      "change_pct": 0.4148,
+      "value": 7.2296,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 7.2864,
+      "prev_date": "2026-11-11",
+      "change_abs": -0.0568,
+      "change_pct": -0.7795,
       "status": "ok"
     },
     "uyu_clp_cross": {
@@ -581,13 +589,13 @@
         "usd_clp_obs_mkt",
         "usd_uyu_interbank"
       ],
-      "value": 24.2982,
-      "date": "2026-11-11",
-      "days_since_official": 1,
-      "prev_value": 24.1134,
-      "prev_date": "2026-11-10",
-      "change_abs": 0.1848,
-      "change_pct": 0.7664,
+      "value": 24.4519,
+      "date": "2026-11-12",
+      "days_since_official": 0,
+      "prev_value": 24.2982,
+      "prev_date": "2026-11-11",
+      "change_abs": 0.1537,
+      "change_pct": 0.6326,
       "status": "ok"
     },
     "pen_mxn_cross": {
@@ -602,13 +610,13 @@
         "usd_mxn_fix",
         "usd_pen_interbank"
       ],
-      "value": 5.4645,
-      "date": "2026-11-10",
-      "days_since_official": 2,
-      "prev_value": 5.4506,
-      "prev_date": "2026-11-09",
-      "change_abs": 0.0139,
-      "change_pct": 0.255,
+      "value": 5.4588,
+      "date": "2026-11-11",
+      "days_since_official": 1,
+      "prev_value": 5.4645,
+      "prev_date": "2026-11-10",
+      "change_abs": -0.0057,
+      "change_pct": -0.1043,
       "status": "ok"
     },
     "pen_cop_cross": {
@@ -644,14 +652,14 @@
         "usd_ars_a3500",
         "usd_pen_interbank"
       ],
-      "value": 448.1083,
-      "date": "2026-11-05",
-      "days_since_official": 7,
-      "prev_value": 449.2109,
-      "prev_date": "2026-11-04",
-      "change_abs": -1.1026,
-      "change_pct": -0.2455,
-      "status": "stale"
+      "value": 453.8193,
+      "date": "2026-11-11",
+      "days_since_official": 1,
+      "prev_value": 448.1083,
+      "prev_date": "2026-11-05",
+      "change_abs": 5.711,
+      "change_pct": 1.2745,
+      "status": "ok"
     },
     "pen_brl_cross": {
       "pair": "PEN-BRL",
@@ -665,13 +673,13 @@
         "usd_brl_ptax",
         "usd_pen_interbank"
       ],
-      "value": 1.6346,
-      "date": "2026-11-10",
-      "days_since_official": 2,
-      "prev_value": 1.6162,
-      "prev_date": "2026-11-09",
-      "change_abs": 0.0184,
-      "change_pct": 1.1385,
+      "value": 1.6303,
+      "date": "2026-11-11",
+      "days_since_official": 1,
+      "prev_value": 1.6346,
+      "prev_date": "2026-11-10",
+      "change_abs": -0.0043,
+      "change_pct": -0.2631,
       "status": "ok"
     },
     "pen_clp_cross": {
@@ -686,13 +694,13 @@
         "usd_clp_obs_mkt",
         "usd_pen_interbank"
       ],
-      "value": 286.0037,
-      "date": "2026-11-10",
-      "days_since_official": 2,
-      "prev_value": 284.2202,
-      "prev_date": "2026-11-09",
-      "change_abs": 1.7835,
-      "change_pct": 0.6275,
+      "value": 288.6342,
+      "date": "2026-11-11",
+      "days_since_official": 1,
+      "prev_value": 286.0037,
+      "prev_date": "2026-11-10",
+      "change_abs": 2.6305,
+      "change_pct": 0.9197,
       "status": "ok"
     },
     "pen_uyu_cross": {
@@ -707,13 +715,13 @@
         "usd_uyu_interbank",
         "usd_pen_interbank"
       ],
-      "value": 11.8608,
-      "date": "2026-11-10",
-      "days_since_official": 2,
-      "prev_value": 11.8492,
-      "prev_date": "2026-11-09",
-      "change_abs": 0.0116,
-      "change_pct": 0.0979,
+      "value": 11.8788,
+      "date": "2026-11-11",
+      "days_since_official": 1,
+      "prev_value": 11.8608,
+      "prev_date": "2026-11-10",
+      "change_abs": 0.018,
+      "change_pct": 0.1518,
       "status": "ok"
     }
   }
