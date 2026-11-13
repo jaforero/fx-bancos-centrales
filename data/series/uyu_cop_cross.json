@@ -13,7 +13,7 @@
     "usd_uyu_interbank"
   ],
   "first_date": "2020-01-02",
-  "last_date": "2026-11-12",
+  "last_date": "2026-11-13",
   "last_official_date": "2026-11-12",
   "observations": [
     {"date": "2020-01-02", "value": 87.6834, "filled": false},
@@ -2522,6 +2522,7 @@
     {"date": "2026-11-09", "value": 80.8756, "filled": false},
     {"date": "2026-11-10", "value": 81.371, "filled": false},
     {"date": "2026-11-11", "value": 81.375, "filled": true},
-    {"date": "2026-11-12", "value": 81.3499, "filled": false}
+    {"date": "2026-11-12", "value": 81.3499, "filled": false},
+    {"date": "2026-11-13", "value": 81.3499, "filled": true}
   ]
 }
