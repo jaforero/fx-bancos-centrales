@@ -138,13 +138,13 @@
         "docs_url": "https://www.bcra.gob.ar/archivos/Catalogo/Content/files/pdf/estadisticascambiarias-v1.pdf"
       },
       "method": "official",
-      "value": 1547.0336,
-      "date": "2026-11-13",
-      "days_since_official": 3,
-      "prev_value": 1544.432,
-      "prev_date": "2026-11-12",
-      "change_abs": 2.6016,
-      "change_pct": 0.1685,
+      "value": 1549.6732,
+      "date": "2026-11-16",
+      "days_since_official": 0,
+      "prev_value": 1547.0336,
+      "prev_date": "2026-11-13",
+      "change_abs": 2.6396,
+      "change_pct": 0.1706,
       "status": "ok"
     },
     "usd_brl_ptax": {
@@ -164,13 +164,13 @@
         "legal_basis": "Resolução BCB nº 45/2020 (metodología PTAX; reemplazó la Circular 3.506/2010)"
       },
       "method": "official",
-      "value": 5.6518,
-      "date": "2026-11-13",
-      "days_since_official": 3,
-      "prev_value": 5.6143,
-      "prev_date": "2026-11-12",
-      "change_abs": 0.0375,
-      "change_pct": 0.6679,
+      "value": 5.7324,
+      "date": "2026-11-16",
+      "days_since_official": 0,
+      "prev_value": 5.6518,
+      "prev_date": "2026-11-13",
+      "change_abs": 0.0806,
+      "change_pct": 1.4261,
       "status": "ok"
     },
     "usd_clp_obs": {
@@ -197,6 +197,10 @@
       "prev_date": "2026-11-13",
       "change_abs": 6.62,
       "change_pct": 0.667,
+      "next": {
+        "date": "2026-11-17",
+        "value": 1001.17
+      },
       "status": "ok"
     },
     "usd_clp_obs_mkt": {
@@ -216,13 +220,13 @@
         "legal_basis": "Compendio de Normas de Cambios Internacionales, Capítulo I, sección VII"
       },
       "method": "official",
-      "value": 999.1,
-      "date": "2026-11-13",
-      "days_since_official": 3,
-      "prev_value": 992.48,
-      "prev_date": "2026-11-12",
-      "change_abs": 6.62,
-      "change_pct": 0.667,
+      "value": 1001.17,
+      "date": "2026-11-16",
+      "days_since_official": 0,
+      "prev_value": 999.1,
+      "prev_date": "2026-11-13",
+      "change_abs": 2.07,
+      "change_pct": 0.2072,
       "status": "ok"
     },
     "usd_uyu_interbank": {
@@ -241,13 +245,13 @@
         "authority": "Banco Central del Uruguay: publica la cotización interbancaria (promedio de las operaciones del día en BEVSA)"
       },
       "method": "official",
-      "value": 40.611,
-      "date": "2026-11-13",
-      "days_since_official": 3,
-      "prev_value": 40.589,
-      "prev_date": "2026-11-12",
-      "change_abs": 0.022,
-      "change_pct": 0.0542,
+      "value": 40.609,
+      "date": "2026-11-16",
+      "days_since_official": 0,
+      "prev_value": 40.611,
+      "prev_date": "2026-11-13",
+      "change_abs": -0.002,
+      "change_pct": -0.0049,
       "status": "ok"
     },
     "usd_pen_interbank": {
@@ -392,13 +396,13 @@
         "usd_ars_a3500",
         "usd_brl_ptax"
       ],
-      "value": 273.7241,
-      "date": "2026-11-13",
-      "days_since_official": 3,
-      "prev_value": 275.089,
-      "prev_date": "2026-11-12",
-      "change_abs": -1.3649,
-      "change_pct": -0.4962,
+      "value": 270.3358,
+      "date": "2026-11-16",
+      "days_since_official": 0,
+      "prev_value": 273.7241,
+      "prev_date": "2026-11-13",
+      "change_abs": -3.3883,
+      "change_pct": -1.2379,
       "status": "ok"
     },
     "mxn_clp_cross": {
@@ -455,13 +459,13 @@
         "usd_ars_a3500",
         "usd_clp_obs_mkt"
       ],
-      "value": 1.548427,
-      "date": "2026-11-13",
-      "days_since_official": 3,
-      "prev_value": 1.556134,
-      "prev_date": "2026-11-12",
-      "change_abs": -0.007707,
-      "change_pct": -0.4953,
+      "value": 1.547862,
+      "date": "2026-11-16",
+      "days_since_official": 0,
+      "prev_value": 1.548427,
+      "prev_date": "2026-11-13",
+      "change_abs": -0.000565,
+      "change_pct": -0.0365,
       "status": "ok"
     },
     "brl_clp_cross": {
@@ -476,13 +480,13 @@
         "usd_clp_obs_mkt",
         "usd_brl_ptax"
       ],
-      "value": 176.7755,
-      "date": "2026-11-13",
-      "days_since_official": 3,
-      "prev_value": 176.7772,
-      "prev_date": "2026-11-12",
-      "change_abs": -0.0017,
-      "change_pct": -0.001,
+      "value": 174.6511,
+      "date": "2026-11-16",
+      "days_since_official": 0,
+      "prev_value": 176.7755,
+      "prev_date": "2026-11-13",
+      "change_abs": -2.1244,
+      "change_pct": -1.2018,
       "status": "ok"
     },
     "mxn_uyu_cross": {
@@ -539,13 +543,13 @@
         "usd_ars_a3500",
         "usd_uyu_interbank"
       ],
-      "value": 38.094,
-      "date": "2026-11-13",
-      "days_since_official": 3,
-      "prev_value": 38.0505,
-      "prev_date": "2026-11-12",
-      "change_abs": 0.0435,
-      "change_pct": 0.1143,
+      "value": 38.1608,
+      "date": "2026-11-16",
+      "days_since_official": 0,
+      "prev_value": 38.094,
+      "prev_date": "2026-11-13",
+      "change_abs": 0.0668,
+      "change_pct": 0.1754,
       "status": "ok"
     },
     "brl_uyu_cross": {
@@ -560,13 +564,13 @@
         "usd_uyu_interbank",
         "usd_brl_ptax"
       ],
-      "value": 7.1855,
-      "date": "2026-11-13",
-      "days_since_official": 3,
-      "prev_value": 7.2296,
-      "prev_date": "2026-11-12",
-      "change_abs": -0.0441,
-      "change_pct": -0.61,
+      "value": 7.0841,
+      "date": "2026-11-16",
+      "days_since_official": 0,
+      "prev_value": 7.1855,
+      "prev_date": "2026-11-13",
+      "change_abs": -0.1014,
+      "change_pct": -1.4112,
       "status": "ok"
     },
     "uyu_clp_cross": {
@@ -581,13 +585,13 @@
         "usd_clp_obs_mkt",
         "usd_uyu_interbank"
       ],
-      "value": 24.6017,
-      "date": "2026-11-13",
-      "days_since_official": 3,
-      "prev_value": 24.4519,
-      "prev_date": "2026-11-12",
-      "change_abs": 0.1498,
-      "change_pct": 0.6126,
+      "value": 24.6539,
+      "date": "2026-11-16",
+      "days_since_official": 0,
+      "prev_value": 24.6017,
+      "prev_date": "2026-11-13",
+      "change_abs": 0.0522,
+      "change_pct": 0.2122,
       "status": "ok"
     },
     "pen_mxn_cross": {
