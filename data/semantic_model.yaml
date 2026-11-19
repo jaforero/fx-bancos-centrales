@@ -5562,7 +5562,7 @@ curation:
     es: "Lista vacía = toda serie, proveedor, moneda y país de la configuración tiene su curaduría en es y en."
     en: "Empty list = every series, provider, currency and country in the configuration has its curation in es and en."
 coverage:
-  as_of: "2026-11-18"
+  as_of: "2026-11-19"
   series_count: 31
   official_series_count: 10
   cross_series_count: 21
@@ -5579,11 +5579,11 @@ coverage:
     - id: "usd_mxn_fix"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1731
-      filled_observations: 782
+      filled_observations: 783
     - id: "usd_mxn_liq"
       status: "ok"
       first_date: "2020-01-01"
@@ -5603,27 +5603,27 @@ coverage:
     - id: "usd_cop_trm_mkt"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1629
-      filled_observations: 884
+      filled_observations: 885
     - id: "usd_ars_a3500"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1672
-      filled_observations: 841
+      filled_observations: 842
     - id: "usd_brl_ptax"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1727
-      filled_observations: 786
+      filled_observations: 787
     - id: "usd_clp_obs"
       status: "ok"
       first_date: "2020-01-02"
@@ -5635,192 +5635,192 @@ coverage:
     - id: "usd_clp_obs_mkt"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1716
-      filled_observations: 797
+      filled_observations: 798
     - id: "usd_uyu_interbank"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1711
-      filled_observations: 802
+      filled_observations: 803
     - id: "usd_pen_interbank"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-16"
-      observations: 2513
+      observations: 2514
       official_observations: 1716
-      filled_observations: 797
+      filled_observations: 798
     - id: "mxn_cop_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1600
-      filled_observations: 913
+      filled_observations: 914
     - id: "mxn_ars_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1638
-      filled_observations: 875
+      filled_observations: 876
     - id: "ars_cop_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1561
-      filled_observations: 952
+      filled_observations: 953
     - id: "brl_mxn_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1689
-      filled_observations: 824
+      filled_observations: 825
     - id: "brl_cop_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1592
-      filled_observations: 921
+      filled_observations: 922
     - id: "brl_ars_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1640
-      filled_observations: 873
+      filled_observations: 874
     - id: "mxn_clp_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1673
-      filled_observations: 840
+      filled_observations: 841
     - id: "clp_cop_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1590
-      filled_observations: 923
+      filled_observations: 924
     - id: "clp_ars_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1627
-      filled_observations: 886
+      filled_observations: 887
     - id: "brl_clp_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1670
-      filled_observations: 843
+      filled_observations: 844
     - id: "mxn_uyu_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1679
-      filled_observations: 834
+      filled_observations: 835
     - id: "uyu_cop_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1594
-      filled_observations: 919
+      filled_observations: 920
     - id: "uyu_ars_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1635
-      filled_observations: 878
+      filled_observations: 879
     - id: "brl_uyu_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1685
-      filled_observations: 828
+      filled_observations: 829
     - id: "uyu_clp_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-18"
-      observations: 2513
+      observations: 2514
       official_observations: 1659
-      filled_observations: 854
+      filled_observations: 855
     - id: "pen_mxn_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-13"
-      observations: 2513
+      observations: 2514
       official_observations: 1679
-      filled_observations: 834
+      filled_observations: 835
     - id: "pen_cop_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-13"
-      observations: 2513
+      observations: 2514
       official_observations: 1587
-      filled_observations: 926
+      filled_observations: 927
     - id: "pen_ars_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-16"
-      observations: 2513
+      observations: 2514
       official_observations: 1627
-      filled_observations: 886
+      filled_observations: 887
     - id: "pen_brl_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-16"
-      observations: 2513
+      observations: 2514
       official_observations: 1668
-      filled_observations: 845
+      filled_observations: 846
     - id: "pen_clp_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-16"
-      observations: 2513
+      observations: 2514
       official_observations: 1670
-      filled_observations: 843
+      filled_observations: 844
     - id: "pen_uyu_cross"
       status: "ok"
       first_date: "2020-01-02"
-      last_date: "2026-11-18"
+      last_date: "2026-11-19"
       last_official_date: "2026-11-16"
-      observations: 2513
+      observations: 2514
       official_observations: 1660
-      filled_observations: 853
+      filled_observations: 854
