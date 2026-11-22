@@ -2537,6 +2537,7 @@
     {"date": "2026-11-19", "value": 1002.07, "filled": false},
     {"date": "2026-11-20", "value": 1008.79, "filled": false},
     {"date": "2026-11-21", "value": 1008.79, "filled": true},
+    {"date": "2026-11-22", "value": 1008.79, "filled": true},
     {"date": "2026-11-23", "value": 1017.17, "filled": false}
   ]
 }
