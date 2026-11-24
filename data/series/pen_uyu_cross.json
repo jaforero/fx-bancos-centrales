@@ -14,7 +14,7 @@
   ],
   "first_date": "2020-01-02",
   "last_date": "2026-11-23",
-  "last_official_date": "2026-11-19",
+  "last_official_date": "2026-11-20",
   "observations": [
     {"date": "2020-01-02", "value": 11.2517, "filled": false},
     {"date": "2020-01-03", "value": 11.2557, "filled": false},
@@ -2530,9 +2530,9 @@
     {"date": "2026-11-17", "value": 11.8937, "filled": false},
     {"date": "2026-11-18", "value": 11.8419, "filled": false},
     {"date": "2026-11-19", "value": 11.7991, "filled": false},
-    {"date": "2026-11-20", "value": 11.8063, "filled": true},
-    {"date": "2026-11-21", "value": 11.8063, "filled": true},
-    {"date": "2026-11-22", "value": 11.8063, "filled": true},
-    {"date": "2026-11-23", "value": 11.8063, "filled": true}
+    {"date": "2026-11-20", "value": 11.7614, "filled": false},
+    {"date": "2026-11-21", "value": 11.7614, "filled": true},
+    {"date": "2026-11-22", "value": 11.7614, "filled": true},
+    {"date": "2026-11-23", "value": 11.7881, "filled": true}
   ]
 }
