@@ -2533,7 +2533,7 @@
     {"date": "2026-11-20", "value": 456.2136, "filled": false},
     {"date": "2026-11-21", "value": 456.2136, "filled": true},
     {"date": "2026-11-22", "value": 456.2136, "filled": true},
-    {"date": "2026-11-23", "value": 456.2136, "filled": true},
-    {"date": "2026-11-24", "value": 456.2136, "filled": true}
+    {"date": "2026-11-23", "value": 456.5345, "filled": true},
+    {"date": "2026-11-24", "value": 461.1885, "filled": true}
   ]
 }
