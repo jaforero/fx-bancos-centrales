@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2.0",
   "config_version": "1.10.0",
-  "generated_at": "2026-11-26T09:00:22+00:00",
+  "generated_at": "2026-11-27T02:19:59+00:00",
   "as_of": "2026-11-26",
   "overall_status": "ok",
-  "data_hash": "84906f900ba5fd90ea85cddc0d71b0bc46395df237c7e903f3a783374f5dea5b",
+  "data_hash": "83f9f4b32999a0097d42bb36303a8acd8b19b7fdab7c4624589e5cb05d4de560",
   "series_status": {
     "ars_cop_cross": "ok",
     "brl_ars_cross": "ok",
@@ -73,9 +73,11 @@
       "salto 2026-10-23->2026-10-26: 5.0377 -> 5.5007 (+9.19%)"
     ],
     "usd_cop_trm": [
+      "fuente principal no disponible (BanRep: XML inválido (not well-formed (invalid token): line 4, column 17)); se usó el respaldo sfc_trm",
       "salto 2020-03-09->2020-03-10: 3584.58 -> 3803.6 (+6.11%)"
     ],
     "usd_cop_trm_mkt": [
+      "fuente principal no disponible (BanRep: XML inválido (not well-formed (invalid token): line 4, column 17)); se usó el respaldo sfc_trm",
       "salto 2020-03-06->2020-03-09: 3584.58 -> 3803.6 (+6.11%)"
     ],
     "uyu_ars_cross": [
