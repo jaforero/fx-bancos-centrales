@@ -2543,6 +2543,7 @@
     {"date": "2026-11-25", "value": 1025.06, "filled": false},
     {"date": "2026-11-26", "value": 1044.08, "filled": false},
     {"date": "2026-11-27", "value": 1037.91, "filled": false},
+    {"date": "2026-11-28", "value": 1037.91, "filled": true},
     {"date": "2026-11-30", "value": 1033.62, "filled": false}
   ]
 }
